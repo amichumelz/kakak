@@ -264,6 +264,28 @@ footer{background:var(--cyan);padding:60px 0 0}
 .reveal.in{opacity:1;transform:none}
 
 @media(max-width:560px){.why-cards{grid-template-columns:1fr}.hero{height:420px}}
+
+/* SUCCESS PAGE */
+.success-page{display:none;position:fixed;inset:0;z-index:999;background:#f7fafc;overflow-y:auto}
+.success-page.show{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px}
+.success-card{background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.12);max-width:520px;width:100%;overflow:hidden}
+.success-head{background:linear-gradient(135deg,#00BCD4,#009BB5);padding:40px 36px 32px;text-align:center;color:#fff}
+.success-head .checkmark{width:72px;height:72px;background:rgba(255,255,255,.2);border-radius:50%;display:grid;place-items:center;margin:0 auto 20px}
+.success-head .checkmark svg{width:38px;height:38px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.success-head h2{font-family:'Barlow Semi Condensed';font-size:1.9rem;font-weight:700;margin-bottom:6px}
+.success-head p{font-size:.95rem;opacity:.88;line-height:1.5}
+.success-body{padding:32px 36px}
+.receipt-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px dashed var(--border);font-size:.9rem}
+.receipt-row:last-of-type{border-bottom:none}
+.receipt-row .label{color:var(--ink-mid);font-weight:500}
+.receipt-row .val{font-weight:700;color:var(--ink);text-align:right;max-width:60%}
+.receipt-row.total-row .label{font-size:1rem;font-weight:700;color:var(--ink)}
+.receipt-row.total-row .val{font-family:'Barlow Semi Condensed';font-size:1.6rem;color:var(--cyan)}
+.receipt-id{background:var(--bg2);border-radius:10px;padding:12px 16px;margin:20px 0 0;font-size:.75rem;color:var(--ink-mid);word-break:break-all}
+.receipt-id b{display:block;margin-bottom:4px;color:var(--ink);font-size:.78rem}
+.success-actions{display:flex;gap:12px;padding:0 36px 32px;flex-wrap:wrap}
+.success-actions .btn{flex:1;min-width:140px}
+.success-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border-radius:999px;padding:6px 14px;font-size:.82rem;font-weight:600;margin-top:12px}
 </style>
 </head>
 <body>
@@ -549,6 +571,35 @@ footer{background:var(--cyan);padding:60px 0 0}
         <span data-i18n="modal_send">Hantar via WhatsApp</span>
       </button>
       <button class="btn btn-stripe" id="payBtn" onclick="payDeposit()" data-i18n="pay_deposit">Bayar Deposit (Test)</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- SUCCESS PAGE -->
+<div class="success-page" id="successPage">
+  <div class="success-card">
+    <div class="success-head">
+      <div class="checkmark">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 id="sp-title">Pembayaran Berjaya!</h2>
+      <p id="sp-subtitle">Deposit kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.</p>
+      <div class="success-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Selamat &amp; disahkan oleh Stripe
+      </div>
+    </div>
+    <div class="success-body">
+      <div class="receipt-row"><span class="label" id="sp-namelabel">Nama</span><span class="val" id="sp-name">—</span></div>
+      <div class="receipt-row"><span class="label" id="sp-carlabel">Tempahan</span><span class="val" id="sp-car">—</span></div>
+      <div class="receipt-row"><span class="label" id="sp-emaillabel">E-mel</span><span class="val" id="sp-email">—</span></div>
+      <div class="receipt-row total-row"><span class="label" id="sp-totallabel">Deposit Dibayar</span><span class="val" id="sp-amount">—</span></div>
+      <div class="receipt-id"><b>ID Transaksi</b><span id="sp-receipt">—</span></div>
+    </div>
+    <div class="success-actions">
+      <button class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+      <button class="btn btn-cyan" onclick="closeSuccessPage()">Balik ke Laman Utama</button>
     </div>
   </div>
 </div>
@@ -1158,9 +1209,72 @@ renderBrandShowcase();
 showSvc(0);
 renderTesti();
 renderFAQ();
-const payStatus = new URLSearchParams(window.location.search).get('pay');
-if (payStatus === 'success') showToast(T[lang].pay_success);
-if (payStatus === 'cancel') showToast(T[lang].pay_cancel);
+
+// ════════════════════════════════════════
+// SUCCESS PAGE
+// ════════════════════════════════════════
+async function checkPaySuccess() {
+  const params = new URLSearchParams(window.location.search);
+  const payStatus = params.get('pay');
+  const sessionId = params.get('session_id');
+
+  if (payStatus === 'success' && sessionId) {
+    showSuccessPage(sessionId);
+  } else if (payStatus === 'success') {
+    // Fallback kalau takde session_id
+    showToast(T[lang].pay_success);
+  } else if (payStatus === 'cancel') {
+    showToast(T[lang].pay_cancel);
+  }
+}
+
+async function showSuccessPage(sessionId) {
+  const page = document.getElementById('successPage');
+  page.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  // Set loading state
+  document.getElementById('sp-name').textContent    = '...';
+  document.getElementById('sp-car').textContent     = '...';
+  document.getElementById('sp-email').textContent   = '...';
+  document.getElementById('sp-amount').textContent  = '...';
+  document.getElementById('sp-receipt').textContent = '...';
+
+  try {
+    const res  = await fetch(WORKER_URL + 'session?id=' + sessionId);
+    const data = await res.json();
+
+    if (data.status === 'paid') {
+      const isMs = lang === 'ms';
+      document.getElementById('sp-title').textContent    = isMs ? 'Pembayaran Berjaya! 🎉' : 'Payment Successful! 🎉';
+      document.getElementById('sp-subtitle').textContent = isMs
+        ? 'Deposit kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.'
+        : 'Your deposit has been received. We will contact you shortly.';
+      document.getElementById('sp-namelabel').textContent  = isMs ? 'Nama' : 'Name';
+      document.getElementById('sp-carlabel').textContent   = isMs ? 'Tempahan' : 'Booking';
+      document.getElementById('sp-emaillabel').textContent = isMs ? 'E-mel' : 'Email';
+      document.getElementById('sp-totallabel').textContent = isMs ? 'Deposit Dibayar' : 'Deposit Paid';
+
+      document.getElementById('sp-name').textContent    = data.customerName || '—';
+      document.getElementById('sp-car').textContent     = data.itemName     || '—';
+      document.getElementById('sp-email').textContent   = data.email        || '—';
+      document.getElementById('sp-amount').textContent  = 'RM ' + Number(data.amount).toFixed(2);
+      document.getElementById('sp-receipt').textContent = data.receiptId    || '—';
+    }
+  } catch (e) {
+    document.getElementById('sp-name').textContent = '—';
+    document.getElementById('sp-receipt').textContent = 'Sila hubungi kami untuk pengesahan.';
+  }
+}
+
+function closeSuccessPage() {
+  document.getElementById('successPage').classList.remove('show');
+  document.body.style.overflow = '';
+  // Remove query params dari URL
+  window.history.replaceState({}, '', window.location.pathname);
+}
+
+checkPaySuccess();
 </script>
 </body>
 </html>
