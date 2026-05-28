@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ms" data-lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kakak — Sewa Kereta & Driver di Langkawi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Barlow+Semi+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cyan:#00BCD4;--cyan-dark:#009BB5;--cyan-light:#E0F7FA;
+  --ink:#0D1B2A;--ink-mid:#4A5568;--ink-light:#718096;
+  --border:#E2E8F0;--bg:#FFFFFF;--bg2:#F7FAFC;--r:12px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Barlow';font-weight:700;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;border:none;border-radius:999px;padding:14px 32px;cursor:pointer;transition:.2s}
+.btn-cyan{background:var(--cyan);color:#fff}.btn-cyan:hover{background:var(--cyan-dark)}
+.btn-outline{background:transparent;color:var(--ink);border:2px solid var(--ink)}.btn-outline:hover{background:var(--ink);color:#fff}
+.btn:active{transform:scale(.97)}
+
+/* LANG TOGGLE */
+.lang-toggle{display:flex;align-items:center;background:var(--bg2);border:1.5px solid var(--border);border-radius:999px;padding:3px;gap:2px;flex:0 0 auto}
+.lang-btn{font-family:'Barlow';font-size:.8rem;font-weight:700;letter-spacing:.04em;padding:6px 14px;border-radius:999px;border:none;cursor:pointer;background:transparent;color:var(--ink-mid);transition:.18s}
+.lang-btn.active{background:var(--cyan);color:#fff}
+.lang-btn:hover:not(.active){color:var(--ink)}
+
+/* NAV */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.06)}
+nav{display:flex;align-items:center;height:72px;gap:32px}
+.logo{font-family:'Barlow Semi Condensed';font-size:1.6rem;font-weight:800;color:var(--cyan);letter-spacing:-.01em;white-space:nowrap;flex:0 0 auto}
+.navlinks{display:flex;align-items:center;gap:24px;flex:1}
+.navlinks a{font-size:.88rem;font-weight:600;color:var(--ink);transition:color .2s;white-space:nowrap}
+.navlinks a:hover{color:var(--cyan)}
+.has-drop{position:relative;display:flex;align-items:center;gap:4px;cursor:pointer;font-size:.88rem;font-weight:600}
+.has-drop svg{width:14px;height:14px;stroke:var(--ink-mid);fill:none;stroke-width:2.5;stroke-linecap:round;flex:0 0 14px}
+.drop-menu{position:absolute;top:calc(100%+14px);left:0;background:#fff;border:1px solid var(--border);border-radius:var(--r);box-shadow:0 8px 30px rgba(0,0,0,.1);min-width:180px;padding:8px;display:none;z-index:60}
+.has-drop:hover .drop-menu{display:block}
+.drop-menu a{display:block;padding:9px 14px;border-radius:8px;font-size:.88rem;font-weight:500;transition:.15s}
+.drop-menu a:hover{background:var(--cyan-light);color:var(--cyan-dark)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.nav-right .btn{padding:10px 22px;font-size:.82rem}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.burger span{width:22px;height:2px;background:var(--ink);display:block;border-radius:2px}
+@media(max-width:960px){
+  .navlinks{display:none;position:fixed;top:72px;left:0;right:0;background:#fff;flex-direction:column;padding:24px;gap:16px;align-items:flex-start;border-bottom:1px solid var(--border);z-index:40}
+  .navlinks.open{display:flex}
+  .burger{display:flex}
+  .nav-right .btn-cyan{display:none}
+}
+
+/* HERO */
+.hero{position:relative;height:520px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,25,45,.3) 0%,rgba(5,15,30,.65) 100%),linear-gradient(135deg,#0D4F6C 0%,#1A7FA0 35%,#0E5E80 60%,#0A3550 100%)}
+.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(0,188,212,.25) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(0,100,150,.3) 0%,transparent 50%)}
+.hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.4) 100%)}
+.hero-content{position:relative;z-index:2;width:100%;padding:0 0 48px}
+.hero-text{text-align:center;color:#fff;margin-bottom:28px}
+.hero-text h1{font-family:'Barlow Semi Condensed';font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:.01em;margin-bottom:8px}
+.hero-text h1 span{font-style:italic;color:var(--cyan)}
+.hero-search{max-width:700px;margin:0 auto;background:#fff;border-radius:999px;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 24px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.hero-search input{flex:1;border:none;outline:none;font-family:'Barlow';font-size:1rem;color:var(--ink-mid);background:transparent}
+.hero-search input::placeholder{color:#A0AEC0}
+.hero-search svg{width:20px;height:20px;stroke:#A0AEC0;fill:none;stroke-width:2;stroke-linecap:round;flex:0 0 20px}
+
+/* SECTION */
+.sec{padding:80px 0}
+.sec-title{font-family:'Barlow Semi Condensed';font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;line-height:1.1;color:var(--ink)}
+.sec-sub{font-size:1.05rem;color:var(--ink-mid);line-height:1.7;margin-top:10px}
+
+/* WELCOME */
+.welcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.welcome-left h2{font-family:'Barlow Semi Condensed';font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;line-height:1.1;margin-bottom:16px}
+.welcome-left .tagline{font-size:1.2rem;font-weight:700;margin-bottom:6px;color:var(--ink)}
+.welcome-left p{font-size:1rem;color:var(--ink-mid);line-height:1.7;margin-top:14px}
+.why-title{font-family:'Barlow Semi Condensed';font-size:1.4rem;font-weight:700;margin-bottom:24px}
+.why-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.why-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px;transition:.2s}
+.why-card:hover{box-shadow:0 6px 20px rgba(0,188,212,.15);border-color:rgba(0,188,212,.3)}
+.why-card .ic{margin-bottom:12px}
+.why-card .ic svg{width:28px;height:28px;stroke:var(--cyan);fill:none;stroke-width:1.8}
+.why-card h4{font-weight:700;font-size:1rem;margin-bottom:6px}
+.why-card p{font-size:.85rem;color:var(--ink-mid);line-height:1.6}
+.why-dots{display:flex;gap:8px;justify-content:center;margin-top:20px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s}
+.dot.active{background:var(--cyan)}
+@media(max-width:900px){.welcome-grid{grid-template-columns:1fr;gap:40px}}
+
+/* BRAND SHOWCASE */
+.brand-sec{background:var(--bg2)}
+.brand-sec-header{margin-bottom:40px}
+.brand-showcase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.brand-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:box-shadow .22s,transform .22s}
+.brand-card:hover{box-shadow:0 10px 30px rgba(0,0,0,.11);transform:translateY(-3px)}
+.brand-card:hover .bc-img svg{transform:translateX(4px) scale(1.03)}
+.bc-img{height:170px;display:flex;align-items:center;justify-content:center;background:#f4f6f9;border-bottom:1px solid var(--border);overflow:hidden}
+.bc-img svg{width:100%;max-width:230px;height:auto;transition:transform .3s ease}
+.bc-body{padding:18px 20px 20px;display:flex;justify-content:space-between;align-items:center}
+.bc-brand-name{font-family:'Barlow Semi Condensed';font-size:1.25rem;font-weight:700;color:var(--ink)}
+.bc-models{font-size:.8rem;color:var(--ink-light);margin-top:3px}
+.bc-caret{width:34px;height:34px;border-radius:50%;background:var(--cyan-light);display:grid;place-items:center;flex:0 0 34px;transition:background .2s}
+.brand-card:hover .bc-caret{background:var(--cyan)}
+.bc-caret svg{width:16px;height:16px;stroke:var(--cyan);fill:none;stroke-width:2.5;stroke-linecap:round;transition:stroke .2s}
+.brand-card:hover .bc-caret svg{stroke:#fff}
+@media(max-width:900px){.brand-showcase-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.brand-showcase-grid{grid-template-columns:1fr}}
+
+/* CARS LISTING */
+.cars-header{margin-bottom:0}
+.brand-filters{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 8px}
+.bf{font-family:'Barlow';font-size:.9rem;font-weight:600;padding:9px 22px;border-radius:999px;border:1.5px solid var(--border);background:#fff;color:var(--ink-mid);cursor:pointer;transition:.2s;white-space:nowrap}
+.bf:hover{border-color:var(--cyan);color:var(--cyan)}
+.bf.active{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.cars-count{font-size:.9rem;color:var(--ink-mid);font-weight:500;margin:0 0 24px}
+.cars-count b{color:var(--ink);font-weight:700}
+.car-list{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.car-item{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px 20px 20px;cursor:pointer;transition:.2s;position:relative;display:flex;flex-direction:column}
+.car-item:hover{box-shadow:0 8px 28px rgba(0,0,0,.1);border-color:rgba(0,188,212,.35);transform:translateY(-2px)}
+.car-item .ci-img{height:130px;display:flex;align-items:center;justify-content:center}
+.car-item .ci-img svg{width:100%;max-width:220px;height:auto}
+.ci-foot{border-top:1px solid var(--border);padding-top:14px;margin-top:14px}
+.ci-name-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:14px}
+.ci-name{font-family:'Barlow Semi Condensed';font-size:1.05rem;font-weight:700;color:var(--ink);text-transform:uppercase}
+.ci-price-block{text-align:right;flex:0 0 auto}
+.ci-price-block .price{font-family:'Barlow Semi Condensed';font-size:1.2rem;font-weight:700;color:var(--ink);white-space:nowrap}
+.ci-price-block .per{font-size:.72rem;color:var(--ink-light);display:block;text-align:right}
+.ci-feats-label{font-size:.8rem;font-weight:600;color:var(--ink-mid);margin-bottom:10px}
+.ci-feats{display:flex;gap:14px;flex-wrap:wrap}
+.ci-feat{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:.72rem;color:var(--ink-mid);font-weight:500;text-align:center;min-width:48px}
+.ci-feat svg{width:30px;height:30px;stroke:var(--cyan);fill:none;stroke-width:1.5}
+.ci-badge{position:absolute;top:12px;right:12px;background:var(--cyan);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:3px 10px}
+.ci-badge.hot{background:#E53E3E}
+.ci-badge.lux{background:#B7950B;color:#fff}
+.cars-cta{text-align:center;margin-top:32px}
+@media(max-width:900px){.car-list{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.car-list{grid-template-columns:1fr}}
+
+/* SERVICES */
+.svc-sec{background:var(--bg2)}
+.svc-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.svc-visual{background:linear-gradient(145deg,var(--cyan) 0%,#0099B8 100%);border-radius:24px;padding:40px;min-height:380px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.svc-visual::before{content:'';position:absolute;bottom:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,.12);border-radius:50%}
+.svc-visual::after{content:'';position:absolute;top:-60px;left:-60px;width:250px;height:250px;background:rgba(255,255,255,.07);border-radius:50%}
+.svc-visual h3{font-family:'Barlow Semi Condensed';font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.svc-visual p{color:rgba(255,255,255,.85);font-size:.95rem;line-height:1.7;position:relative;z-index:1}
+.svc-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.svc-tab{font-family:'Barlow';font-size:.88rem;font-weight:600;padding:9px 20px;border-radius:999px;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--ink-mid);transition:.2s}
+.svc-tab.active{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.svc-tab:hover:not(.active){border-color:var(--cyan);color:var(--cyan)}
+.svc-content h4{font-family:'Barlow Semi Condensed';font-size:1.5rem;font-weight:700;margin-bottom:12px}
+.svc-content p{font-size:.95rem;color:var(--ink-mid);line-height:1.75;margin-bottom:20px}
+.svc-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.svc-tag{background:var(--cyan-light);color:var(--cyan-dark);font-size:.8rem;font-weight:600;padding:6px 14px;border-radius:999px}
+@media(max-width:900px){.svc-inner{grid-template-columns:1fr;gap:32px}}
+
+/* TESTI */
+.testi-inner{max-width:800px;margin:0 auto;text-align:center}
+.testi-stars{display:flex;gap:4px;justify-content:center;margin-bottom:20px}
+.testi-stars svg{width:28px;height:28px;fill:var(--cyan)}
+.testi-quote{font-size:1.1rem;color:var(--ink-mid);line-height:1.8;position:relative;padding:0 40px}
+.testi-quote::before{content:'\201C';font-size:5rem;font-family:Georgia,serif;color:var(--cyan);position:absolute;top:-30px;left:0;line-height:1}
+.testi-quote::after{content:'\201D';font-size:5rem;font-family:Georgia,serif;color:var(--cyan);position:absolute;bottom:-60px;right:0;line-height:1}
+.testi-who{margin-top:32px;font-weight:700;font-size:.95rem;color:var(--cyan)}
+.testi-nav{display:flex;gap:10px;justify-content:center;margin-top:36px}
+.snav{width:38px;height:38px;border:1.5px solid var(--border);border-radius:50%;background:#fff;display:grid;place-items:center;cursor:pointer;transition:.2s}
+.snav:hover{border-color:var(--cyan);background:var(--cyan-light)}
+.snav svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:2.5;stroke-linecap:round}
+.sdots{display:flex;gap:8px}
+
+/* CTA */
+.cta-sec{padding:80px 0;background:var(--bg2)}
+.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.cta-inner h2{font-family:'Barlow Semi Condensed';font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:700;line-height:1.2;max-width:580px}
+
+/* FOOTER */
+footer{background:var(--cyan);padding:60px 0 0}
+.foot-top{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:32px;padding-bottom:48px}
+.foot-brand .logo-f{font-family:'Barlow Semi Condensed';font-size:1.8rem;font-weight:800;color:#fff;margin-bottom:8px}
+.foot-brand p{font-size:.85rem;color:rgba(255,255,255,.8);line-height:1.7;margin-bottom:20px}
+.foot-socials{display:flex;gap:10px}
+.soc{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;transition:.2s;cursor:pointer}
+.soc:hover{background:rgba(255,255,255,.35)}
+.soc svg{width:18px;height:18px;fill:#fff;stroke:none}
+.foot-col h5{font-family:'Barlow';font-weight:700;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:18px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-col ul li a{font-size:.9rem;color:rgba(255,255,255,.85);font-weight:500;transition:.15s}
+.foot-col ul li a:hover{color:#fff}
+.foot-col ul li a.bold{font-weight:700;color:#fff}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.2);padding:20px 0;text-align:center;font-size:.8rem;color:rgba(255,255,255,.7)}
+@media(max-width:900px){.foot-top{grid-template-columns:1fr 1fr;gap:28px}}
+@media(max-width:560px){.foot-top{grid-template-columns:1fr}}
+
+/* MODAL */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;place-items:center;padding:20px;overflow-y:auto}
+.modal-backdrop.open{display:grid}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:540px;max-height:calc(100vh - 40px);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);display:flex;flex-direction:column}
+.modal-head{background:var(--cyan);padding:24px 28px;display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{font-family:'Barlow Semi Condensed';font-size:1.4rem;font-weight:700;color:#fff}
+.modal-close{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;display:grid;place-items:center;color:#fff;font-size:1.3rem}
+.modal-body{padding:28px;overflow-y:auto;min-height:0}
+.modal-body .fg{margin-bottom:16px}
+.modal-body label{display:block;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:7px}
+.modal-body input,.modal-body select,.modal-body textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Barlow';font-size:.95rem;color:var(--ink);background:#fff}
+.modal-body input:focus,.modal-body select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,188,212,.15)}
+.modal-body .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.booking-calendar{border:1px solid var(--border);border-radius:12px;padding:14px;background:#fff}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px}
+.cal-title{font-size:.92rem;font-weight:700;color:var(--ink)}
+.cal-nav{display:flex;gap:8px}
+.cal-nav button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:1.1rem;line-height:1;color:var(--ink-mid)}
+.cal-nav button:hover{border-color:var(--cyan);color:var(--cyan)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-weekday{font-size:.72rem;font-weight:700;color:var(--ink-light);text-align:center;padding:4px 0}
+.cal-day{border:1px solid var(--border);border-radius:8px;min-height:52px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#fff;cursor:pointer;transition:.15s}
+.cal-day .d{font-size:.82rem;font-weight:700}
+.cal-day .r{font-size:.62rem;font-weight:700}
+.cal-day:hover:not(.disabled){border-color:var(--cyan)}
+.cal-day.empty{border:none;background:transparent;cursor:default}
+.cal-day.disabled{background:#F3F4F6;color:#9CA3AF;cursor:not-allowed;text-decoration:line-through}
+.cal-day.peak{background:#FFF1F2;border-color:#FCA5A5;color:#9F1239}
+.cal-day.low{background:#ECFDF5;border-color:#86EFAC;color:#166534}
+.cal-day.selected{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(0,188,212,.2)}
+.cal-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.cal-chip{font-size:.7rem;font-weight:700;padding:4px 8px;border-radius:999px}
+.chip-booked{background:#F3F4F6;color:#6B7280}
+.chip-peak{background:#FFF1F2;color:#9F1239}
+.chip-low{background:#ECFDF5;color:#166534}
+.chip-normal{background:#EFF6FF;color:#1D4ED8}
+.hotline{font-size:.82rem;color:var(--ink-mid);margin-top:10px}
+.hotline b{color:var(--ink)}
+.sum-line{display:flex;justify-content:space-between;font-size:.9rem;padding:8px 0;border-bottom:1px dashed var(--border)}
+.sum-total-line{display:flex;justify-content:space-between;align-items:baseline;padding-top:12px;margin-top:4px}
+.sum-total-line span{font-weight:700;font-size:.9rem;text-transform:uppercase;color:var(--ink-mid)}
+.sum-total-line b{font-family:'Barlow Semi Condensed';font-size:1.8rem;color:var(--ink)}
+.modal-foot{padding:20px 28px;border-top:1px solid var(--border);display:flex;gap:12px}
+.modal-foot .btn{flex:1}
+.btn-stripe{background:#635BFF;color:#fff}
+.btn-stripe:hover{background:#4F46E5}
+@media(max-width:560px){
+  .modal-backdrop{padding:10px}
+  .modal{max-height:calc(100vh - 20px)}
+  .modal-head,.modal-body,.modal-foot{padding-left:18px;padding-right:18px}
+}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;border-radius:999px;padding:12px 24px;font-size:.88rem;font-weight:600;opacity:0;pointer-events:none;z-index:200;transition:.3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* WA FLOAT */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:60;background:#25D366;color:#fff;border-radius:999px;display:flex;align-items:center;gap:10px;padding:13px 22px 13px 16px;box-shadow:0 6px 24px rgba(37,211,102,.4);font-family:'Barlow';font-weight:700;font-size:.88rem;transition:.2s}
+.wa-float:hover{background:#20BA5A;transform:translateY(-2px)}
+.wa-float svg{width:22px;height:22px;fill:#fff;flex:0 0 22px}
+@media(max-width:480px){.wa-float span{display:none}.wa-float{padding:14px;border-radius:50%}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:560px){.why-cards{grid-template-columns:1fr}.hero{height:420px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <nav class="wrap">
+    <a href="#" class="logo">KAKAK</a>
+    <div class="navlinks" id="nav">
+      <div class="has-drop"><span data-i18n="nav_about">Tentang Kami</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="drop-menu">
+          <a href="#" data-i18n="nav_who">Siapa Kami</a>
+          <a href="#" data-i18n="nav_why">Kenapa Kami</a>
+          <a href="#" data-i18n="nav_media">Media</a>
+        </div>
+      </div>
+      <div class="has-drop"><span data-i18n="nav_services">Servis</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="drop-menu">
+          <a href="#svc">Self-Drive</a>
+          <a href="#svc" data-i18n="nav_with_driver">Dengan Driver</a>
+          <a href="#svc">Airport Transfer</a>
+        </div>
+      </div>
+      <a href="#cars" data-i18n="nav_cars">Kereta</a>
+      <a href="#dest" data-i18n="nav_brands">Jenama</a>
+      <a href="#faq" data-i18n="nav_help">Bantuan</a>
+      <a href="#testi">Testimonial</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnMS" onclick="setLang('ms')">BM</button>
+        <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="btn btn-cyan" onclick="openModal()" data-i18n="nav_book">Tempah Sekarang</button>
+    </div>
+    <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div style="position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,rgba(0,40,80,.5))"></div>
+    <svg style="position:absolute;bottom:40px;left:60px;opacity:.15" width="120" height="200" viewBox="0 0 120 200"><path d="M60 200 Q55 120 40 80 Q20 40 0 30 Q20 60 35 100 Q45 140 60 200Z" fill="white"/><path d="M60 200 Q65 120 80 80 Q100 40 120 30 Q100 60 85 100 Q75 140 60 200Z" fill="white"/></svg>
+    <svg style="position:absolute;bottom:40px;right:80px;opacity:.12" width="100" height="180" viewBox="0 0 120 200"><path d="M60 200 Q55 120 40 80 Q20 40 0 30 Q20 60 35 100 Q45 140 60 200Z" fill="white"/><path d="M60 200 Q65 120 80 80 Q100 40 120 30 Q100 60 85 100 Q75 140 60 200Z" fill="white"/></svg>
+  </div>
+  <div class="hero-content wrap">
+    <div class="hero-text">
+      <h1 data-i18n="hero_h1_pre">Masa untuk <span data-i18n="hero_h1_span">jelajah Langkawi</span> sesuka hati</h1>
+    </div>
+    <div class="hero-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" data-i18n-placeholder="hero_search_ph" placeholder="Cari kereta, destinasi, atau servis..." onclick="openModal()">
+      <button class="btn btn-cyan" onclick="openModal()" data-i18n="hero_search_btn">Cari</button>
+    </div>
+  </div>
+</section>
+
+<!-- WELCOME + WHY -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="welcome-grid">
+      <div class="welcome-left reveal">
+        <h2 data-i18n="welcome_h2">Selamat Datang ke Sewa Kereta Mesra-Bajet di Langkawi</h2>
+        <p class="tagline" style="margin-top:18px" data-i18n="welcome_tag1">Dari serendah RM89/Hari. Mana-mana destinasi, ikut gaya kamu.</p>
+        <p class="tagline" style="margin-top:6px;color:var(--ink-mid)" data-i18n="welcome_tag2">Sewa, drive, dan nikmati.</p>
+        <p data-i18n="welcome_body">Jelajah Pulau Langkawi dengan fleksibel — sewa kereta harian, mingguan, atau pilih pakej percutian penuh dengan driver lokal yang kenal setiap pelusuk pulau, semuanya mudah dan jujur.</p>
+        <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap">
+          <button class="btn btn-cyan" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn1">Lihat Kereta</button>
+          <button class="btn btn-outline" onclick="document.getElementById('svc').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn2">Servis Kami</button>
+        </div>
+      </div>
+      <div class="reveal">
+        <p class="why-title" data-i18n="why_title">Kenapa Pilih Kakak</p>
+        <div class="why-cards">
+          <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h4 data-i18n="why1_h">Pickup Dari Mana Sahaja</h4><p data-i18n="why1_p">Ambil kereta di airport, jeti Kuah, atau kami antar terus ke hotel kamu percuma.</p></div>
+          <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.0 1.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><h4 data-i18n="why2_h">Sokongan 24/7</h4><p data-i18n="why2_p">Tanya kami bila-bila siang atau malam melalui WhatsApp — kami sentiasa responsif.</p></div>
+          <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 17H5a2 2 0 01-2-2V7a2 2 0 012-2h11l5 4v6a2 2 0 01-2 2z"/><polyline points="16 17 16 21 8 21 8 17"/></svg></div><h4 data-i18n="why3_h">3 Cara Sewa</h4><p data-i18n="why3_p">Sewa sendiri, sewa + driver lokal, atau ambil pakej airport transfer. Semua ada.</p></div>
+          <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h4 data-i18n="why4_h">9+ Model Kereta</h4><p data-i18n="why4_p">Dari Axia ekonomi hingga Alphard VIP — pilih ikut bajet dan saiz kumpulan kamu.</p></div>
+        </div>
+        <div class="why-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND SHOWCASE -->
+<section class="sec brand-sec" id="dest">
+  <div class="wrap">
+    <div class="brand-sec-header reveal">
+      <h2 class="sec-title" data-i18n="brand_h2">Pilih Jenama Kereta Kamu dari Koleksi Terkini.</h2>
+      <p class="sec-sub" style="margin-top:10px" data-i18n="brand_sub">Tekan jenama untuk lihat semua model yang tersedia.</p>
+    </div>
+    <div class="brand-showcase-grid" id="brandShowcase"></div>
+  </div>
+</section>
+
+<!-- CARS -->
+<section class="sec" id="cars">
+  <div class="wrap">
+    <div class="cars-header reveal">
+      <h2 class="sec-title" data-i18n="cars_h2">Kami Ada 9 Model Kereta,<br>Kamu Yang Pilih.</h2>
+    </div>
+    <div class="brand-filters reveal" id="brandFilters"></div>
+    <p class="cars-count reveal" id="carsCount"></p>
+    <div class="car-list" id="carList"></div>
+    <div class="cars-cta reveal">
+      <button class="btn btn-cyan" onclick="openModal()" style="padding:16px 48px;font-size:1rem" data-i18n="cars_cta">TEMPAH SEKARANG</button>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec svc-sec" id="svc">
+  <div class="wrap">
+    <div class="svc-inner">
+      <div class="svc-visual reveal">
+        <h3 id="svc-vis-title" data-i18n="svc_vis_title">Jelajah Langkawi Sesuka Hati</h3>
+        <p id="svc-vis-desc" data-i18n="svc_vis_desc">Sewa kereta jam, hari, atau minggu — pilih masa kamu sendiri.</p>
+        <div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;position:relative;z-index:1">
+          <span style="background:rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600" data-i18n="svc_tag1">Tangki penuh</span>
+          <span style="background:rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600" data-i18n="svc_tag2">Insurans asas</span>
+          <span style="background:rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600" data-i18n="svc_tag3">Free delivery</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <h2 class="sec-title" style="margin-bottom:24px" data-i18n="svc_h2">Ke Mana-mana dengan 3 Cara Sewa Kami</h2>
+        <div class="svc-tabs" id="svcTabs">
+          <button class="svc-tab active" onclick="showSvc(0)" data-i18n="svc_tab0">Self-Drive</button>
+          <button class="svc-tab" onclick="showSvc(1)" data-i18n="svc_tab1">Dengan Driver</button>
+          <button class="svc-tab" onclick="showSvc(2)" data-i18n="svc_tab2">Airport Transfer</button>
+        </div>
+        <div class="svc-content" id="svcContent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="testi">
+  <div class="wrap">
+    <h2 class="sec-title reveal" style="text-align:center;margin-bottom:48px" data-i18n="testi_h2">Ulasan dari Pelanggan Kami</h2>
+    <div class="testi-inner reveal">
+      <div class="testi-stars">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="testi-quote" id="tQuote"></div>
+      <div class="testi-who" id="tWho"></div>
+      <div class="testi-nav">
+        <button class="snav" onclick="prevTesti()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="sdots" id="testiDots"></div>
+        <button class="snav" onclick="nextTesti()"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq" style="background:var(--bg2);padding:60px 0">
+  <div class="wrap">
+    <h2 class="sec-title reveal" style="margin-bottom:32px" data-i18n="faq_h2">Perlu Bantuan?</h2>
+    <div style="max-width:740px;display:flex;flex-direction:column;gap:8px" id="faqList"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <h2 data-i18n="cta_h2">Hello, Langkawi sedang menunggu.<br>Jom kita tunjukkan jalan.</h2>
+      <button class="btn btn-cyan" onclick="openModal()" style="padding:16px 44px;font-size:.95rem;white-space:nowrap" data-i18n="cta_btn">TEMPAH SEKARANG</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="logo-f">KAKAK</div>
+        <p data-i18n="foot_desc">Sewa kereta dan pakej driver paling jujur dan mesra-bajet di Pulau Langkawi. Jelajah ikut cara kamu.</p>
+        <div class="foot-socials">
+          <div class="soc"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>
+          <div class="soc"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+          <div class="soc"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="foot_col1_h">Tentang</h5>
+        <ul>
+          <li><a href="#" data-i18n="nav_who">Siapa Kami</a></li>
+          <li><a href="#" data-i18n="nav_why">Kenapa Kami</a></li>
+          <li><a href="#" data-i18n="foot_promo">Promosi</a></li>
+          <li><a href="#" data-i18n="foot_career">Kerjaya</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="nav_cars">Kereta</h5>
+        <ul>
+          <li><a href="#dest" class="bold">Perodua</a></li>
+          <li><a href="#dest">Proton</a></li>
+          <li><a href="#dest">Honda</a></li>
+          <li><a href="#dest">Toyota</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="nav_services">Servis</h5>
+        <ul>
+          <li><a href="#svc">Self-Drive</a></li>
+          <li><a href="#svc" data-i18n="nav_with_driver">Dengan Driver</a></li>
+          <li><a href="#svc">Airport Transfer</a></li>
+          <li><a href="#svc" data-i18n="foot_fullday">Full-Day Tour</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="nav_help">Bantuan</h5>
+        <ul>
+          <li><a href="#faq" data-i18n="foot_how">Cara Tempah</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#" data-i18n="foot_terms">Syarat & Terma</a></li>
+          <li><a href="#" data-i18n="foot_privacy">Dasar Privasi</a></li>
+          <li><a href="#" data-i18n="foot_contact">Hubungi Kami</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="wrap" data-i18n="foot_bottom">KAKAK SDN. BHD. · Pantai Cenang, Langkawi, Kedah · Laman demonstrasi</div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <h3 data-i18n="modal_h">Buat Tempahan</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row2">
+        <div class="fg"><label data-i18n="modal_name">Nama Penuh</label><input type="text" id="m-name" data-i18n-placeholder="modal_name_ph" placeholder="Ahmad bin Ali"></div>
+        <div class="fg"><label data-i18n="modal_wa">No. WhatsApp</label><input type="tel" id="m-phone" placeholder="011-xxxx xxxx"></div>
+      </div>
+      <div class="fg"><label data-i18n="modal_car">Pilih Kereta / Pakej</label><select id="m-car" onchange="mRecalc()"></select></div>
+      <input type="hidden" id="m-from">
+      <div class="fg">
+        <label data-i18n="modal_calendar">Kalendar Harga & Ketersediaan</label>
+        <div class="booking-calendar">
+          <div class="cal-head">
+            <div class="cal-title" id="calTitle">May 2026</div>
+            <div class="cal-nav">
+              <button type="button" onclick="changeMonth(-1)">‹</button>
+              <button type="button" onclick="changeMonth(1)">›</button>
+            </div>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-legend">
+            <span class="cal-chip chip-booked" data-i18n="legend_booked">Booked</span>
+            <span class="cal-chip chip-peak" data-i18n="legend_peak">Peak (PH)</span>
+            <span class="cal-chip chip-low" data-i18n="legend_low">Low</span>
+            <span class="cal-chip chip-normal" data-i18n="legend_normal">Normal</span>
+          </div>
+        </div>
+      </div>
+      <div class="fg"><label data-i18n="modal_loc">Lokasi Ambil</label>
+        <select id="m-loc">
+          <option data-i18n="loc1">Lapangan Terbang (LGK)</option>
+          <option data-i18n="loc2">Jeti Kuah</option>
+          <option data-i18n="loc3">Pantai Cenang</option>
+          <option data-i18n="loc4">Antar ke hotel</option>
+        </select>
+      </div>
+      <p class="hotline" data-i18n="hotline_text">Telefon/WhatsApp segera: <b>018-3954478</b></p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" style="background:#25D366;color:#fff;flex:1" onclick="sendWA()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.836L.047 23.954l6.282-1.49C7.886 23.47 9.9 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.636-.508-5.148-1.394l-.369-.219-3.73.885.924-3.638-.241-.374C2.54 15.704 2 13.914 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        <span data-i18n="modal_send">Hantar via WhatsApp</span>
+      </button>
+      <button class="btn btn-stripe" id="payBtn" onclick="payDeposit()" data-i18n="pay_deposit">Bayar Deposit (Test)</button>
+    </div>
+  </div>
+</div>
+
+<!-- WA FLOAT -->
+<a href="#" class="wa-float" onclick="openModal();return false">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.836L.047 23.954l6.282-1.49C7.886 23.47 9.9 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.636-.508-5.148-1.394l-.369-.219-3.73.885.924-3.638-.241-.374C2.54 15.704 2 13.914 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+  <span data-i18n="wa_btn">Tempah via WhatsApp (018-3954478)</span>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════
+// TRANSLATIONS
+// ════════════════════════════════════════
+const T = {
+  ms: {
+    page_title:'Kakak — Sewa Kereta & Driver di Langkawi',
+    nav_about:'Tentang Kami', nav_who:'Siapa Kami', nav_why:'Kenapa Kami', nav_media:'Media',
+    nav_services:'Servis', nav_with_driver:'Dengan Driver', nav_cars:'Kereta',
+    nav_brands:'Jenama', nav_help:'Bantuan', nav_book:'Tempah Sekarang',
+    hero_h1_pre:'Masa untuk ', hero_h1_span:'jelajah Langkawi', hero_h1_suf:' sesuka hati',
+    hero_search_ph:'Cari kereta, destinasi, atau servis...', hero_search_btn:'Cari',
+    welcome_h2:'Selamat Datang ke Sewa Kereta Mesra-Bajet di Langkawi',
+    welcome_tag1:'Dari serendah RM89/Hari. Mana-mana destinasi, ikut gaya kamu.',
+    welcome_tag2:'Sewa, drive, dan nikmati.',
+    welcome_body:'Jelajah Pulau Langkawi dengan fleksibel — sewa kereta harian, mingguan, atau pilih pakej percutian penuh dengan driver lokal yang kenal setiap pelusuk pulau, semuanya mudah dan jujur.',
+    welcome_btn1:'Lihat Kereta', welcome_btn2:'Servis Kami',
+    why_title:'Kenapa Pilih Kakak',
+    why1_h:'Pickup Dari Mana Sahaja', why1_p:'Ambil kereta di airport, jeti Kuah, atau kami antar terus ke hotel kamu percuma.',
+    why2_h:'Sokongan 24/7', why2_p:'Tanya kami bila-bila siang atau malam melalui WhatsApp — kami sentiasa responsif.',
+    why3_h:'3 Cara Sewa', why3_p:'Sewa sendiri, sewa + driver lokal, atau ambil pakej airport transfer. Semua ada.',
+    why4_h:'9+ Model Kereta', why4_p:'Dari Axia ekonomi hingga Alphard VIP — pilih ikut bajet dan saiz kumpulan kamu.',
+    brand_h2:'Pilih Jenama Kereta Kamu dari Koleksi Terkini.',
+    brand_sub:'Tekan jenama untuk lihat semua model yang tersedia.',
+    cars_h2:'Kami Ada 9 Model Kereta,<br>Kamu Yang Pilih.',
+    cars_filter_all:'Semua', cars_cta:'TEMPAH SEKARANG',
+    cars_count_all:'kereta dijumpai', cars_count_brand:'kereta dijumpai untuk',
+    feat_label:'Features', per_day:'per hari',
+    svc_h2:'Ke Mana-mana dengan 3 Cara Sewa Kami',
+    svc_tab0:'Self-Drive', svc_tab1:'Dengan Driver', svc_tab2:'Airport Transfer',
+    svc_vis_title:'Jelajah Langkawi Sesuka Hati',
+    svc_vis_desc:'Sewa kereta jam, hari, atau minggu — pilih masa kamu sendiri. Pickup di airport atau jeti, drive ke mana sahaja, dan pulangkan apabila selesai.',
+    svc_tag1:'Tangki penuh', svc_tag2:'Insurans asas', svc_tag3:'Free delivery',
+    testi_h2:'Ulasan dari Pelanggan Kami',
+    faq_h2:'Perlu Bantuan?',
+    cta_h2:'Hello, Langkawi sedang menunggu.<br>Jom kita tunjukkan jalan.',
+    cta_btn:'TEMPAH SEKARANG',
+    foot_desc:'Sewa kereta dan pakej driver paling jujur dan mesra-bajet di Pulau Langkawi. Jelajah ikut cara kamu.',
+    foot_col1_h:'Tentang', foot_promo:'Promosi', foot_career:'Kerjaya',
+    foot_fullday:'Full-Day Tour', foot_how:'Cara Tempah', foot_terms:'Syarat & Terma',
+    foot_privacy:'Dasar Privasi', foot_contact:'Hubungi Kami',
+    foot_bottom:'KAKAK SDN. BHD. · Pantai Cenang, Langkawi, Kedah · Laman demonstrasi',
+    modal_h:'Buat Tempahan', modal_name:'Nama Penuh', modal_name_ph:'Ahmad bin Ali',
+    modal_wa:'No. WhatsApp', modal_car:'Pilih Kereta / Pakej',
+    modal_days:'Bilangan Hari', modal_date:'Tarikh Ambil', modal_calendar:'Kalendar Harga & Ketersediaan', modal_loc:'Lokasi Ambil',
+    loc1:'Lapangan Terbang (LGK)', loc2:'Jeti Kuah', loc3:'Pantai Cenang', loc4:'Antar ke hotel',
+    sum_car:'Kereta / Pakej', sum_rate:'Kadar', sum_day_type:'Jenis Hari', sum_dur:'Tempoh',
+    sum_del:'Delivery', sum_free:'Percuma', sum_est:'Anggaran',
+    legend_booked:'Booked', legend_peak:'Peak (PH)', legend_low:'Low', legend_normal:'Normal',
+    day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
+    hotline_text:'Telefon/WhatsApp segera: <b>018-3954478</b>',
+    pay_deposit:'Bayar Deposit (Test)',
+    pay_processing:'Sedang buka Stripe...',
+    pay_error:'Gagal buka Stripe. Cuba lagi.',
+    pay_success:'Pembayaran berjaya dalam test mode.',
+    pay_cancel:'Pembayaran dibatalkan.',
+    modal_send:'Hantar via WhatsApp', wa_btn:'Tempah via WhatsApp (018-3954478)',
+    svc_data:[
+      {tab:'Self-Drive', vis_title:'Jelajah Langkawi Sesuka Hati',
+       vis_desc:'Sewa kereta jam, hari, atau minggu — pilih masa kamu sendiri. Pickup di airport atau jeti, drive ke mana sahaja, dan pulangkan apabila selesai.',
+       h4:'Self-Drive Roundtrip', p:'Sewa kereta dan drive sendiri ke mana kamu nak. Ambil kereta di airport, jeti Kuah, atau kami antar ke hotel kamu percuma. Kembalikan apabila selesai.',
+       tags:['Commute harian','Percutian keluarga','Solo backpacker'], btn:'Tempah Self-Drive'},
+      {tab:'Dengan Driver', vis_title:'Duduk, Relaks & Nikmati View',
+       vis_desc:'Driver lokal kami bukan sekadar memandu — mereka tahu tempat makan terbaik, spot foto tersembunyi, dan jalan pintas yang turis tak tahu.',
+       h4:'Sewa Kereta + Driver', p:'Half-day atau full-day island tour dengan driver berpengalaman yang kenal setiap pelusuk Langkawi. Duduk belakang dan layan pemandangan.',
+       tags:['Half-Day Tour — RM180','Full-Day Tour — RM320','Rombongan keluarga'], btn:'Tempah Pakej Driver'},
+      {tab:'Airport Transfer', vis_title:'Meet & Greet di Arrival Hall',
+       vis_desc:'Sebaik landing, nama kamu sudah ada pada papan tanda. Kami bawa kamu terus ke hotel tanpa sebarang kerumitan.',
+       h4:'Airport Transfer', p:'Fixed rate dari LGK ke mana-mana hotel di Langkawi. No surge, no hidden charge. Boleh book jauh awal sebelum trip.',
+       tags:['LGK ⇄ Hotel','Harga tetap RM45','Sehala atau bolak-balik'], btn:'Tempah Transfer'},
+    ],
+    testi_data:[
+      {q:'Saya dah guna Kakak dua kali. Konsep yang sangat praktikal bagi sesiapa yang nak jelajah tanpa risau pasal tambang. Mudah dibooking dan mudah digunakan. Highly recommended!', w:'— Reez Shah, Kuala Lumpur'},
+      {q:'Ambil pakej Full-Day dengan driver — abang driver tu bawa kami makan nasi lemak tepi hutan bakau yang tak ada dalam Google Maps. Pengalaman terbaik trip Langkawi kami!', w:'— Sarah & family, Singapore'},
+      {q:'Sewa Hiace untuk group trip 10 orang. Selesa, harga berpatutan, dan driver sangat cooperative. Proses booking cepat je via WhatsApp. Terima kasih Kakak!', w:'— Hafiz Karim, Johor Bahru'},
+      {q:'Airport transfer tepat pada masa, driver dah tunggu dengan papan nama. Kereta bersih dan aircond sejuk. Dari airport ke hotel dalam 20 minit sahaja!', w:'— Nurul Ain, Penang'},
+    ],
+    faq_data:[
+      {q:'Dokumen apa yang perlu dibawa?', a:'Lesen memandu yang sah (Malaysia atau International Driving Permit) dan IC atau passport. Proses siap dalam 5 minit.'},
+      {q:'Berapa umur minimum untuk sewa?', a:'21 tahun ke atas dengan lesen sekurang-kurangnya 1 tahun. Surcaj kecil mungkin dikenakan untuk pemandu berumur 21–23 tahun.'},
+      {q:'Adakah ada deposit?', a:'Ya, deposit refundable RM200–RM500 bergantung kepada jenis kereta. Dipulangkan penuh apabila kereta dikembalikan dalam keadaan baik.'},
+      {q:'Boleh kereta dihantar ke hotel saya?', a:'Boleh — percuma untuk kawasan Airport LGK, Jeti Kuah, Pantai Cenang dan Pantai Tengah. Lokasi lain tertakluk kepada caj kecil berdasarkan jarak.'},
+      {q:'Macam mana dengan petrol?', a:'Kami berikan kereta dengan tangki penuh. Kembalikan dengan tangki penuh — mudah dan adil.'},
+      {q:'Boleh batalkan tempahan?', a:'Percuma cancel sehingga 24 jam sebelum tarikh ambil. Deposit dikembalikan sepenuhnya.'},
+    ],
+    brand_models:{'Perodua':'Axia, Myvi, Alza, Aruz','Honda':'City, CR-V','Proton':'Saga','Toyota':'Hiace, Alphard'},
+    car_types:{'Economy Car':'Economy Car','MPV':'MPV','Sedan':'Sedan','SUV':'SUV','Van':'Van','MPV Luxury':'MPV Luxury'},
+    car_fuel:'Petrol', car_auto:'Automatic', car_manual:'Manual',
+    drv_names:{half:'Half-Day Driver Tour (4 jam)', full:'Full-Day Island Tour (8 jam)', air:'Airport Transfer'},
+    session:'sesi', day:'hari',
+  },
+  en: {
+    page_title:'Kakak — Car Rental & Driver in Langkawi',
+    nav_about:'About Us', nav_who:'Who We Are', nav_why:'Why Us', nav_media:'Media',
+    nav_services:'Services', nav_with_driver:'With Driver', nav_cars:'Cars',
+    nav_brands:'Brands', nav_help:'Help', nav_book:'Book Now',
+    hero_h1_pre:'Time to ', hero_h1_span:'explore Langkawi', hero_h1_suf:' your own way',
+    hero_search_ph:'Search cars, destinations, or services...', hero_search_btn:'Search',
+    welcome_h2:'Welcome to Budget-Friendly Car Rental in Langkawi',
+    welcome_tag1:'From only RM89/Day. Any destination, your style.',
+    welcome_tag2:'Rent, drive, and enjoy.',
+    welcome_body:'Explore Pulau Langkawi flexibly — rent a car daily, weekly, or choose a full holiday package with a local driver who knows every corner of the island. Easy and transparent.',
+    welcome_btn1:'View Cars', welcome_btn2:'Our Services',
+    why_title:'Why Choose Kakak',
+    why1_h:'Pickup Anywhere', why1_p:'Pick up at the airport, Kuah Jetty, or we deliver straight to your hotel for free.',
+    why2_h:'24/7 Support', why2_p:'Ask us anytime, day or night via WhatsApp — we are always responsive.',
+    why3_h:'3 Ways to Rent', why3_p:'Self-drive, rent + local driver, or airport transfer package. All available.',
+    why4_h:'9+ Car Models', why4_p:'From economy Axia to VIP Alphard — choose by budget and group size.',
+    brand_h2:'Choose Your Preferred Car Brand from Our Latest Collection.',
+    brand_sub:'Tap a brand to see all available models.',
+    cars_h2:'We Have 9 Car Models,<br>You Choose.',
+    cars_filter_all:'All', cars_cta:'BOOK NOW',
+    cars_count_all:'cars found', cars_count_brand:'cars found for',
+    feat_label:'Features', per_day:'per day',
+    svc_h2:'Go Anywhere with Our 3 Rental Options',
+    svc_tab0:'Self-Drive', svc_tab1:'With Driver', svc_tab2:'Airport Transfer',
+    svc_vis_title:'Explore Langkawi Your Own Way',
+    svc_vis_desc:'Rent a car by the hour, day, or week — choose your own schedule. Pick up at the airport or jetty, drive wherever you want, and return when done.',
+    svc_tag1:'Full tank', svc_tag2:'Basic insurance', svc_tag3:'Free delivery',
+    testi_h2:'Reviews from Our Customers',
+    faq_h2:'Need Help?',
+    cta_h2:'Hello, Langkawi is waiting for you.<br>Let us show you around.',
+    cta_btn:'BOOK NOW',
+    foot_desc:'The most honest and budget-friendly car rental and driver packages in Pulau Langkawi. Explore your way.',
+    foot_col1_h:'About', foot_promo:'Promotions', foot_career:'Careers',
+    foot_fullday:'Full-Day Tour', foot_how:'How to Book', foot_terms:'Terms & Conditions',
+    foot_privacy:'Privacy Policy', foot_contact:'Contact Us',
+    foot_bottom:'KAKAK SDN. BHD. · Pantai Cenang, Langkawi, Kedah · Demo website',
+    modal_h:'Make a Booking', modal_name:'Full Name', modal_name_ph:'Ahmad bin Ali',
+    modal_wa:'WhatsApp Number', modal_car:'Select Car / Package',
+    modal_days:'Number of Days', modal_date:'Pickup Date', modal_calendar:'Availability & Price Calendar', modal_loc:'Pickup Location',
+    loc1:'Langkawi Airport (LGK)', loc2:'Kuah Jetty', loc3:'Pantai Cenang', loc4:'Deliver to hotel',
+    sum_car:'Car / Package', sum_rate:'Rate', sum_day_type:'Day Type', sum_dur:'Duration',
+    sum_del:'Delivery', sum_free:'Free', sum_est:'Estimate',
+    legend_booked:'Booked', legend_peak:'Peak (PH)', legend_low:'Low', legend_normal:'Normal',
+    day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
+    hotline_text:'Hotline/WhatsApp: <b>018-3954478</b>',
+    pay_deposit:'Pay Deposit (Test)',
+    pay_processing:'Opening Stripe...',
+    pay_error:'Failed to open Stripe. Please try again.',
+    pay_success:'Payment successful in test mode.',
+    pay_cancel:'Payment cancelled.',
+    modal_send:'Send via WhatsApp', wa_btn:'Book via WhatsApp (018-3954478)',
+    svc_data:[
+      {tab:'Self-Drive', vis_title:'Explore Langkawi Your Own Way',
+       vis_desc:'Rent a car by the hour, day, or week — choose your own schedule. Pick up at the airport or jetty, drive wherever you like, and return when done.',
+       h4:'Self-Drive Roundtrip', p:'Rent a car and drive yourself wherever you want. Pick up at the airport, Kuah Jetty, Pantai Cenang, or we deliver to your hotel for free. Return when you\'re done.',
+       tags:['Daily commute','Family holiday','Solo backpacker'], btn:'Book Self-Drive'},
+      {tab:'With Driver', vis_title:'Sit Back, Relax & Enjoy the View',
+       vis_desc:'Our local drivers do more than drive — they know the best food spots, hidden photo locations, and shortcuts that tourists never find.',
+       h4:'Car + Driver Package', p:'Half-day or full-day island tour with an experienced driver who knows every corner of Langkawi. Sit back and take in the scenery.',
+       tags:['Half-Day Tour — RM180','Full-Day Tour — RM320','Group trips'], btn:'Book Driver Package'},
+      {tab:'Airport Transfer', vis_title:'Meet & Greet at Arrival Hall',
+       vis_desc:'The moment you land, your name is already on the sign. We take you straight to your hotel with no hassle and no price surprises.',
+       h4:'Airport Transfer', p:'Fixed rate from LGK to any hotel in Langkawi. No surge, no hidden charges. Book well in advance before your trip.',
+       tags:['LGK ⇄ Hotel','Fixed rate RM45','One-way or return'], btn:'Book Transfer'},
+    ],
+    testi_data:[
+      {q:'I\'ve used Kakak twice now. A very practical concept for anyone who wants to explore without worrying about transport. Easy to book and easy to use. Highly recommended!', w:'— Reez Shah, Kuala Lumpur'},
+      {q:'We took the Full-Day driver tour — the driver brought us to a nasi lemak spot by the mangroves that wasn\'t on any app. Best experience of our whole Langkawi trip!', w:'— Sarah & family, Singapore'},
+      {q:'Rented the Hiace for a group trip of 10. Very comfortable, great price compared to other rentals I surveyed. Quick booking process via WhatsApp. Thank you Kakak!', w:'— Hafiz Karim, Johor Bahru'},
+      {q:'Airport transfer was right on time, driver was already waiting with a name sign. Clean car and cold aircon. From airport to hotel in only 20 minutes. No issues at all!', w:'— Nurul Ain, Penang'},
+    ],
+    faq_data:[
+      {q:'What documents do I need to rent?', a:'A valid driving licence (Malaysian or International Driving Permit) and IC or passport. The whole process takes about 5 minutes.'},
+      {q:'What is the minimum age to rent?', a:'21 years and above with at least 1 year of driving experience. A small young-driver surcharge may apply for drivers aged 21–23.'},
+      {q:'Is there a deposit?', a:'Yes, a refundable deposit of RM200–RM500 depending on the car type. It is returned in full once the car is returned in good condition.'},
+      {q:'Can the car be delivered to my hotel?', a:'Yes — free for LGK Airport, Kuah Jetty, Pantai Cenang and Pantai Tengah areas. Other locations are subject to a small charge based on distance.'},
+      {q:'How does petrol work?', a:'We provide the car with a full tank. Return it with a full tank — simple and fair.'},
+      {q:'Can I cancel my booking?', a:'Free cancellation up to 24 hours before the pickup date. Deposit is returned in full.'},
+    ],
+    brand_models:{'Perodua':'Axia, Myvi, Alza, Aruz','Honda':'City, CR-V','Proton':'Saga','Toyota':'Hiace, Alphard'},
+    car_types:{'Economy Car':'Economy Car','MPV':'MPV','Sedan':'Sedan','SUV':'SUV','Van':'Van','MPV Luxury':'MPV Luxury'},
+    car_fuel:'Petrol', car_auto:'Automatic', car_manual:'Manual',
+    drv_names:{half:'Half-Day Driver Tour (4 hrs)', full:'Full-Day Island Tour (8 hrs)', air:'Airport Transfer'},
+    session:'session', day:'day',
+  }
+};
+
+let lang = 'ms';
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.setAttribute('lang', l);
+  document.getElementById('btnMS').classList.toggle('active', l === 'ms');
+  document.getElementById('btnEN').classList.toggle('active', l === 'en');
+
+  // Update all data-i18n text nodes
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T[l][key] !== undefined) el.innerHTML = T[l][key];
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (T[l][key] !== undefined) el.placeholder = T[l][key];
+  });
+
+  // Update page title
+  document.title = T[l].page_title;
+
+  // Re-render dynamic sections
+  renderBrandShowcase();
+  renderBrandFilters();
+  renderCarList();
+  renderModalOptions();
+  renderCalendar();
+  showSvc(curSvc);
+  renderTesti();
+  renderFAQ();
+  mRecalc();
+}
+
+// ════════════════════════════════════════
+// CAR SVGs
+// ════════════════════════════════════════
+function carSVG(type) {
+  const s = {
+    hatch:`<svg viewBox="0 0 280 110"><ellipse cx="140" cy="102" rx="130" ry="7" fill="#e8e8e8"/><path d="M22 74 L34 50 L72 26 L168 24 L215 50 L258 64 L258 76 L22 76Z" fill="#e0e0e0" stroke="#ccc" stroke-width="1.5"/><path d="M72 26 L80 52 L206 52 L200 26Z" fill="#B8DDF5" stroke="#aacce0" stroke-width="1"/><rect x="210" y="58" width="34" height="6" rx="3" fill="#FFE566" opacity=".95"/><rect x="22" y="58" width="22" height="6" rx="3" fill="#FF6060" opacity=".85"/><circle cx="72" cy="84" r="17" fill="#1c1c1c"/><circle cx="72" cy="84" r="11" fill="#5a5a5a"/><circle cx="72" cy="84" r="5" fill="#909090"/><circle cx="200" cy="84" r="17" fill="#1c1c1c"/><circle cx="200" cy="84" r="11" fill="#5a5a5a"/><circle cx="200" cy="84" r="5" fill="#909090"/></svg>`,
+    sedan:`<svg viewBox="0 0 290 110"><ellipse cx="145" cy="102" rx="133" ry="7" fill="#e8e8e8"/><path d="M20 76 L24 54 L72 28 L185 26 L230 50 L270 66 L270 78 L20 78Z" fill="#ddd" stroke="#ccc" stroke-width="1.5"/><path d="M72 28 L76 54 L222 54 L220 28Z" fill="#ACD4F0" stroke="#aacce0" stroke-width="1"/><rect x="224" y="60" width="32" height="6" rx="3" fill="#FFE566"/><rect x="21" y="60" width="20" height="6" rx="3" fill="#FF5050"/><circle cx="68" cy="86" r="17" fill="#1c1c1c"/><circle cx="68" cy="86" r="11" fill="#5a5a5a"/><circle cx="68" cy="86" r="5" fill="#909090"/><circle cx="210" cy="86" r="17" fill="#1c1c1c"/><circle cx="210" cy="86" r="11" fill="#5a5a5a"/><circle cx="210" cy="86" r="5" fill="#909090"/></svg>`,
+    suv:`<svg viewBox="0 0 290 115"><ellipse cx="145" cy="106" rx="133" ry="7" fill="#e8e8e8"/><path d="M18 78 L20 46 L44 26 L195 24 L240 46 L272 64 L272 80 L18 80Z" fill="#ddd" stroke="#ccc" stroke-width="1.5"/><path d="M44 26 L46 54 L230 54 L226 26Z" fill="#AAD2EE" stroke="#aacce0" stroke-width="1"/><rect x="234" y="62" width="30" height="6" rx="3" fill="#FFE566"/><rect x="19" y="62" width="20" height="6" rx="3" fill="#FF5050"/><circle cx="64" cy="90" r="19" fill="#1c1c1c"/><circle cx="64" cy="90" r="12" fill="#5a5a5a"/><circle cx="64" cy="90" r="5" fill="#909090"/><circle cx="212" cy="90" r="19" fill="#1c1c1c"/><circle cx="212" cy="90" r="12" fill="#5a5a5a"/><circle cx="212" cy="90" r="5" fill="#909090"/></svg>`,
+    van:`<svg viewBox="0 0 300 115"><ellipse cx="150" cy="106" rx="136" ry="7" fill="#e8e8e8"/><path d="M14 80 L14 44 L26 26 L220 24 L256 42 L286 60 L286 82 L14 82Z" fill="#ddd" stroke="#ccc" stroke-width="1.5"/><rect x="30" y="28" width="88" height="30" rx="3" fill="#AAD2EE" stroke="#aacce0" stroke-width="1"/><rect x="126" y="28" width="88" height="30" rx="3" fill="#B8DCFA" stroke="#aacce0" stroke-width="1"/><rect x="256" y="60" width="24" height="6" rx="3" fill="#FFE566"/><rect x="15" y="60" width="16" height="6" rx="3" fill="#FF5050"/><circle cx="66" cy="92" r="19" fill="#1c1c1c"/><circle cx="66" cy="92" r="12" fill="#5a5a5a"/><circle cx="66" cy="92" r="5" fill="#909090"/><circle cx="224" cy="92" r="19" fill="#1c1c1c"/><circle cx="224" cy="92" r="12" fill="#5a5a5a"/><circle cx="224" cy="92" r="5" fill="#909090"/></svg>`,
+    lux:`<svg viewBox="0 0 300 115"><ellipse cx="150" cy="106" rx="136" ry="7" fill="#e8e8e8"/><path d="M16 78 L20 50 L72 22 L200 20 L248 48 L284 64 L284 80 L16 80Z" fill="#d8d8d8" stroke="#c0c0c0" stroke-width="1.5"/><path d="M72 22 L76 52 L238 52 L234 22Z" fill="#98CCE8" stroke="#88bcd8" stroke-width="1"/><rect x="240" y="58" width="32" height="7" rx="3.5" fill="#FFE566"/><rect x="17" y="58" width="18" height="7" rx="3.5" fill="#FF4040"/><circle cx="66" cy="88" r="19" fill="#111"/><circle cx="66" cy="88" r="12" fill="#666"/><circle cx="66" cy="88" r="5" fill="#aaa"/><circle cx="222" cy="88" r="19" fill="#111"/><circle cx="222" cy="88" r="12" fill="#666"/><circle cx="222" cy="88" r="5" fill="#aaa"/></svg>`
+  };
+  return s[type] || s.hatch;
+}
+
+const FEAT_ICONS = {
+  mpv:`<svg viewBox="0 0 24 24"><rect x="1" y="8" width="22" height="10" rx="3"/><rect x="4" y="6" width="16" height="4" rx="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>`,
+  eco:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>`,
+  petrol:`<svg viewBox="0 0 24 24"><path d="M3 22V6a2 2 0 012-2h8a2 2 0 012 2v16"/><path d="M15 8h2a2 2 0 012 2v3a1 1 0 001 1h0a1 1 0 001-1V7l-3-3"/><line x1="3" y1="22" x2="15" y2="22"/><rect x="6" y="10" width="6" height="4" rx="1"/></svg>`,
+  seat5:`<svg viewBox="0 0 24 24"><circle cx="9" cy="4" r="2"/><circle cx="15" cy="4" r="2"/><path d="M5 8h14l-1 8H6L5 8z"/><path d="M6 16l-2 4m14-4l2 4"/></svg>`,
+  seat7:`<svg viewBox="0 0 24 24"><path d="M2 8h20l-2 8H4L2 8z"/><circle cx="7" cy="20" r="2"/><circle cx="17" cy="20" r="2"/><line x1="7" y1="8" x2="7" y2="4"/><line x1="17" y1="8" x2="17" y2="4"/></svg>`,
+  seat12:`<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/></svg>`,
+  auto:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`,
+  manual:`<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="18" r="2"/><line x1="12" y1="8" x2="12" y2="18"/></svg>`
+};
+
+// ════════════════════════════════════════
+// CAR DATA
+// ════════════════════════════════════════
+const CAR_DATA = [
+  {id:'axia',  brand:'Perodua', name:'Perodua Axia',    price:89,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'Paling murah', badgeCls:''},
+  {id:'myvi',  brand:'Perodua', name:'Perodua Myvi',    price:99,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'Best Seller',  badgeCls:'hot'},
+  {id:'alza',  brand:'Perodua', name:'Perodua Alza',    price:149, shape:'van',   type:'MPV',          seats:7,  trans:'Automatic', badge:'7 Seats',      badgeCls:''},
+  {id:'aruz',  brand:'Perodua', name:'Perodua Aruz',    price:179, shape:'suv',   type:'SUV',          seats:7,  trans:'Automatic', badge:'SUV',          badgeCls:''},
+  {id:'saga',  brand:'Proton',  name:'Proton Saga',     price:95,  shape:'sedan', type:'Sedan',        seats:5,  trans:'Automatic', badge:'',             badgeCls:''},
+  {id:'city',  brand:'Honda',   name:'Honda City',      price:139, shape:'sedan', type:'Sedan',        seats:5,  trans:'Automatic', badge:'Comfort',      badgeCls:''},
+  {id:'crv',   brand:'Honda',   name:'Honda CR-V',      price:229, shape:'suv',   type:'SUV',          seats:5,  trans:'Automatic', badge:'',             badgeCls:''},
+  {id:'hiace', brand:'Toyota',  name:'Toyota Hiace',    price:299, shape:'van',   type:'Van',          seats:12, trans:'Manual',    badge:'Group',        badgeCls:''},
+  {id:'alpha', brand:'Toyota',  name:'Toyota Alphard',  price:399, shape:'lux',   type:'MPV Luxury',   seats:7,  trans:'Automatic', badge:'VIP',          badgeCls:'lux'},
+];
+
+const BRANDS_LIST = ['Semua','Perodua','Honda','Proton','Toyota'];
+let activeBrand = 'Semua';
+const WA_NUMBER = '60183954478';
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/';
+const PUBLIC_HOLIDAYS = [
+  '2026-01-01','2026-01-29','2026-01-30','2026-03-23','2026-03-31','2026-05-01',
+  '2026-05-17','2026-05-18','2026-06-01','2026-06-02','2026-08-31','2026-09-16',
+  '2026-11-05','2026-12-25'
+];
+const BOOKED_DATES = [
+  '2026-06-08','2026-06-09','2026-06-15','2026-06-21','2026-06-22',
+  '2026-07-04','2026-07-12','2026-07-19','2026-08-08','2026-08-09'
+];
+let calView = new Date();
+let selectedDateMeta = { iso:'', type:'normal', multiplier:1 };
+
+function toISO(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function getDayMeta(iso) {
+  if (BOOKED_DATES.includes(iso)) return {type:'booked', multiplier:null};
+  if (PUBLIC_HOLIDAYS.includes(iso)) return {type:'peak', multiplier:1.3};
+  const day = new Date(iso).getDay();
+  if (day === 2 || day === 3) return {type:'low', multiplier:0.9};
+  return {type:'normal', multiplier:1};
+}
+
+function dayTypeLabel(type) {
+  const t = T[lang];
+  if (type === 'peak') return t.day_type_peak;
+  if (type === 'low') return t.day_type_low;
+  return t.day_type_normal;
+}
+
+function renderCalendar() {
+  const t = T[lang];
+  const year = calView.getFullYear();
+  const month = calView.getMonth();
+  const first = new Date(year, month, 1);
+  const startDay = first.getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const todayIso = toISO(new Date());
+  document.getElementById('calTitle').textContent = first.toLocaleDateString(lang === 'ms' ? 'ms-MY' : 'en-US', {month:'long', year:'numeric'});
+  const grid = document.getElementById('calGrid');
+  const labels = lang === 'ms' ? ['Ah','Is','Sl','Rb','Kh','Jm','Sb'] : ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  let html = labels.map(w => `<div class="cal-weekday">${w}</div>`).join('');
+  for (let i = 0; i < startDay; i++) html += '<div class="cal-day empty"></div>';
+  for (let day = 1; day <= daysInMonth; day++) {
+    const iso = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const meta = getDayMeta(iso);
+    const isPast = iso < todayIso;
+    const disabled = meta.type === 'booked' || isPast;
+    const rate = meta.type === 'peak' ? '+30%' : meta.type === 'low' ? '-10%' : '';
+    const cls = ['cal-day', meta.type, disabled ? 'disabled' : '', selectedDateMeta.iso === iso ? 'selected' : ''].join(' ').trim();
+    html += `<button type="button" class="${cls}" ${disabled ? 'disabled' : ''} onclick="pickDate('${iso}')"><span class="d">${day}</span><span class="r">${rate}</span></button>`;
+  }
+  grid.innerHTML = html;
+}
+
+function changeMonth(step) {
+  calView = new Date(calView.getFullYear(), calView.getMonth() + step, 1);
+  renderCalendar();
+}
+
+function pickDate(iso) {
+  const meta = getDayMeta(iso);
+  if (meta.type === 'booked') return;
+  selectedDateMeta = { iso, type:meta.type, multiplier:meta.multiplier || 1 };
+  document.getElementById('m-from').value = iso;
+  renderCalendar();
+  mRecalc();
+}
+
+function getSeatIcon(n){ return n>=12?'seat12':n>=7?'seat7':'seat5'; }
+
+function renderBrandFilters() {
+  const t = T[lang];
+  const all = t.cars_filter_all;
+  const brands = [all,'Perodua','Honda','Proton','Toyota'];
+  const cur = activeBrand === 'Semua' || activeBrand === 'All' ? all : activeBrand;
+  document.getElementById('brandFilters').innerHTML = brands.map(b =>
+    `<button class="bf${b===cur?' active':''}" onclick="filterBrand('${b==='Semua'||b==='All'?'__all__':b}')">${b}</button>`
+  ).join('');
+}
+
+function renderCarList() {
+  const t = T[lang];
+  const all = t.cars_filter_all;
+  const isAll = activeBrand === 'Semua' || activeBrand === 'All' || activeBrand === '__all__';
+  const filtered = isAll ? CAR_DATA : CAR_DATA.filter(c => c.brand === activeBrand);
+  const count = document.getElementById('carsCount');
+  count.innerHTML = `<b>${filtered.length} ${t.cars_count_all}</b>${!isAll ? ' '+t.cars_count_brand+' '+activeBrand : ''}`;
+  document.getElementById('carList').innerHTML = filtered.map(c => `
+    <div class="car-item" onclick="selectCar('${c.id}')">
+      ${c.badge ? `<span class="ci-badge ${c.badgeCls}">${c.badge}</span>` : ''}
+      <div class="ci-img">${carSVG(c.shape)}</div>
+      <div class="ci-foot">
+        <div class="ci-name-row">
+          <div class="ci-name">${c.name}</div>
+          <div class="ci-price-block"><span class="price">RM ${c.price.toFixed(2)}</span><span class="per">${t.per_day}</span></div>
+        </div>
+        <p class="ci-feats-label">${t.feat_label}</p>
+        <div class="ci-feats">
+          <div class="ci-feat">${FEAT_ICONS[c.type.toLowerCase().includes('mpv')||c.type==='Van'?'mpv':'eco']}<span>${t.car_types[c.type]||c.type}</span></div>
+          <div class="ci-feat">${FEAT_ICONS.petrol}<span>${t.car_fuel}</span></div>
+          <div class="ci-feat">${FEAT_ICONS[getSeatIcon(c.seats)]}<span>${c.seats} Seats</span></div>
+          <div class="ci-feat">${FEAT_ICONS[c.trans==='Automatic'?'auto':'manual']}<span>${c.trans==='Automatic'?t.car_auto:t.car_manual}</span></div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function filterBrand(b) {
+  activeBrand = (b === '__all__') ? (lang==='ms'?'Semua':'All') : b;
+  renderBrandFilters();
+  renderCarList();
+}
+
+function selectCar(id) {
+  const sel = document.getElementById('m-car');
+  for (let i = 0; i < sel.options.length; i++) { if (sel.options[i].value === id) { sel.selectedIndex = i; break; } }
+  mRecalc();
+  openModal();
+}
+
+// ════════════════════════════════════════
+// BRAND SHOWCASE
+// ════════════════════════════════════════
+const BRAND_SVGs = {
+  Perodua:`<svg viewBox="0 0 280 110"><ellipse cx="140" cy="102" rx="130" ry="7" fill="#e8e8e8"/><path d="M22 74 L34 50 L72 26 L168 24 L215 50 L258 64 L258 76 L22 76Z" fill="#e0e0e0" stroke="#ccc" stroke-width="1.5"/><path d="M72 26 L80 52 L206 52 L200 26Z" fill="#B8DDF5" stroke="#aacce0" stroke-width="1"/><rect x="210" y="58" width="34" height="6" rx="3" fill="#FFE566" opacity=".95"/><rect x="22" y="58" width="22" height="6" rx="3" fill="#FF6060" opacity=".85"/><circle cx="72" cy="84" r="17" fill="#1c1c1c"/><circle cx="72" cy="84" r="11" fill="#5a5a5a"/><circle cx="72" cy="84" r="5" fill="#909090"/><circle cx="200" cy="84" r="17" fill="#1c1c1c"/><circle cx="200" cy="84" r="11" fill="#5a5a5a"/><circle cx="200" cy="84" r="5" fill="#909090"/></svg>`,
+  Honda:`<svg viewBox="0 0 290 110"><ellipse cx="145" cy="102" rx="133" ry="7" fill="#e8e8e8"/><path d="M20 76 L24 54 L72 28 L185 26 L230 50 L270 66 L270 78 L20 78Z" fill="#ddd" stroke="#ccc" stroke-width="1.5"/><path d="M72 28 L76 54 L222 54 L220 28Z" fill="#ACD4F0" stroke="#aacce0" stroke-width="1"/><rect x="224" y="60" width="32" height="6" rx="3" fill="#FFE566"/><rect x="21" y="60" width="20" height="6" rx="3" fill="#FF5050"/><circle cx="68" cy="86" r="17" fill="#1c1c1c"/><circle cx="68" cy="86" r="11" fill="#5a5a5a"/><circle cx="68" cy="86" r="5" fill="#909090"/><circle cx="210" cy="86" r="17" fill="#1c1c1c"/><circle cx="210" cy="86" r="11" fill="#5a5a5a"/><circle cx="210" cy="86" r="5" fill="#909090"/></svg>`,
+  Proton:`<svg viewBox="0 0 290 110"><ellipse cx="145" cy="102" rx="133" ry="7" fill="#e8e8e8"/><path d="M18 76 L22 52 L74 26 L188 24 L234 50 L272 66 L272 78 L18 78Z" fill="#d8d8d8" stroke="#ccc" stroke-width="1.5"/><path d="M74 26 L78 54 L225 54 L222 26Z" fill="#AAD4F2" stroke="#aacce0" stroke-width="1"/><rect x="226" y="60" width="30" height="6" rx="3" fill="#FFE566"/><rect x="19" y="60" width="18" height="6" rx="3" fill="#FF5050"/><circle cx="68" cy="86" r="17" fill="#1c1c1c"/><circle cx="68" cy="86" r="11" fill="#5a5a5a"/><circle cx="68" cy="86" r="5" fill="#909090"/><circle cx="213" cy="86" r="17" fill="#1c1c1c"/><circle cx="213" cy="86" r="11" fill="#5a5a5a"/><circle cx="213" cy="86" r="5" fill="#909090"/></svg>`,
+  Toyota:`<svg viewBox="0 0 300 115"><ellipse cx="150" cy="106" rx="136" ry="7" fill="#e8e8e8"/><path d="M14 80 L14 44 L26 26 L220 24 L256 42 L286 60 L286 82 L14 82Z" fill="#ddd" stroke="#ccc" stroke-width="1.5"/><rect x="30" y="28" width="88" height="30" rx="3" fill="#AAD2EE" stroke="#aacce0" stroke-width="1"/><rect x="126" y="28" width="88" height="30" rx="3" fill="#B8DCFA" stroke="#aacce0" stroke-width="1"/><rect x="256" y="60" width="24" height="6" rx="3" fill="#FFE566"/><rect x="15" y="60" width="16" height="6" rx="3" fill="#FF5050"/><circle cx="66" cy="92" r="19" fill="#1c1c1c"/><circle cx="66" cy="92" r="12" fill="#5a5a5a"/><circle cx="66" cy="92" r="5" fill="#909090"/><circle cx="224" cy="92" r="19" fill="#1c1c1c"/><circle cx="224" cy="92" r="12" fill="#5a5a5a"/><circle cx="224" cy="92" r="5" fill="#909090"/></svg>`
+};
+
+function renderBrandShowcase() {
+  const t = T[lang];
+  const wrap = document.getElementById('brandShowcase');
+  if (!wrap) return;
+  const brands = ['Perodua','Honda','Proton','Toyota'];
+  wrap.innerHTML = brands.map(b => `
+    <div class="brand-card reveal" onclick="goToBrand('${b}')">
+      <div class="bc-img">${BRAND_SVGs[b]}</div>
+      <div class="bc-body">
+        <div><div class="bc-brand-name">${b}</div><div class="bc-models">${t.brand_models[b]||''}</div></div>
+        <div class="bc-caret"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+    </div>`).join('');
+  wrap.querySelectorAll('.reveal').forEach(e => obs.observe(e));
+}
+
+function goToBrand(brand) {
+  activeBrand = brand;
+  renderBrandFilters();
+  renderCarList();
+  document.getElementById('cars').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ════════════════════════════════════════
+// MODAL
+// ════════════════════════════════════════
+function renderModalOptions() {
+  const t = T[lang];
+  const sel = document.getElementById('m-car');
+  const cur = sel.value;
+  sel.innerHTML = '';
+  CAR_DATA.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c.id;
+    o.textContent = `${c.name} — RM${c.price}/${t.day}`;
+    sel.appendChild(o);
+  });
+  [['drv-half', t.drv_names.half], ['drv-full', t.drv_names.full], ['drv-air', t.drv_names.air]].forEach(([v,tx]) => {
+    const o = document.createElement('option'); o.value = v; o.textContent = tx; sel.appendChild(o);
+  });
+  if (cur) sel.value = cur;
+}
+
+function getRateFor(id) {
+  const c = CAR_DATA.find(x => x.id === id);
+  if (c) return {name:c.name, price:c.price, drv:false};
+  const t = T[lang];
+  const m = {
+    'drv-half':{name:t.drv_names.half, price:180, drv:true, unit:lang==='ms'?' /sesi':' /session'},
+    'drv-full':{name:t.drv_names.full, price:320, drv:true, unit:lang==='ms'?' /sesi':' /session'},
+    'drv-air': {name:t.drv_names.air,  price:45,  drv:true, unit:lang==='ms'?' /sehala':' /way'},
+  };
+  return m[id] || {name:'—', price:0, drv:false};
+}
+
+function getBookingCalc() {
+  const id = document.getElementById('m-car').value;
+  const r = getRateFor(id);
+  const pickedIso = document.getElementById('m-from').value;
+  const dayMeta = getDayMeta(pickedIso);
+  const mult = dayMeta.multiplier || 1;
+  const days = 1;
+  const total = r.drv ? r.price : Math.round(r.price * mult) * days;
+  return { r, pickedIso, dayMeta, days, total };
+}
+
+function mRecalc() {
+  getBookingCalc();
+}
+
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+function sendWA() {
+  const name = document.getElementById('m-name').value.trim();
+  const t = T[lang];
+  if (!name) { showToast(lang==='ms'?'Sila isi nama dahulu':'Please enter your name first'); return; }
+  const booking = getBookingCalc();
+  const r = booking.r;
+  const days = booking.days;
+  const from = booking.pickedIso || '-';
+  const loc = document.getElementById('m-loc').value;
+  const total = 'RM' + booking.total.toLocaleString();
+  const msg = lang==='ms'
+    ? `Hai Kakak! Saya ingin membuat tempahan:%0A%0ANama: ${name}%0ANo. WA: ${document.getElementById('m-phone').value||'-'}%0APilihan: ${r.name}%0ATarikh: ${from}%0ATempoh: ${days} hari%0ALokasi: ${loc}%0AAnggaran: ${total}`
+    : `Hi Kakak! I'd like to make a booking:%0A%0AName: ${name}%0AWA: ${document.getElementById('m-phone').value||'-'}%0ACar/Package: ${r.name}%0ADate: ${from}%0ADuration: ${days} days%0ALocation: ${loc}%0AEstimate: ${total}`;
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
+  closeModal();
+}
+
+async function payDeposit() {
+  const name = document.getElementById('m-name').value.trim();
+  const t = T[lang];
+  if (!name) { showToast(lang==='ms'?'Sila isi nama dahulu':'Please enter your name first'); return; }
+  if (!STRIPE_PAYMENT_LINK || STRIPE_PAYMENT_LINK === 'https://buy.stripe.com/') {
+    showToast(lang==='ms'?'Letak Stripe Payment Link dulu':'Set Stripe Payment Link first');
+    return;
+  }
+  const btn = document.getElementById('payBtn');
+  const oldText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = t.pay_processing;
+  window.location.href = STRIPE_PAYMENT_LINK;
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = oldText;
+  }, 1200);
+}
+
+// ════════════════════════════════════════
+// SERVICES
+// ════════════════════════════════════════
+let curSvc = 0;
+function showSvc(i) {
+  curSvc = i;
+  const t = T[lang];
+  const s = t.svc_data[i];
+  document.querySelectorAll('.svc-tab').forEach((tb, idx) => tb.classList.toggle('active', idx === i));
+  document.getElementById('svc-vis-title').textContent = s.vis_title;
+  document.getElementById('svc-vis-desc').textContent = s.vis_desc;
+  document.getElementById('svcContent').innerHTML = `
+    <h4>${s.h4}</h4><p>${s.p}</p>
+    <div class="svc-tags">${s.tags.map(tg=>`<span class="svc-tag">${tg}</span>`).join('')}</div>
+    <button class="btn btn-cyan" onclick="openModal()">${s.btn}</button>`;
+  // update tab labels
+  document.querySelectorAll('.svc-tab').forEach((tb, idx) => { tb.setAttribute('data-i18n', 'svc_tab'+idx); tb.textContent = t['svc_tab'+idx]; });
+}
+
+// ════════════════════════════════════════
+// TESTIMONIALS
+// ════════════════════════════════════════
+let curT = 0;
+function renderTesti() {
+  const data = T[lang].testi_data;
+  document.getElementById('tQuote').textContent = data[curT].q;
+  document.getElementById('tWho').textContent = data[curT].w;
+  const dots = document.getElementById('testiDots');
+  dots.innerHTML = data.map((_, i) => `<span class="dot${i===curT?' active':''}" onclick="goTesti(${i})"></span>`).join('');
+}
+function prevTesti() { curT = (curT - 1 + T[lang].testi_data.length) % T[lang].testi_data.length; renderTesti(); }
+function nextTesti() { curT = (curT + 1) % T[lang].testi_data.length; renderTesti(); }
+function goTesti(i) { curT = i; renderTesti(); }
+
+// ════════════════════════════════════════
+// FAQ
+// ════════════════════════════════════════
+function renderFAQ() {
+  const faqs = T[lang].faq_data;
+  document.getElementById('faqList').innerHTML = faqs.map(f => `
+    <details class="reveal" style="background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden">
+      <summary style="list-style:none;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;font-weight:600;font-size:.95rem">${f.q}<span style="font-size:1.4rem;color:var(--cyan);flex:0 0 auto">+</span></summary>
+      <div style="padding:0 22px 18px;font-size:.9rem;color:var(--ink-mid);line-height:1.75;border-top:1px solid var(--border);padding-top:14px">${f.a}</div>
+    </details>`).join('');
+  document.querySelectorAll('#faqList .reveal').forEach(e => obs.observe(e));
+}
+
+// ════════════════════════════════════════
+// TOAST / BURGER / REVEAL
+// ════════════════════════════════════════
+let tt;
+function showToast(m) { const el=document.getElementById('toast'); el.textContent=m; el.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('show'),2600); }
+document.getElementById('burger').addEventListener('click', () => document.getElementById('nav').classList.toggle('open'));
+document.querySelectorAll('#nav a').forEach(a => a.addEventListener('click', () => document.getElementById('nav').classList.remove('open')));
+
+const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } }), {threshold:.1});
+document.querySelectorAll('.reveal').forEach(e => obs.observe(e));
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+document.getElementById('m-from').value = new Date().toISOString().split('T')[0];
+selectedDateMeta.iso = document.getElementById('m-from').value;
+calView = new Date(document.getElementById('m-from').value);
+renderModalOptions();
+renderCalendar();
+mRecalc();
+renderBrandFilters();
+renderCarList();
+renderBrandShowcase();
+showSvc(0);
+renderTesti();
+renderFAQ();
+const payStatus = new URLSearchParams(window.location.search).get('pay');
+if (payStatus === 'success') showToast(T[lang].pay_success);
+if (payStatus === 'cancel') showToast(T[lang].pay_cancel);
+</script>
+</body>
+</html>
