@@ -818,7 +818,7 @@ const CAR_DATA = [
 const BRANDS_LIST = ['Semua','Perodua','Honda','Proton','Toyota'];
 let activeBrand = 'Semua';
 const WA_NUMBER = '60183954478';
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/';
+const WORKER_URL = 'https://broad-band-6d14.1211111996.workers.dev/';
 const PUBLIC_HOLIDAYS = [
   '2026-01-01','2026-01-29','2026-01-30','2026-03-23','2026-03-31','2026-05-01',
   '2026-05-17','2026-05-18','2026-06-01','2026-06-02','2026-08-31','2026-09-16',
@@ -1050,21 +1050,39 @@ function sendWA() {
 
 async function payDeposit() {
   const name = document.getElementById('m-name').value.trim();
-  const t = T[lang];
   if (!name) { showToast(lang==='ms'?'Sila isi nama dahulu':'Please enter your name first'); return; }
-  if (!STRIPE_PAYMENT_LINK || STRIPE_PAYMENT_LINK === 'https://buy.stripe.com/') {
-    showToast(lang==='ms'?'Letak Stripe Payment Link dulu':'Set Stripe Payment Link first');
-    return;
-  }
+
+  const booking = getBookingCalc();
+  const carName = booking.r.name;
+  const total = booking.total;
+  const days = booking.days;
+
   const btn = document.getElementById('payBtn');
   const oldText = btn.textContent;
   btn.disabled = true;
-  btn.textContent = t.pay_processing;
-  window.location.href = STRIPE_PAYMENT_LINK;
-  setTimeout(() => {
+  btn.textContent = lang==='ms' ? '⏳ Memproses...' : '⏳ Processing...';
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ carName, total, days, customerName: name, lang }),
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      showToast(data.error || (lang==='ms' ? 'Ralat. Cuba lagi.' : 'Error. Please try again.'));
+      btn.disabled = false;
+      btn.textContent = oldText;
+    }
+  } catch (err) {
+    showToast(lang==='ms' ? 'Gagal sambung ke server.' : 'Failed to connect to server.');
     btn.disabled = false;
     btn.textContent = oldText;
-  }, 1200);
+  }
 }
 
 // ════════════════════════════════════════
