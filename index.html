@@ -585,7 +585,7 @@ footer{background:var(--cyan);padding:60px 0 0}
         <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.836L.047 23.954l6.282-1.49C7.886 23.47 9.9 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.636-.508-5.148-1.394l-.369-.219-3.73.885.924-3.638-.241-.374C2.54 15.704 2 13.914 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         <span data-i18n="modal_send">Hantar via WhatsApp</span>
       </button>
-      <button class="btn btn-stripe" id="payBtn" onclick="payDeposit()" data-i18n="pay_deposit">Bayar Deposit (Test)</button>
+      <button class="btn btn-stripe" id="payBtn" onclick="payDeposit()" data-i18n="pay_deposit">Tempah Sekarang</button>
     </div>
   </div>
 </div>
@@ -599,7 +599,7 @@ footer{background:var(--cyan);padding:60px 0 0}
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <h2 id="sp-title">Pembayaran Berjaya!</h2>
-      <p id="sp-subtitle">Deposit kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.</p>
+      <p id="sp-subtitle">Pembayaran kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.</p>
       <div class="success-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Selamat &amp; disahkan oleh Stripe
@@ -609,7 +609,7 @@ footer{background:var(--cyan);padding:60px 0 0}
       <div class="receipt-row"><span class="label" id="sp-namelabel">Nama</span><span class="val" id="sp-name">—</span></div>
       <div class="receipt-row"><span class="label" id="sp-carlabel">Tempahan</span><span class="val" id="sp-car">—</span></div>
       <div class="receipt-row"><span class="label" id="sp-emaillabel">E-mel</span><span class="val" id="sp-email">—</span></div>
-      <div class="receipt-row total-row"><span class="label" id="sp-totallabel">Deposit Dibayar</span><span class="val" id="sp-amount">—</span></div>
+      <div class="receipt-row total-row"><span class="label" id="sp-totallabel">Jumlah Dibayar</span><span class="val" id="sp-amount">—</span></div>
       <div class="receipt-id"><b>ID Transaksi</b><span id="sp-receipt">—</span></div>
     </div>
     <div class="success-actions">
@@ -685,7 +685,7 @@ const T = {
     legend_booked:'Booked', legend_peak:'Peak (PH)', legend_low:'Low', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Telefon/WhatsApp segera: <b>018-3954478</b>',
-    pay_deposit:'Bayar Deposit (Test)',
+    pay_deposit:'Tempah Sekarang',
     pay_processing:'Sedang buka Stripe...',
     pay_error:'Gagal buka Stripe. Cuba lagi.',
     pay_success:'Pembayaran berjaya dalam test mode.',
@@ -778,7 +778,7 @@ const T = {
     legend_booked:'Booked', legend_peak:'Peak (PH)', legend_low:'Low', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Hotline/WhatsApp: <b>018-3954478</b>',
-    pay_deposit:'Pay Deposit (Test)',
+    pay_deposit:'Book Now',
     pay_processing:'Opening Stripe...',
     pay_error:'Failed to open Stripe. Please try again.',
     pay_success:'Payment successful in test mode.',
@@ -1495,12 +1495,12 @@ async function showSuccessPage(sessionId) {
       const isMs = lang === 'ms';
       document.getElementById('sp-title').textContent    = isMs ? 'Pembayaran Berjaya! 🎉' : 'Payment Successful! 🎉';
       document.getElementById('sp-subtitle').textContent = isMs
-        ? 'Deposit kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.'
-        : 'Your deposit has been received. We will contact you shortly.';
+        ? 'Pembayaran kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.'
+        : 'Your payment has been received. We will contact you shortly.';
       document.getElementById('sp-namelabel').textContent  = isMs ? 'Nama' : 'Name';
       document.getElementById('sp-carlabel').textContent   = isMs ? 'Tempahan' : 'Booking';
       document.getElementById('sp-emaillabel').textContent = isMs ? 'E-mel' : 'Email';
-      document.getElementById('sp-totallabel').textContent = isMs ? 'Deposit Dibayar' : 'Deposit Paid';
+      document.getElementById('sp-totallabel').textContent = isMs ? 'Jumlah Dibayar' : 'Amount Paid';
 
       document.getElementById('sp-name').textContent    = data.customerName || '—';
       document.getElementById('sp-car').textContent     = data.itemName     || '—';
@@ -1655,7 +1655,7 @@ checkPaySuccess();
   <div class="awrap ahidden" id="admDash">
     <div class="stats">
       <div class="stat"><div class="k">Jumlah Tempahan</div><div class="v" id="admStCount">0</div></div>
-      <div class="stat"><div class="k">Deposit Terkumpul</div><div class="v"><small>RM</small> <span id="admStRev">0</span></div></div>
+      <div class="stat"><div class="k">Jumlah Terkumpul</div><div class="v"><small>RM</small> <span id="admStRev">0</span></div></div>
       <div class="stat"><div class="k">Akan Datang</div><div class="v" id="admStUp">0</div></div>
       <div class="stat"><div class="k">Kereta Ada Tempahan</div><div class="v" id="admStCars">0</div></div>
     </div>
@@ -1670,13 +1670,13 @@ checkPaySuccess();
       </div>
       <div class="tbl-scroll">
         <table>
-          <thead><tr><th>Tarikh Bayar</th><th>Pelanggan</th><th>Kereta</th><th>Ambil → Pulang</th><th>Hari</th><th>Deposit</th><th>Resit</th></tr></thead>
+          <thead><tr><th>Tarikh Bayar</th><th>Pelanggan</th><th>Kereta</th><th>Ambil → Pulang</th><th>Hari</th><th>Bayaran</th><th>Resit</th></tr></thead>
           <tbody id="admBody"></tbody>
         </table>
       </div>
       <div class="empty ahidden" id="admEmpty">
         <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        <div>Tiada tempahan lagi. Akan muncul automatik selepas deposit dibayar.</div>
+        <div>Tiada tempahan lagi. Akan muncul automatik selepas bayaran dibuat.</div>
       </div>
     </div>
     <div class="panel ahidden" id="admViewAvail">
@@ -1705,7 +1705,7 @@ checkPaySuccess();
 window.KADMIN = (function(){
   // CAR_DATA & WORKER_URL diwarisi dari skrip utama (global)
   const CAR_NAMES = CAR_DATA.reduce((m,c)=>{ m[c.id]=c.name; return m; }, {});
-  let TOKEN='', DATA={bookings:[],booked:{}}, avView=new Date();
+  let TOKEN='', DATA={bookings:[],booked:{}}, avView=new Date(), lastErr='';
 
   const $=id=>document.getElementById(id);
   const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -1717,10 +1717,11 @@ window.KADMIN = (function(){
   async function tryLoad(token){
     try{
       const res=await fetch(WORKER_URL+'admin/bookings',{headers:{'X-Admin-Token':token}});
-      if(!res.ok) return false;
+      if(res.status===401){ lastErr='Token salah. Pastikan ADMIN_TOKEN di worker sama persis dengan yang dimasukkan.'; return false; }
+      if(!res.ok){ lastErr='Worker balas ralat '+res.status+'. Pastikan worker.js terkini sudah di-deploy (endpoint /admin/bookings).'; return false; }
       DATA=await res.json(); DATA.bookings=DATA.bookings||[]; DATA.booked=DATA.booked||{};
-      return true;
-    }catch(e){ return false; }
+      lastErr=''; return true;
+    }catch(e){ lastErr='Tak dapat hubungi worker (kemungkinan worker terkini belum deploy / isu CORS).'; return false; }
   }
 
   async function login(){
@@ -1728,7 +1729,7 @@ window.KADMIN = (function(){
     if(!t){ $('admErr').textContent='Sila masukkan token.'; return; }
     $('admErr').textContent='Menyemak…';
     if(await tryLoad(t)){ TOKEN=t; sg('kakak_admin',t); showDash(); }
-    else $('admErr').textContent='Token salah atau server tak dapat dihubungi.';
+    else $('admErr').textContent = lastErr || 'Gagal log masuk.';
   }
   function logout(){ TOKEN=''; try{sessionStorage.removeItem('kakak_admin');}catch(e){}
     $('admDash').classList.add('ahidden'); $('admLogin').classList.remove('ahidden');
