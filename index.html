@@ -243,6 +243,9 @@ footer{background:var(--cyan);padding:60px 0 0}
 .chip-normal{background:#EFF6FF;color:#1D4ED8}
 .hotline{font-size:.82rem;color:var(--ink-mid);margin-top:10px}
 .hotline b{color:var(--ink)}
+.selected-item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--cyan-light);border:1.5px solid var(--cyan);border-radius:var(--r);padding:13px 16px}
+.selected-item .si-name{font-family:'Barlow Semi Condensed';font-weight:700;font-size:1.05rem;color:var(--ink)}
+.selected-item .si-price{font-weight:700;color:var(--cyan-dark);white-space:nowrap}
 .sum-line{display:flex;justify-content:space-between;font-size:.9rem;padding:8px 0;border-bottom:1px dashed var(--border)}
 .sum-total-line{display:flex;justify-content:space-between;align-items:baseline;padding-top:12px;margin-top:4px}
 .sum-total-line span{font-weight:700;font-size:.9rem;text-transform:uppercase;color:var(--ink-mid)}
@@ -543,7 +546,7 @@ footer{background:var(--cyan);padding:60px 0 0}
         <div class="fg"><label data-i18n="modal_name">Nama Penuh</label><input type="text" id="m-name" data-i18n-placeholder="modal_name_ph" placeholder="Ahmad bin Ali"></div>
         <div class="fg"><label data-i18n="modal_wa">No. WhatsApp</label><input type="tel" id="m-phone" placeholder="011-xxxx xxxx"></div>
       </div>
-      <div class="fg"><label data-i18n="modal_car">Pilih Kereta / Pakej</label><select id="m-car" onchange="mRecalc()"></select></div>
+      <div class="fg"><label data-i18n="modal_car">Kereta / Pakej Dipilih</label><div class="selected-item" id="m-car-display">—</div></div>
       <input type="hidden" id="m-from">
       <div class="fg">
         <label data-i18n="modal_calendar">Kalendar Harga & Ketersediaan</label>
@@ -576,7 +579,6 @@ footer{background:var(--cyan);padding:60px 0 0}
           <option data-i18n="loc4">Antar ke hotel</option>
         </select>
       </div>
-      <p class="hotline" data-i18n="hotline_text">Telefon/WhatsApp segera: <b>018-3954478</b></p>
     </div>
     <div class="modal-foot">
       <button class="btn" style="background:#25D366;color:#fff;flex:1" onclick="sendWA()">
@@ -669,7 +671,7 @@ const T = {
     foot_privacy:'Dasar Privasi', foot_contact:'Hubungi Kami',
     foot_bottom:'KAKAK SDN. BHD. · Pantai Cenang, Langkawi, Kedah · Laman demonstrasi',
     modal_h:'Buat Tempahan', modal_name:'Nama Penuh', modal_name_ph:'Ahmad bin Ali',
-    modal_wa:'No. WhatsApp', modal_car:'Pilih Kereta / Pakej',
+    modal_wa:'No. WhatsApp', modal_car:'Kereta / Pakej Dipilih',
     modal_days:'Bilangan Hari', modal_date:'Tarikh Ambil', modal_calendar:'Kalendar Harga & Ketersediaan', modal_loc:'Lokasi Ambil',
     modal_summary:'Ringkasan Tempahan',
     sum_pickup:'Ambil', sum_return:'Pulang', sum_days:'Tempoh', sum_total:'Jumlah', sum_package:'Pakej',
@@ -762,7 +764,7 @@ const T = {
     foot_privacy:'Privacy Policy', foot_contact:'Contact Us',
     foot_bottom:'KAKAK SDN. BHD. · Pantai Cenang, Langkawi, Kedah · Demo website',
     modal_h:'Make a Booking', modal_name:'Full Name', modal_name_ph:'Ahmad bin Ali',
-    modal_wa:'WhatsApp Number', modal_car:'Select Car / Package',
+    modal_wa:'WhatsApp Number', modal_car:'Selected Car / Package',
     modal_days:'Number of Days', modal_date:'Pickup Date', modal_calendar:'Availability & Price Calendar', modal_loc:'Pickup Location',
     modal_summary:'Booking Summary',
     sum_pickup:'Pickup', sum_return:'Return', sum_days:'Duration', sum_total:'Total', sum_package:'Package',
@@ -939,10 +941,12 @@ async function fetchBooked() {
   renderCalendar();
 }
 
+// item yang sedang dipilih dalam modal (id kereta atau pakej driver)
+let currentSel = 'axia';
+
 // id kereta yang sedang dipilih dalam modal
 function selectedCarId() {
-  const el = document.getElementById('m-car');
-  return el ? el.value : '';
+  return currentSel;
 }
 
 // adakah tarikh ini sudah booked untuk kereta tertentu?
@@ -1012,8 +1016,7 @@ function renderCalendar() {
   let html = labels.map(w => `<div class="cal-weekday">${w}</div>`).join('');
   for (let i = 0; i < startDay; i++) html += '<div class="cal-day empty"></div>';
   // kereta yang dipilih (untuk papar harga sebenar + tarikh booked kereta itu)
-  const selEl = document.getElementById('m-car');
-  const selId = selEl ? selEl.value : '';
+  const selId = selectedCarId();
   const selCar = selId ? CAR_DATA.find(c => c.id === selId) : null;
   for (let day = 1; day <= daysInMonth; day++) {
     const iso = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
@@ -1145,10 +1148,20 @@ function filterBrand(b) {
 }
 
 function selectCar(id) {
-  const sel = document.getElementById('m-car');
-  for (let i = 0; i < sel.options.length; i++) { if (sel.options[i].value === id) { sel.selectedIndex = i; break; } }
+  currentSel = id;
+  updateSelectedDisplay();
   mRecalc();
   openModal();
+}
+
+// pilih servis dari seksyen "Cara Sewa"
+function bookService(i) {
+  if (i === 1) selectCar('drv-full');        // pakej driver (full-day)
+  else if (i === 2) selectCar('drv-air');    // airport transfer
+  else {                                      // self-drive → pastikan kereta dipilih
+    if (getRateFor(currentSel).drv) selectCar('axia');
+    else openModal();
+  }
 }
 
 // ════════════════════════════════════════
@@ -1187,21 +1200,18 @@ function goToBrand(brand) {
 // ════════════════════════════════════════
 // MODAL
 // ════════════════════════════════════════
-function renderModalOptions() {
+function updateSelectedDisplay() {
+  const el = document.getElementById('m-car-display');
+  if (!el) return;
   const t = T[lang];
-  const sel = document.getElementById('m-car');
-  const cur = sel.value;
-  sel.innerHTML = '';
-  CAR_DATA.forEach(c => {
-    const o = document.createElement('option');
-    o.value = c.id;
-    o.textContent = `${c.name} — RM${c.price}/${t.day}`;
-    sel.appendChild(o);
-  });
-  [['drv-half', t.drv_names.half], ['drv-full', t.drv_names.full], ['drv-air', t.drv_names.air]].forEach(([v,tx]) => {
-    const o = document.createElement('option'); o.value = v; o.textContent = tx; sel.appendChild(o);
-  });
-  if (cur) sel.value = cur;
+  const r = getRateFor(currentSel);
+  const priceTxt = r.drv ? `RM${r.price}` : `RM${r.price}/${t.day}`;
+  el.innerHTML = `<span class="si-name">${r.name}</span><span class="si-price">${priceTxt}</span>`;
+}
+
+// dikekalkan supaya panggilan sedia ada (init / setLang) terus berfungsi
+function renderModalOptions() {
+  updateSelectedDisplay();
 }
 
 function getRateFor(id) {
@@ -1217,7 +1227,7 @@ function getRateFor(id) {
 }
 
 function getBookingCalc() {
-  const id = document.getElementById('m-car').value;
+  const id = currentSel;
   const r = getRateFor(id);
 
   // Pakej driver = harga tetap, tiada kiraan per-hari
@@ -1336,9 +1346,12 @@ async function payDeposit() {
   const carName = booking.r.name;
   const total = booking.total;
   const days = booking.days;
-  // id kereta + senarai tarikh sewa sebenar (untuk direkod sebagai booked selepas bayar)
+  // butiran untuk rekod booking (admin) + tarikh sewa sebenar
   const carId = booking.r.drv ? '' : selectedCarId();
   const dates = booking.breakdown.map(d => d.iso).join(',');
+  const phone = document.getElementById('m-phone').value.trim();
+  const startIso = booking.startIso || '';
+  const endIso = booking.endIso || '';
 
   const btn = document.getElementById('payBtn');
   const oldText = btn.textContent;
@@ -1349,7 +1362,7 @@ async function payDeposit() {
     const res = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ carName, total, days, customerName: name, lang, carId, dates }),
+      body: JSON.stringify({ carName, total, days, customerName: name, phone, lang, carId, dates, startIso, endIso }),
     });
 
     const data = await res.json();
@@ -1382,7 +1395,7 @@ function showSvc(i) {
   document.getElementById('svcContent').innerHTML = `
     <h4>${s.h4}</h4><p>${s.p}</p>
     <div class="svc-tags">${s.tags.map(tg=>`<span class="svc-tag">${tg}</span>`).join('')}</div>
-    <button class="btn btn-cyan" onclick="openModal()">${s.btn}</button>`;
+    <button class="btn btn-cyan" onclick="bookService(${i})">${s.btn}</button>`;
   // update tab labels
   document.querySelectorAll('.svc-tab').forEach((tb, idx) => { tb.setAttribute('data-i18n', 'svc_tab'+idx); tb.textContent = t['svc_tab'+idx]; });
 }
@@ -1513,5 +1526,295 @@ function closeSuccessPage() {
 
 checkPaySuccess();
 </script>
+
+<!-- ════════════════════════════════════════════════════════════
+     ADMIN PANEL  (akses: tambah #admin pada URL → /#admin)
+     Semua CSS di-scope bawah #adminApp, JS dalam window.KADMIN,
+     supaya tak berlanggar dengan tapak utama.
+     Kata laluan TIDAK disimpan di sini — disahkan oleh worker (ADMIN_TOKEN).
+═════════════════════════════════════════════════════════════ -->
+<style>
+#adminApp{position:fixed;inset:0;z-index:9999;overflow-y:auto;font-family:'Barlow',sans-serif;
+  --abg:#0A1422;--apanel:#0F1E33;--apanel2:#13263F;--aline:#1E3454;--acyan:#00BCD4;
+  --aink:#E8F1F8;--amut:#7E9CBC;--amut2:#52708F;--agood:#34D399;--abad:#F87171;--ar:14px;
+  color:var(--aink);
+  background:radial-gradient(ellipse at 80% -10%,rgba(0,188,212,.14),transparent 55%),
+    radial-gradient(ellipse at 0% 110%,rgba(0,120,160,.12),transparent 50%),var(--abg)}
+#adminApp.hidden{display:none}
+#adminApp .mono{font-family:ui-monospace,'SF Mono',Menlo,monospace}
+#adminApp .topbar{display:flex;align-items:center;gap:16px;padding:18px 28px;border-bottom:1px solid var(--aline);
+  background:rgba(10,20,34,.7);backdrop-filter:blur(8px);position:sticky;top:0;z-index:5}
+#adminApp .brand{font-family:'Barlow Semi Condensed';font-weight:800;font-size:1.35rem}
+#adminApp .brand .dot{color:var(--acyan)}
+#adminApp .brand small{display:block;font-family:'Barlow';font-weight:600;font-size:.62rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--amut)}
+#adminApp .tb-right{margin-left:auto;display:flex;gap:10px}
+#adminApp .abtn{font-family:'Barlow';font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;
+  border:1px solid var(--aline);background:var(--apanel2);color:var(--aink);border-radius:999px;
+  padding:9px 18px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+#adminApp .abtn:hover{border-color:var(--acyan);color:var(--acyan)}
+#adminApp .abtn.primary{background:var(--acyan);color:#04222a;border-color:var(--acyan)}
+#adminApp .abtn.primary:hover{background:#2fd4ea}
+#adminApp .abtn:active{transform:scale(.97)}
+#adminApp .awrap{max-width:1180px;margin:0 auto;padding:28px}
+#adminApp .login{min-height:72vh;display:grid;place-items:center}
+#adminApp .login-card{width:100%;max-width:380px;background:var(--apanel);border:1px solid var(--aline);
+  border-radius:var(--ar);padding:34px 30px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+#adminApp .login-card h1{font-family:'Barlow Semi Condensed';font-weight:800;font-size:1.5rem;margin-bottom:6px}
+#adminApp .login-card p{color:var(--amut);font-size:.9rem;margin-bottom:22px}
+#adminApp label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--amut);margin-bottom:8px}
+#adminApp input,#adminApp select{width:100%;background:var(--abg);border:1px solid var(--aline);color:var(--aink);
+  border-radius:10px;padding:13px 15px;font-family:'Barlow';font-size:.95rem;outline:none;transition:.15s}
+#adminApp input:focus,#adminApp select:focus{border-color:var(--acyan)}
+#adminApp .err{color:var(--abad);font-size:.85rem;margin-top:12px;min-height:18px}
+#adminApp .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+#adminApp .stat{background:var(--apanel);border:1px solid var(--aline);border-radius:var(--ar);padding:20px 22px;position:relative;overflow:hidden}
+#adminApp .stat::after{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,188,212,.18),transparent 70%)}
+#adminApp .stat .k{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amut)}
+#adminApp .stat .v{font-family:'Barlow Semi Condensed';font-weight:800;font-size:2rem;margin-top:8px;line-height:1}
+#adminApp .stat .v small{font-size:1rem;color:var(--amut);font-weight:700}
+@media(max-width:760px){#adminApp .stats{grid-template-columns:1fr 1fr}}
+#adminApp .tabs{display:flex;gap:6px;background:var(--apanel);border:1px solid var(--aline);border-radius:999px;
+  padding:5px;width:fit-content;margin-bottom:22px}
+#adminApp .tab{font-weight:700;font-size:.85rem;padding:9px 22px;border-radius:999px;border:none;background:transparent;
+  color:var(--amut);cursor:pointer;transition:.15s}
+#adminApp .tab.active{background:var(--acyan);color:#04222a}
+#adminApp .panel{background:var(--apanel);border:1px solid var(--aline);border-radius:var(--ar);overflow:hidden}
+#adminApp .panel-head{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--aline);flex-wrap:wrap}
+#adminApp .panel-head h2{font-family:'Barlow Semi Condensed';font-weight:700;font-size:1.15rem}
+#adminApp .panel-head .search{margin-left:auto;max-width:260px}
+#adminApp .panel-head .search input{padding:9px 14px}
+#adminApp .tbl-scroll{overflow-x:auto}
+#adminApp table{width:100%;border-collapse:collapse;min-width:760px}
+#adminApp th{text-align:left;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--amut);padding:13px 16px;border-bottom:1px solid var(--aline);white-space:nowrap;background:var(--apanel2)}
+#adminApp td{padding:14px 16px;border-bottom:1px solid var(--aline);font-size:.9rem;vertical-align:top}
+#adminApp tr:last-child td{border-bottom:none}
+#adminApp tr:hover td{background:rgba(0,188,212,.04)}
+#adminApp .cust{font-weight:700}
+#adminApp .sub{color:var(--amut);font-size:.8rem;margin-top:3px}
+#adminApp .pill{display:inline-block;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:999px;
+  background:rgba(0,188,212,.14);color:var(--acyan)}
+#adminApp .amt{font-family:ui-monospace,Menlo,monospace;font-weight:700;color:var(--agood)}
+#adminApp .empty{padding:48px;text-align:center;color:var(--amut)}
+#adminApp .empty svg{width:42px;height:42px;stroke:var(--amut);fill:none;stroke-width:1.5;margin-bottom:12px;opacity:.6}
+#adminApp .avail-grid{display:grid;grid-template-columns:300px 1fr;gap:0}
+@media(max-width:760px){#adminApp .avail-grid{grid-template-columns:1fr}}
+#adminApp .avail-side{padding:20px;border-right:1px solid var(--aline)}
+@media(max-width:760px){#adminApp .avail-side{border-right:none;border-bottom:1px solid var(--aline)}}
+#adminApp .avail-side .upcoming{margin-top:22px}
+#adminApp .avail-side .upcoming h3{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amut);margin-bottom:12px}
+#adminApp .date-chip{display:flex;justify-content:space-between;font-size:.85rem;padding:8px 0;border-bottom:1px dashed var(--aline)}
+#adminApp .date-chip .who{color:var(--amut);font-size:.78rem}
+#adminApp .avail-cal{padding:20px}
+#adminApp .cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+#adminApp .cal-top h3{font-family:'Barlow Semi Condensed';font-weight:700;font-size:1.1rem}
+#adminApp .cal-nav button{width:32px;height:32px;border-radius:8px;border:1px solid var(--aline);background:var(--apanel2);
+  color:var(--aink);cursor:pointer;font-size:1rem}
+#adminApp .cal-nav button:hover{border-color:var(--acyan);color:var(--acyan)}
+#adminApp .acal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+#adminApp .cw{text-align:center;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--amut);padding-bottom:4px}
+#adminApp .cd{aspect-ratio:1;border:1px solid var(--aline);border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;background:var(--abg);color:var(--aink)}
+#adminApp .cd.empty{border:none;background:transparent}
+#adminApp .cd.past{color:var(--amut2);opacity:.4}
+#adminApp .cd.today{border-color:var(--acyan)}
+#adminApp .cd.booked{background:repeating-linear-gradient(45deg,#3a1320,#3a1320 5px,#4a1a2a 5px,#4a1a2a 10px);
+  color:#ffb4c4;border-color:#7a2a3e}
+#adminApp .cal-legend{display:flex;gap:18px;margin-top:16px;font-size:.78rem;color:var(--amut)}
+#adminApp .cal-legend i{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:6px;vertical-align:-2px}
+#adminApp .lg-book{background:repeating-linear-gradient(45deg,#3a1320,#3a1320 4px,#4a1a2a 4px,#4a1a2a 8px)}
+#adminApp .lg-free{background:var(--abg);border:1px solid var(--aline)}
+#adminApp .ahidden{display:none!important}
+#adminApp .muted{color:var(--amut)}
+</style>
+
+<div id="adminApp" class="hidden">
+  <div class="topbar">
+    <div class="brand">KAKAK<span class="dot">.</span>admin<small>Booking Control Panel</small></div>
+    <div class="tb-right" id="admActions" style="display:none">
+      <button class="abtn" onclick="KADMIN.refresh()" id="admRefresh">↻ Refresh</button>
+      <button class="abtn" onclick="KADMIN.exit()">← Tapak Web</button>
+      <button class="abtn" onclick="KADMIN.logout()">Log Keluar</button>
+    </div>
+  </div>
+
+  <div class="login" id="admLogin">
+    <div class="login-card">
+      <h1>Admin Login</h1>
+      <p>Masukkan token admin untuk akses panel tempahan.</p>
+      <label>Admin Token</label>
+      <input type="password" id="admToken" placeholder="••••••••" onkeydown="if(event.key==='Enter')KADMIN.login()">
+      <div class="err" id="admErr"></div>
+      <button class="abtn primary" style="width:100%;justify-content:center;margin-top:6px" onclick="KADMIN.login()">Masuk</button>
+    </div>
+  </div>
+
+  <div class="awrap ahidden" id="admDash">
+    <div class="stats">
+      <div class="stat"><div class="k">Jumlah Tempahan</div><div class="v" id="admStCount">0</div></div>
+      <div class="stat"><div class="k">Deposit Terkumpul</div><div class="v"><small>RM</small> <span id="admStRev">0</span></div></div>
+      <div class="stat"><div class="k">Akan Datang</div><div class="v" id="admStUp">0</div></div>
+      <div class="stat"><div class="k">Kereta Ada Tempahan</div><div class="v" id="admStCars">0</div></div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" id="admTab1" onclick="KADMIN.tab('bookings')">Tempahan</button>
+      <button class="tab" id="admTab2" onclick="KADMIN.tab('avail')">Ketersediaan Kereta</button>
+    </div>
+    <div class="panel" id="admViewBookings">
+      <div class="panel-head">
+        <h2>Senarai Tempahan</h2>
+        <div class="search"><input type="text" id="admSearch" placeholder="Cari nama / kereta…" oninput="KADMIN.filter()"></div>
+      </div>
+      <div class="tbl-scroll">
+        <table>
+          <thead><tr><th>Tarikh Bayar</th><th>Pelanggan</th><th>Kereta</th><th>Ambil → Pulang</th><th>Hari</th><th>Deposit</th><th>Resit</th></tr></thead>
+          <tbody id="admBody"></tbody>
+        </table>
+      </div>
+      <div class="empty ahidden" id="admEmpty">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <div>Tiada tempahan lagi. Akan muncul automatik selepas deposit dibayar.</div>
+      </div>
+    </div>
+    <div class="panel ahidden" id="admViewAvail">
+      <div class="panel-head"><h2>Ketersediaan Kereta</h2></div>
+      <div class="avail-grid">
+        <div class="avail-side">
+          <label>Pilih Kereta</label>
+          <select id="admAvCar" onchange="KADMIN.renderAvail()"></select>
+          <div class="upcoming"><h3>Tarikh Booked Akan Datang</h3><div id="admAvUp"><p class="muted" style="font-size:.85rem">—</p></div></div>
+        </div>
+        <div class="avail-cal">
+          <div class="cal-top">
+            <div class="cal-nav"><button onclick="KADMIN.month(-1)">‹</button></div>
+            <h3 id="admAvTitle">—</h3>
+            <div class="cal-nav"><button onclick="KADMIN.month(1)">›</button></div>
+          </div>
+          <div class="acal" id="admAvCal"></div>
+          <div class="cal-legend"><span><i class="lg-book"></i>Booked</span><span><i class="lg-free"></i>Available</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.KADMIN = (function(){
+  // CAR_DATA & WORKER_URL diwarisi dari skrip utama (global)
+  const CAR_NAMES = CAR_DATA.reduce((m,c)=>{ m[c.id]=c.name; return m; }, {});
+  let TOKEN='', DATA={bookings:[],booked:{}}, avView=new Date();
+
+  const $=id=>document.getElementById(id);
+  const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const fmt=s=>{ if(!s) return '—'; const d=new Date(s); return isNaN(d)?s:d.toLocaleDateString('ms-MY',{day:'numeric',month:'short',year:'numeric'}); };
+  const fmtDT=s=>{ if(!s) return '—'; const d=new Date(s); return isNaN(d)?s:d.toLocaleDateString('ms-MY',{day:'numeric',month:'short',year:'numeric'})+' · '+d.toLocaleTimeString('ms-MY',{hour:'2-digit',minute:'2-digit'}); };
+  const cn=id=>CAR_NAMES[id]||id||'—';
+  const sg=(k,v)=>{ try{ if(v===undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k,v);}catch(e){return null;} };
+
+  async function tryLoad(token){
+    try{
+      const res=await fetch(WORKER_URL+'admin/bookings',{headers:{'X-Admin-Token':token}});
+      if(!res.ok) return false;
+      DATA=await res.json(); DATA.bookings=DATA.bookings||[]; DATA.booked=DATA.booked||{};
+      return true;
+    }catch(e){ return false; }
+  }
+
+  async function login(){
+    const t=$('admToken').value.trim();
+    if(!t){ $('admErr').textContent='Sila masukkan token.'; return; }
+    $('admErr').textContent='Menyemak…';
+    if(await tryLoad(t)){ TOKEN=t; sg('kakak_admin',t); showDash(); }
+    else $('admErr').textContent='Token salah atau server tak dapat dihubungi.';
+  }
+  function logout(){ TOKEN=''; try{sessionStorage.removeItem('kakak_admin');}catch(e){}
+    $('admDash').classList.add('ahidden'); $('admLogin').classList.remove('ahidden');
+    $('admActions').style.display='none'; $('admToken').value=''; }
+  function exit(){ document.getElementById('adminApp').classList.add('hidden'); document.body.style.overflow='';
+    if(location.hash==='#admin') history.replaceState({},'',location.pathname); }
+  function showDash(){ $('admLogin').classList.add('ahidden'); $('admDash').classList.remove('ahidden');
+    $('admActions').style.display='flex'; renderAll(); }
+  async function refresh(){ const b=$('admRefresh'),o=b.textContent; b.textContent='↻ …';
+    const ok=await tryLoad(TOKEN); b.textContent=o; ok?renderAll():logout(); }
+
+  function renderAll(){ stats(); filter(); buildSelect(); renderAvail(); }
+
+  function stats(){
+    const bk=DATA.bookings, today=iso(new Date());
+    $('admStCount').textContent=bk.length;
+    $('admStRev').textContent=bk.reduce((s,b)=>s+(Number(b.amount)||0),0).toLocaleString();
+    $('admStUp').textContent=bk.filter(b=>(b.startIso||'')>=today).length;
+    $('admStCars').textContent=Object.keys(DATA.booked).filter(c=>(DATA.booked[c]||[]).length).length;
+  }
+
+  function filter(){
+    const q=($('admSearch').value||'').toLowerCase();
+    const rows=DATA.bookings.filter(b=>!q||(b.customer||'').toLowerCase().includes(q)||cn(b.carId).toLowerCase().includes(q)||(b.carName||'').toLowerCase().includes(q));
+    const body=$('admBody'), empty=$('admEmpty');
+    if(!rows.length){ body.innerHTML=''; empty.classList.remove('ahidden'); return; }
+    empty.classList.add('ahidden');
+    body.innerHTML=rows.map(b=>`
+      <tr>
+        <td class="mono" style="font-size:.82rem">${fmtDT(b.paidAt)}</td>
+        <td><div class="cust">${b.customer||'—'}</div><div class="sub">${b.email||''}${b.phone?' · '+b.phone:''}</div></td>
+        <td><span class="pill">${b.carName||cn(b.carId)}</span></td>
+        <td>${fmt(b.startIso)} ${b.endIso?'→ '+fmt(b.endIso):''}</td>
+        <td>${b.days||'—'}</td>
+        <td class="amt">RM${(Number(b.amount)||0).toLocaleString()}</td>
+        <td class="mono sub" style="font-size:.74rem">${b.receiptId||'—'}</td>
+      </tr>`).join('');
+  }
+
+  function buildSelect(){
+    const sel=$('admAvCar'), cur=sel.value;
+    sel.innerHTML=Object.keys(CAR_NAMES).map(id=>{
+      const n=(DATA.booked[id]||[]).length;
+      return `<option value="${id}">${CAR_NAMES[id]}${n?' ('+n+' hari booked)':''}</option>`;
+    }).join('');
+    if(cur&&CAR_NAMES[cur]) sel.value=cur;
+  }
+
+  function month(step){ avView=new Date(avView.getFullYear(),avView.getMonth()+step,1); renderAvail(); }
+
+  function renderAvail(){
+    const carId=$('admAvCar').value, booked=DATA.booked[carId]||[], today=iso(new Date());
+    const y=avView.getFullYear(), m=avView.getMonth(), first=new Date(y,m,1), sd=first.getDay(), dim=new Date(y,m+1,0).getDate();
+    $('admAvTitle').textContent=first.toLocaleDateString('ms-MY',{month:'long',year:'numeric'});
+    let h=['Ah','Is','Sl','Rb','Kh','Jm','Sb'].map(w=>`<div class="cw">${w}</div>`).join('');
+    for(let i=0;i<sd;i++) h+='<div class="cd empty"></div>';
+    for(let d=1;d<=dim;d++){
+      const s=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const cls=['cd',booked.includes(s)?'booked':'',s<today?'past':'',s===today?'today':''].join(' ').trim();
+      h+=`<div class="${cls}">${d}</div>`;
+    }
+    $('admAvCal').innerHTML=h;
+    const up=booked.filter(s=>s>=today).sort(), box=$('admAvUp');
+    if(!up.length){ box.innerHTML='<p class="muted" style="font-size:.85rem">Tiada tarikh booked akan datang.</p>'; return; }
+    const who=s=>{ const b=DATA.bookings.find(x=>x.carId===carId&&(x.dates||[]).includes(s)); return b?(b.customer||''):''; };
+    box.innerHTML=up.map(s=>`<div class="date-chip"><span>${fmt(s)}</span><span class="who">${who(s)}</span></div>`).join('');
+  }
+
+  function tab(which){
+    const b=which==='bookings';
+    $('admTab1').classList.toggle('active',b); $('admTab2').classList.toggle('active',!b);
+    $('admViewBookings').classList.toggle('ahidden',!b); $('admViewAvail').classList.toggle('ahidden',b);
+  }
+
+  function open(){ document.getElementById('adminApp').classList.remove('hidden'); document.body.style.overflow='hidden';
+    const saved=sg('kakak_admin');
+    if(saved){ tryLoad(saved).then(ok=>{ if(ok){ TOKEN=saved; showDash(); } }); }
+  }
+
+  // buka bila URL ada #admin
+  window.addEventListener('hashchange',()=>{ if(location.hash==='#admin') open(); });
+  if(location.hash==='#admin') open();
+
+  return { login, logout, exit, refresh, tab, month, renderAvail, filter, open };
+})();
+</script>
+
 </body>
 </html>
