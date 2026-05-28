@@ -227,6 +227,13 @@ footer{background:var(--cyan);padding:60px 0 0}
 .cal-day.peak{background:#FFF1F2;border-color:#FCA5A5;color:#9F1239}
 .cal-day.low{background:#ECFDF5;border-color:#86EFAC;color:#166534}
 .cal-day.selected{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(0,188,212,.2)}
+.cal-day.in-range{background:var(--cyan-light);border-color:#9fe6ef;color:var(--cyan-dark)}
+.cal-day.range-start,.cal-day.range-end{background:var(--cyan);border-color:var(--cyan);color:#fff;box-shadow:0 0 0 2px rgba(0,188,212,.28)}
+.cal-day.range-start .r,.cal-day.range-end .r{color:#fff}
+.booking-summary{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.sum-hint{font-size:.88rem;color:var(--ink-light);text-align:center;padding:6px 0}
+.sum-line:last-of-type{border-bottom:none}
+.sum-note span{font-size:.78rem;color:var(--ink-light);font-style:italic}
 .cal-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .cal-chip{font-size:.7rem;font-weight:700;padding:4px 8px;border-radius:999px}
 .chip-booked{background:#F3F4F6;color:#6B7280}
@@ -350,7 +357,7 @@ footer{background:var(--cyan);padding:60px 0 0}
     <div class="welcome-grid">
       <div class="welcome-left reveal">
         <h2 data-i18n="welcome_h2">Selamat Datang ke Sewa Kereta Mesra-Bajet di Langkawi</h2>
-        <p class="tagline" style="margin-top:18px" data-i18n="welcome_tag1">Dari serendah RM89/Hari. Mana-mana destinasi, ikut gaya kamu.</p>
+        <p class="tagline" style="margin-top:18px" data-i18n="welcome_tag1">Dari serendah RM80/Hari. Mana-mana destinasi, ikut gaya kamu.</p>
         <p class="tagline" style="margin-top:6px;color:var(--ink-mid)" data-i18n="welcome_tag2">Sewa, drive, dan nikmati.</p>
         <p data-i18n="welcome_body">Jelajah Pulau Langkawi dengan fleksibel — sewa kereta harian, mingguan, atau pilih pakej percutian penuh dengan driver lokal yang kenal setiap pelusuk pulau, semuanya mudah dan jujur.</p>
         <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap">
@@ -364,7 +371,7 @@ footer{background:var(--cyan);padding:60px 0 0}
           <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h4 data-i18n="why1_h">Pickup Dari Mana Sahaja</h4><p data-i18n="why1_p">Ambil kereta di airport, jeti Kuah, atau kami antar terus ke hotel kamu percuma.</p></div>
           <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.0 1.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><h4 data-i18n="why2_h">Sokongan 24/7</h4><p data-i18n="why2_p">Tanya kami bila-bila siang atau malam melalui WhatsApp — kami sentiasa responsif.</p></div>
           <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 17H5a2 2 0 01-2-2V7a2 2 0 012-2h11l5 4v6a2 2 0 01-2 2z"/><polyline points="16 17 16 21 8 21 8 17"/></svg></div><h4 data-i18n="why3_h">3 Cara Sewa</h4><p data-i18n="why3_p">Sewa sendiri, sewa + driver lokal, atau ambil pakej airport transfer. Semua ada.</p></div>
-          <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h4 data-i18n="why4_h">9+ Model Kereta</h4><p data-i18n="why4_p">Dari Axia ekonomi hingga Alphard VIP — pilih ikut bajet dan saiz kumpulan kamu.</p></div>
+          <div class="why-card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h4 data-i18n="why4_h">25+ Model Kereta</h4><p data-i18n="why4_p">Dari Axia ekonomi hingga Alphard VIP — pilih ikut bajet dan saiz kumpulan kamu.</p></div>
         </div>
         <div class="why-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
       </div>
@@ -387,11 +394,12 @@ footer{background:var(--cyan);padding:60px 0 0}
 <section class="sec" id="cars">
   <div class="wrap">
     <div class="cars-header reveal">
-      <h2 class="sec-title" data-i18n="cars_h2">Kami Ada 9 Model Kereta,<br>Kamu Yang Pilih.</h2>
+      <h2 class="sec-title" data-i18n="cars_h2">Kami Ada 25 Model Kereta,<br>Kamu Yang Pilih.</h2>
     </div>
     <div class="brand-filters reveal" id="brandFilters"></div>
     <p class="cars-count reveal" id="carsCount"></p>
     <div class="car-list" id="carList"></div>
+    <div class="cars-more reveal" id="carsMore" style="text-align:center;margin-top:28px"></div>
     <div class="cars-cta reveal">
       <button class="btn btn-cyan" onclick="openModal()" style="padding:16px 48px;font-size:1rem" data-i18n="cars_cta">TEMPAH SEKARANG</button>
     </div>
@@ -555,6 +563,10 @@ footer{background:var(--cyan);padding:60px 0 0}
           </div>
         </div>
       </div>
+      <div class="fg">
+        <label data-i18n="modal_summary">Ringkasan Tempahan</label>
+        <div class="booking-summary" id="bookingSummary"></div>
+      </div>
       <div class="fg"><label data-i18n="modal_loc">Lokasi Ambil</label>
         <select id="m-loc">
           <option data-i18n="loc1">Lapangan Terbang (LGK)</option>
@@ -625,7 +637,7 @@ const T = {
     hero_h1_pre:'Masa untuk ', hero_h1_span:'jelajah Langkawi', hero_h1_suf:' sesuka hati',
     hero_search_ph:'Cari kereta, destinasi, atau servis...', hero_search_btn:'Cari',
     welcome_h2:'Selamat Datang ke Sewa Kereta Mesra-Bajet di Langkawi',
-    welcome_tag1:'Dari serendah RM89/Hari. Mana-mana destinasi, ikut gaya kamu.',
+    welcome_tag1:'Dari serendah RM80/Hari. Mana-mana destinasi, ikut gaya kamu.',
     welcome_tag2:'Sewa, drive, dan nikmati.',
     welcome_body:'Jelajah Pulau Langkawi dengan fleksibel — sewa kereta harian, mingguan, atau pilih pakej percutian penuh dengan driver lokal yang kenal setiap pelusuk pulau, semuanya mudah dan jujur.',
     welcome_btn1:'Lihat Kereta', welcome_btn2:'Servis Kami',
@@ -633,12 +645,13 @@ const T = {
     why1_h:'Pickup Dari Mana Sahaja', why1_p:'Ambil kereta di airport, jeti Kuah, atau kami antar terus ke hotel kamu percuma.',
     why2_h:'Sokongan 24/7', why2_p:'Tanya kami bila-bila siang atau malam melalui WhatsApp — kami sentiasa responsif.',
     why3_h:'3 Cara Sewa', why3_p:'Sewa sendiri, sewa + driver lokal, atau ambil pakej airport transfer. Semua ada.',
-    why4_h:'9+ Model Kereta', why4_p:'Dari Axia ekonomi hingga Alphard VIP — pilih ikut bajet dan saiz kumpulan kamu.',
+    why4_h:'25+ Model Kereta', why4_p:'Dari Axia ekonomi hingga Alphard VIP — pilih ikut bajet dan saiz kumpulan kamu.',
     brand_h2:'Pilih Jenama Kereta Kamu dari Koleksi Terkini.',
     brand_sub:'Tekan jenama untuk lihat semua model yang tersedia.',
-    cars_h2:'Kami Ada 9 Model Kereta,<br>Kamu Yang Pilih.',
+    cars_h2:'Kami Ada 25 Model Kereta,<br>Kamu Yang Pilih.',
     cars_filter_all:'Semua', cars_cta:'TEMPAH SEKARANG',
     cars_count_all:'kereta dijumpai', cars_count_brand:'kereta dijumpai untuk',
+    cars_view_more:'Lihat Lagi ({n}) Kereta', cars_view_less:'Tunjuk Kurang',
     feat_label:'Features', per_day:'per hari',
     svc_h2:'Ke Mana-mana dengan 3 Cara Sewa Kami',
     svc_tab0:'Self-Drive', svc_tab1:'Dengan Driver', svc_tab2:'Airport Transfer',
@@ -657,6 +670,12 @@ const T = {
     modal_h:'Buat Tempahan', modal_name:'Nama Penuh', modal_name_ph:'Ahmad bin Ali',
     modal_wa:'No. WhatsApp', modal_car:'Pilih Kereta / Pakej',
     modal_days:'Bilangan Hari', modal_date:'Tarikh Ambil', modal_calendar:'Kalendar Harga & Ketersediaan', modal_loc:'Lokasi Ambil',
+    modal_summary:'Ringkasan Tempahan',
+    sum_pickup:'Ambil', sum_return:'Pulang', sum_days:'Tempoh', sum_total:'Jumlah', sum_package:'Pakej',
+    unit_day:'hari', unit_days:'hari',
+    sum_pick_hint:'Pilih tarikh ambil & pulang pada kalendar di atas.',
+    sum_mixed:'*Harga termasuk hari peak/low',
+    range_booked_warn:'Julat itu mengandungi tarikh yang sudah penuh.',
     loc1:'Lapangan Terbang (LGK)', loc2:'Jeti Kuah', loc3:'Pantai Cenang', loc4:'Antar ke hotel',
     sum_car:'Kereta / Pakej', sum_rate:'Kadar', sum_day_type:'Jenis Hari', sum_dur:'Tempoh',
     sum_del:'Delivery', sum_free:'Percuma', sum_est:'Anggaran',
@@ -711,7 +730,7 @@ const T = {
     hero_h1_pre:'Time to ', hero_h1_span:'explore Langkawi', hero_h1_suf:' your own way',
     hero_search_ph:'Search cars, destinations, or services...', hero_search_btn:'Search',
     welcome_h2:'Welcome to Budget-Friendly Car Rental in Langkawi',
-    welcome_tag1:'From only RM89/Day. Any destination, your style.',
+    welcome_tag1:'From only RM80/Day. Any destination, your style.',
     welcome_tag2:'Rent, drive, and enjoy.',
     welcome_body:'Explore Pulau Langkawi flexibly — rent a car daily, weekly, or choose a full holiday package with a local driver who knows every corner of the island. Easy and transparent.',
     welcome_btn1:'View Cars', welcome_btn2:'Our Services',
@@ -719,12 +738,13 @@ const T = {
     why1_h:'Pickup Anywhere', why1_p:'Pick up at the airport, Kuah Jetty, or we deliver straight to your hotel for free.',
     why2_h:'24/7 Support', why2_p:'Ask us anytime, day or night via WhatsApp — we are always responsive.',
     why3_h:'3 Ways to Rent', why3_p:'Self-drive, rent + local driver, or airport transfer package. All available.',
-    why4_h:'9+ Car Models', why4_p:'From economy Axia to VIP Alphard — choose by budget and group size.',
+    why4_h:'25+ Car Models', why4_p:'From economy Axia to VIP Alphard — choose by budget and group size.',
     brand_h2:'Choose Your Preferred Car Brand from Our Latest Collection.',
     brand_sub:'Tap a brand to see all available models.',
-    cars_h2:'We Have 9 Car Models,<br>You Choose.',
+    cars_h2:'We Have 25 Car Models,<br>You Choose.',
     cars_filter_all:'All', cars_cta:'BOOK NOW',
     cars_count_all:'cars found', cars_count_brand:'cars found for',
+    cars_view_more:'View {n} More Cars', cars_view_less:'Show Less',
     feat_label:'Features', per_day:'per day',
     svc_h2:'Go Anywhere with Our 3 Rental Options',
     svc_tab0:'Self-Drive', svc_tab1:'With Driver', svc_tab2:'Airport Transfer',
@@ -743,6 +763,12 @@ const T = {
     modal_h:'Make a Booking', modal_name:'Full Name', modal_name_ph:'Ahmad bin Ali',
     modal_wa:'WhatsApp Number', modal_car:'Select Car / Package',
     modal_days:'Number of Days', modal_date:'Pickup Date', modal_calendar:'Availability & Price Calendar', modal_loc:'Pickup Location',
+    modal_summary:'Booking Summary',
+    sum_pickup:'Pickup', sum_return:'Return', sum_days:'Duration', sum_total:'Total', sum_package:'Package',
+    unit_day:'day', unit_days:'days',
+    sum_pick_hint:'Select your pickup & return dates on the calendar above.',
+    sum_mixed:'*Total includes peak/low-day rates',
+    range_booked_warn:'That range includes a date that is already booked.',
     loc1:'Langkawi Airport (LGK)', loc2:'Kuah Jetty', loc3:'Pantai Cenang', loc4:'Deliver to hotel',
     sum_car:'Car / Package', sum_rate:'Rate', sum_day_type:'Day Type', sum_dur:'Duration',
     sum_del:'Delivery', sum_free:'Free', sum_est:'Estimate',
@@ -854,19 +880,39 @@ const FEAT_ICONS = {
 // ════════════════════════════════════════
 // CAR DATA
 // ════════════════════════════════════════
+// price = harga LOW SEASON (base/from). pricePeak = harga PEAK SEASON (rujukan; ikut senarai AEE).
 const CAR_DATA = [
-  {id:'axia',  brand:'Perodua', name:'Perodua Axia',    price:89,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'Paling murah', badgeCls:''},
-  {id:'myvi',  brand:'Perodua', name:'Perodua Myvi',    price:99,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'Best Seller',  badgeCls:'hot'},
-  {id:'alza',  brand:'Perodua', name:'Perodua Alza',    price:149, shape:'van',   type:'MPV',          seats:7,  trans:'Automatic', badge:'7 Seats',      badgeCls:''},
-  {id:'aruz',  brand:'Perodua', name:'Perodua Aruz',    price:179, shape:'suv',   type:'SUV',          seats:7,  trans:'Automatic', badge:'SUV',          badgeCls:''},
-  {id:'saga',  brand:'Proton',  name:'Proton Saga',     price:95,  shape:'sedan', type:'Sedan',        seats:5,  trans:'Automatic', badge:'',             badgeCls:''},
-  {id:'city',  brand:'Honda',   name:'Honda City',      price:139, shape:'sedan', type:'Sedan',        seats:5,  trans:'Automatic', badge:'Comfort',      badgeCls:''},
-  {id:'crv',   brand:'Honda',   name:'Honda CR-V',      price:229, shape:'suv',   type:'SUV',          seats:5,  trans:'Automatic', badge:'',             badgeCls:''},
-  {id:'hiace', brand:'Toyota',  name:'Toyota Hiace',    price:299, shape:'van',   type:'Van',          seats:12, trans:'Manual',    badge:'Group',        badgeCls:''},
-  {id:'alpha', brand:'Toyota',  name:'Toyota Alphard',  price:399, shape:'lux',   type:'MPV Luxury',   seats:7,  trans:'Automatic', badge:'VIP',          badgeCls:'lux'},
+  // ── 6 pertama dipaparkan dahulu (kereta budget paling popular) ──
+  {id:'axia',      brand:'Perodua', name:'Perodua Axia',         price:80,  pricePeak:100,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'Budget',      badgeCls:''},
+  {id:'myvi',      brand:'Perodua', name:'Perodua Myvi',         price:100, pricePeak:120,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'Best Seller', badgeCls:'hot'},
+  {id:'bezza',     brand:'Perodua', name:'Perodua Bezza',        price:100, pricePeak:120,  shape:'sedan', type:'Sedan',       seats:5,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'vios22',    brand:'Toyota',  name:'Toyota Vios 2022',     price:120, pricePeak:150,  shape:'sedan', type:'Sedan',       seats:5,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'almera',    brand:'Nissan',  name:'Nissan Almera',        price:120, pricePeak:150,  shape:'sedan', type:'Sedan',       seats:5,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'citysedan', brand:'Honda',   name:'Honda City Sedan',     price:120, pricePeak:150,  shape:'sedan', type:'Sedan',       seats:5,  trans:'Automatic', badge:'Comfort',     badgeCls:''},
+  // ── selebihnya muncul selepas tekan "View More" ──
+  {id:'vios24',    brand:'Toyota',  name:'Toyota Vios 2024',     price:140, pricePeak:170,  shape:'sedan', type:'Sedan',       seats:5,  trans:'Automatic', badge:'New',         badgeCls:''},
+  {id:'yaris',     brand:'Toyota',  name:'Toyota Yaris',         price:120, pricePeak:150,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'cityhatch', brand:'Honda',   name:'Honda City Hatchback', price:140, pricePeak:170,  shape:'hatch', type:'Economy Car', seats:5,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'avanza',    brand:'Toyota',  name:'Toyota Avanza',        price:120, pricePeak:150,  shape:'van',   type:'MPV',         seats:7,  trans:'Automatic', badge:'7 Seats',     badgeCls:''},
+  {id:'alza',      brand:'Perodua', name:'Perodua Alza 2024',    price:140, pricePeak:170,  shape:'van',   type:'MPV',         seats:7,  trans:'Automatic', badge:'7 Seats',     badgeCls:''},
+  {id:'innova',    brand:'Toyota',  name:'Toyota Innova',        price:200, pricePeak:250,  shape:'van',   type:'MPV',         seats:8,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'serena',    brand:'Nissan',  name:'Nissan Serena',        price:200, pricePeak:250,  shape:'van',   type:'MPV',         seats:8,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'hrv',       brand:'Honda',   name:'Honda HR-V',           price:350, pricePeak:450,  shape:'suv',   type:'SUV',         seats:5,  trans:'Automatic', badge:'SUV',         badgeCls:''},
+  {id:'crv',       brand:'Honda',   name:'Honda CR-V',           price:350, pricePeak:450,  shape:'suv',   type:'SUV',         seats:5,  trans:'Automatic', badge:'SUV',         badgeCls:''},
+  {id:'camry',     brand:'Toyota',  name:'Toyota Camry',         price:350, pricePeak:400,  shape:'sedan', type:'Sedan',       seats:5,  trans:'Automatic', badge:'Premium',     badgeCls:''},
+  {id:'urvan',     brand:'Nissan',  name:'Nissan Urvan',         price:250, pricePeak:350,  shape:'van',   type:'Van',         seats:12, trans:'Manual',    badge:'Group',       badgeCls:''},
+  {id:'hiacemt',   brand:'Toyota',  name:'Toyota Hiace (MT)',    price:200, pricePeak:300,  shape:'van',   type:'Van',         seats:12, trans:'Manual',    badge:'Group',       badgeCls:''},
+  {id:'hiaceat',   brand:'Toyota',  name:'Toyota Hiace (AT)',    price:350, pricePeak:450,  shape:'van',   type:'Van',         seats:12, trans:'Automatic', badge:'Group',       badgeCls:''},
+  {id:'starex',    brand:'Hyundai', name:'Hyundai Starex',       price:400, pricePeak:450,  shape:'van',   type:'MPV',         seats:11, trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'satria',    brand:'Proton',  name:'Proton Satria',        price:450, pricePeak:500,  shape:'hatch', type:'Sport',       seats:5,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'vellfire22',brand:'Toyota',  name:'Toyota Vellfire 2022', price:400, pricePeak:450,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
+  {id:'alphard22', brand:'Toyota',  name:'Toyota Alphard 2022',  price:450, pricePeak:500,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
+  {id:'vellfire25',brand:'Toyota',  name:'Toyota Vellfire 2025', price:800, pricePeak:900,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
+  {id:'alphard25', brand:'Toyota',  name:'Toyota Alphard 2025',  price:900, pricePeak:1000, shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
 ];
 
-const BRANDS_LIST = ['Semua','Perodua','Honda','Proton','Toyota'];
+const CARS_LIMIT = 6;       // berapa kereta dipapar sebelum "View More"
+let carsExpanded = false;   // status papar penuh / tidak
 let activeBrand = 'Semua';
 const WA_NUMBER = '60183954478';
 const WORKER_URL = 'https://broad-band-6d14.1211111996.workers.dev/';
@@ -880,10 +926,27 @@ const BOOKED_DATES = [
   '2026-07-04','2026-07-12','2026-07-19','2026-08-08','2026-08-09'
 ];
 let calView = new Date();
-let selectedDateMeta = { iso:'', type:'normal', multiplier:1 };
+let rangeStart = null;   // tarikh ambil (iso)
+let rangeEnd   = null;   // tarikh pulang (iso)
 
 function toISO(d) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+// bilangan hari (malam) antara dua tarikh
+function dateDiffDays(a, b) {
+  return Math.round((new Date(b) - new Date(a)) / 86400000);
+}
+
+// adakah ada tarikh penuh (booked) dalam julat start..end (inklusif)?
+function rangeHasBooked(startIso, endIso) {
+  const n = dateDiffDays(startIso, endIso);
+  for (let i = 0; i <= n; i++) {
+    const d = new Date(startIso);
+    d.setDate(d.getDate() + i);
+    if (BOOKED_DATES.includes(toISO(d))) return true;
+  }
+  return false;
 }
 
 function getDayMeta(iso) {
@@ -892,6 +955,16 @@ function getDayMeta(iso) {
   const day = new Date(iso).getDay();
   if (day === 2 || day === 3) return {type:'low', multiplier:0.9};
   return {type:'normal', multiplier:1};
+}
+
+// Harga untuk satu hari ikut jenis hari.
+//  peak  → harga PEAK SEASON tepat (pricePeak) dari senarai AEE
+//  low   → diskaun midweek −10% atas harga asas (low season)
+//  normal→ harga asas (low season)
+function dayPriceFor(rate, type) {
+  if (type === 'peak') return rate.pricePeak || Math.round(rate.price * 1.3);
+  if (type === 'low')  return Math.round(rate.price * 0.9);
+  return rate.price;
 }
 
 function dayTypeLabel(type) {
@@ -914,13 +987,21 @@ function renderCalendar() {
   const labels = lang === 'ms' ? ['Ah','Is','Sl','Rb','Kh','Jm','Sb'] : ['Su','Mo','Tu','We','Th','Fr','Sa'];
   let html = labels.map(w => `<div class="cal-weekday">${w}</div>`).join('');
   for (let i = 0; i < startDay; i++) html += '<div class="cal-day empty"></div>';
+  // kereta yang dipilih (untuk papar harga sebenar setiap hari)
+  const selEl = document.getElementById('m-car');
+  const selCar = selEl ? CAR_DATA.find(c => c.id === selEl.value) : null;
   for (let day = 1; day <= daysInMonth; day++) {
     const iso = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     const meta = getDayMeta(iso);
     const isPast = iso < todayIso;
     const disabled = meta.type === 'booked' || isPast;
-    const rate = meta.type === 'peak' ? '+30%' : meta.type === 'low' ? '-10%' : '';
-    const cls = ['cal-day', meta.type, disabled ? 'disabled' : '', selectedDateMeta.iso === iso ? 'selected' : ''].join(' ').trim();
+    // papar harga RM sebenar untuk kereta dipilih; kalau pakej/tiada kereta → kosong
+    const rate = (selCar && !disabled) ? 'RM' + dayPriceFor(selCar, meta.type) : '';
+    let rangeCls = '';
+    if (iso === rangeStart) rangeCls = rangeEnd ? 'range-start' : 'selected';
+    else if (iso === rangeEnd) rangeCls = 'range-end';
+    else if (rangeStart && rangeEnd && iso > rangeStart && iso < rangeEnd) rangeCls = 'in-range';
+    const cls = ['cal-day', meta.type, disabled ? 'disabled' : '', rangeCls].join(' ').trim();
     html += `<button type="button" class="${cls}" ${disabled ? 'disabled' : ''} onclick="pickDate('${iso}')"><span class="d">${day}</span><span class="r">${rate}</span></button>`;
   }
   grid.innerHTML = html;
@@ -933,10 +1014,32 @@ function changeMonth(step) {
 
 function pickDate(iso) {
   const meta = getDayMeta(iso);
-  if (meta.type === 'booked') return;
-  selectedDateMeta = { iso, type:meta.type, multiplier:meta.multiplier || 1 };
-  document.getElementById('m-from').value = iso;
-  renderCalendar();
+  if (meta.type === 'booked') return;          // tak boleh pilih tarikh penuh
+  const t = T[lang];
+
+  if (!rangeStart || (rangeStart && rangeEnd)) {
+    // mula julat baru
+    rangeStart = iso;
+    rangeEnd = null;
+  } else if (iso < rangeStart) {
+    // klik tarikh lebih awal → jadikan tarikh ambil baru
+    rangeStart = iso;
+    rangeEnd = null;
+  } else if (iso === rangeStart) {
+    // sewa sehari sahaja
+    rangeEnd = null;
+  } else {
+    // set tarikh pulang — pastikan tiada tarikh penuh di dalam
+    if (rangeHasBooked(rangeStart, iso)) {
+      showToast(t.range_booked_warn);
+      rangeStart = iso;
+      rangeEnd = null;
+    } else {
+      rangeEnd = iso;
+    }
+  }
+
+  document.getElementById('m-from').value = rangeStart || '';
   mRecalc();
 }
 
@@ -945,10 +1048,12 @@ function getSeatIcon(n){ return n>=12?'seat12':n>=7?'seat7':'seat5'; }
 function renderBrandFilters() {
   const t = T[lang];
   const all = t.cars_filter_all;
-  const brands = [all,'Perodua','Honda','Proton','Toyota'];
+  // ambil senarai jenama unik terus dari CAR_DATA (auto-include Nissan, Hyundai, dll)
+  const uniqueBrands = [...new Set(CAR_DATA.map(c => c.brand))];
+  const brands = [all, ...uniqueBrands];
   const cur = activeBrand === 'Semua' || activeBrand === 'All' ? all : activeBrand;
   document.getElementById('brandFilters').innerHTML = brands.map(b =>
-    `<button class="bf${b===cur?' active':''}" onclick="filterBrand('${b==='Semua'||b==='All'?'__all__':b}')">${b}</button>`
+    `<button class="bf${b===cur?' active':''}" onclick="filterBrand('${b===all?'__all__':b}')">${b}</button>`
   ).join('');
 }
 
@@ -959,7 +1064,11 @@ function renderCarList() {
   const filtered = isAll ? CAR_DATA : CAR_DATA.filter(c => c.brand === activeBrand);
   const count = document.getElementById('carsCount');
   count.innerHTML = `<b>${filtered.length} ${t.cars_count_all}</b>${!isAll ? ' '+t.cars_count_brand+' '+activeBrand : ''}`;
-  document.getElementById('carList').innerHTML = filtered.map(c => `
+
+  // hadkan kepada 6 kalau belum tekan "View More"
+  const shown = carsExpanded ? filtered : filtered.slice(0, CARS_LIMIT);
+
+  document.getElementById('carList').innerHTML = shown.map(c => `
     <div class="car-item" onclick="selectCar('${c.id}')">
       ${c.badge ? `<span class="ci-badge ${c.badgeCls}">${c.badge}</span>` : ''}
       <div class="ci-img">${carSVG(c.shape)}</div>
@@ -977,10 +1086,34 @@ function renderCarList() {
         </div>
       </div>
     </div>`).join('');
+
+  // butang View More / Show Less
+  const moreWrap = document.getElementById('carsMore');
+  if (moreWrap) {
+    if (filtered.length > CARS_LIMIT) {
+      const remaining = filtered.length - CARS_LIMIT;
+      const label = carsExpanded
+        ? t.cars_view_less
+        : t.cars_view_more.replace('{n}', remaining);
+      moreWrap.innerHTML = `<button class="btn btn-outline" onclick="toggleCars()">${label}</button>`;
+    } else {
+      moreWrap.innerHTML = '';
+    }
+  }
+}
+
+function toggleCars() {
+  carsExpanded = !carsExpanded;
+  renderCarList();
+  // bila collapse semula, scroll balik ke atas seksyen kereta
+  if (!carsExpanded) {
+    document.getElementById('cars').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
 }
 
 function filterBrand(b) {
   activeBrand = (b === '__all__') ? (lang==='ms'?'Semua':'All') : b;
+  carsExpanded = false;   // collapse balik bila tukar jenama
   renderBrandFilters();
   renderCarList();
 }
@@ -1047,7 +1180,7 @@ function renderModalOptions() {
 
 function getRateFor(id) {
   const c = CAR_DATA.find(x => x.id === id);
-  if (c) return {name:c.name, price:c.price, drv:false};
+  if (c) return {name:c.name, price:c.price, pricePeak:c.pricePeak, drv:false};
   const t = T[lang];
   const m = {
     'drv-half':{name:t.drv_names.half, price:180, drv:true, unit:lang==='ms'?' /sesi':' /session'},
@@ -1060,16 +1193,82 @@ function getRateFor(id) {
 function getBookingCalc() {
   const id = document.getElementById('m-car').value;
   const r = getRateFor(id);
-  const pickedIso = document.getElementById('m-from').value;
-  const dayMeta = getDayMeta(pickedIso);
-  const mult = dayMeta.multiplier || 1;
-  const days = 1;
-  const total = r.drv ? r.price : Math.round(r.price * mult) * days;
-  return { r, pickedIso, dayMeta, days, total };
+
+  // Pakej driver = harga tetap, tiada kiraan per-hari
+  if (r.drv) {
+    return { r, startIso:rangeStart, endIso:null, pickedIso:rangeStart, days:1, total:r.price, breakdown:[] };
+  }
+
+  // belum pilih tarikh
+  if (!rangeStart) {
+    return { r, startIso:null, endIso:null, pickedIso:null, days:0, total:0, breakdown:[] };
+  }
+
+  // senarai hari sewa (24 jam/unit): start .. end-1; kalau sehari → [start]
+  let days, priceDays;
+  if (!rangeEnd || rangeEnd === rangeStart) {
+    days = 1;
+    priceDays = [rangeStart];
+  } else {
+    days = dateDiffDays(rangeStart, rangeEnd);
+    priceDays = [];
+    for (let i = 0; i < days; i++) {
+      const d = new Date(rangeStart);
+      d.setDate(d.getDate() + i);
+      priceDays.push(toISO(d));
+    }
+  }
+
+  let total = 0;
+  const breakdown = priceDays.map(iso => {
+    const m = getDayMeta(iso);
+    const dayPrice = dayPriceFor(r, m.type);
+    total += dayPrice;
+    return { iso, type:m.type, price:dayPrice };
+  });
+
+  return { r, startIso:rangeStart, endIso:rangeEnd, pickedIso:rangeStart, days, total, breakdown };
+}
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString(lang==='ms'?'ms-MY':'en-US', {day:'numeric', month:'short', year:'numeric'});
+}
+
+function renderBookingSummary(b) {
+  const t = T[lang];
+  const box = document.getElementById('bookingSummary');
+  if (!box) return;
+
+  if (b.r.drv) {
+    box.innerHTML =
+      `<div class="sum-line"><span>${t.sum_package}</span><span>${b.r.name}</span></div>
+       <div class="sum-total-line"><span>${t.sum_total}</span><b>RM ${b.total.toLocaleString()}</b></div>`;
+    return;
+  }
+
+  if (!b.startIso) {
+    box.innerHTML = `<p class="sum-hint">${t.sum_pick_hint}</p>`;
+    return;
+  }
+
+  const daysLabel = `${b.days} ${b.days > 1 ? t.unit_days : t.unit_day}`;
+  // nota jika harga bercampur (ada peak / low dalam julat)
+  const types = [...new Set(b.breakdown.map(d => d.type))];
+  const mixedNote = (types.length > 1)
+    ? `<div class="sum-line sum-note"><span>${t.sum_mixed}</span><span></span></div>` : '';
+
+  box.innerHTML =
+    `<div class="sum-line"><span>${t.sum_pickup}</span><span>${fmtDate(b.startIso)}</span></div>
+     <div class="sum-line"><span>${t.sum_return}</span><span>${b.endIso ? fmtDate(b.endIso) : '—'}</span></div>
+     <div class="sum-line"><span>${t.sum_days}</span><span>${daysLabel}</span></div>
+     ${mixedNote}
+     <div class="sum-total-line"><span>${t.sum_total}</span><b>RM ${b.total.toLocaleString()}</b></div>`;
 }
 
 function mRecalc() {
-  getBookingCalc();
+  renderCalendar();
+  renderBookingSummary(getBookingCalc());
 }
 
 function openModal() {
@@ -1089,12 +1288,13 @@ function sendWA() {
   const booking = getBookingCalc();
   const r = booking.r;
   const days = booking.days;
-  const from = booking.pickedIso || '-';
+  const from = booking.startIso ? fmtDate(booking.startIso) : '-';
+  const to   = booking.endIso ? fmtDate(booking.endIso) : (booking.startIso ? fmtDate(booking.startIso) : '-');
   const loc = document.getElementById('m-loc').value;
   const total = 'RM' + booking.total.toLocaleString();
   const msg = lang==='ms'
-    ? `Hai Kakak! Saya ingin membuat tempahan:%0A%0ANama: ${name}%0ANo. WA: ${document.getElementById('m-phone').value||'-'}%0APilihan: ${r.name}%0ATarikh: ${from}%0ATempoh: ${days} hari%0ALokasi: ${loc}%0AAnggaran: ${total}`
-    : `Hi Kakak! I'd like to make a booking:%0A%0AName: ${name}%0AWA: ${document.getElementById('m-phone').value||'-'}%0ACar/Package: ${r.name}%0ADate: ${from}%0ADuration: ${days} days%0ALocation: ${loc}%0AEstimate: ${total}`;
+    ? `Hai Kakak! Saya ingin membuat tempahan:%0A%0ANama: ${name}%0ANo. WA: ${document.getElementById('m-phone').value||'-'}%0APilihan: ${r.name}%0AAmbil: ${from}%0APulang: ${to}%0ATempoh: ${days} hari%0ALokasi: ${loc}%0AAnggaran: ${total}`
+    : `Hi Kakak! I'd like to make a booking:%0A%0AName: ${name}%0AWA: ${document.getElementById('m-phone').value||'-'}%0ACar/Package: ${r.name}%0APickup: ${from}%0AReturn: ${to}%0ADuration: ${days} days%0ALocation: ${loc}%0AEstimate: ${total}`;
   window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
   closeModal();
 }
@@ -1104,6 +1304,9 @@ async function payDeposit() {
   if (!name) { showToast(lang==='ms'?'Sila isi nama dahulu':'Please enter your name first'); return; }
 
   const booking = getBookingCalc();
+  if (!booking.r.drv && !booking.startIso) {
+    showToast(lang==='ms'?'Sila pilih tarikh ambil dahulu':'Please select a pickup date first'); return;
+  }
   const carName = booking.r.name;
   const total = booking.total;
   const days = booking.days;
@@ -1197,9 +1400,10 @@ document.querySelectorAll('.reveal').forEach(e => obs.observe(e));
 // ════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════
-document.getElementById('m-from').value = new Date().toISOString().split('T')[0];
-selectedDateMeta.iso = document.getElementById('m-from').value;
-calView = new Date(document.getElementById('m-from').value);
+rangeStart = new Date().toISOString().split('T')[0];
+rangeEnd = null;
+document.getElementById('m-from').value = rangeStart;
+calView = new Date(rangeStart);
 renderModalOptions();
 renderCalendar();
 mRecalc();
