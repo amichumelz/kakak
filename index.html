@@ -324,6 +324,7 @@ footer{background:var(--cyan);padding:60px 0 0}
       <a href="#dest" data-i18n="nav_brands">Jenama</a>
       <a href="#faq" data-i18n="nav_help">Bantuan</a>
       <a href="#testi">Testimonial</a>
+      <a href="#" onclick="openMyBookings();return false" data-i18n="nav_mybookings">Semak Tempahan</a>
     </div>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -590,6 +591,28 @@ footer{background:var(--cyan);padding:60px 0 0}
   </div>
 </div>
 
+<!-- MY BOOKINGS MODAL -->
+<div class="modal-backdrop" id="mbModal" onclick="closeMyBookings(event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:520px">
+    <div class="modal-head">
+      <h3 data-i18n="mb_title">Semak Tempahan Anda</h3>
+      <button class="modal-close" onclick="closeMyBookings()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--ink-light);font-size:.92rem;margin-bottom:18px" data-i18n="mb_subtitle">Masukkan e-mel yang anda guna semasa membayar.</p>
+      <div class="fg">
+        <label data-i18n="mb_email">Alamat E-mel</label>
+        <input type="email" id="mbEmail" placeholder="contoh@email.com" onkeydown="if(event.key==='Enter')checkMyBookings()">
+      </div>
+      <div id="mbResult" style="margin-top:18px"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeMyBookings()" data-i18n="mb_close">Tutup</button>
+      <button class="btn btn-cyan" onclick="checkMyBookings()" data-i18n="mb_check">Semak</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- SUCCESS PAGE -->
 <div class="success-page" id="successPage">
@@ -636,6 +659,14 @@ const T = {
     page_title:'Kakak — Sewa Kereta & Driver di Langkawi',
     nav_about:'Tentang Kami', nav_who:'Siapa Kami', nav_why:'Kenapa Kami', nav_media:'Media',
     nav_services:'Servis', nav_with_driver:'Dengan Driver', nav_cars:'Kereta',
+    nav_mybookings:'Semak Tempahan',
+    mb_title:'Semak Tempahan Anda', mb_subtitle:'Masukkan e-mel yang anda guna semasa membayar.',
+    mb_email:'Alamat E-mel', mb_check:'Semak', mb_close:'Tutup',
+    mb_none:'Tiada tempahan dijumpai untuk e-mel ini.',
+    mb_found:'Tempahan dijumpai:',
+    mb_pickup:'Ambil', mb_return:'Pulang', mb_days:'Hari', mb_amount:'Jumlah Dibayar', mb_receipt:'ID Resit',
+    mb_invalid:'Sila masukkan e-mel yang sah.',
+    mb_err:'Tidak dapat hubungi server. Sila cuba semula.',
     nav_brands:'Jenama', nav_help:'Bantuan', nav_book:'Tempah Sekarang',
     hero_h1_pre:'Masa untuk ', hero_h1_span:'jelajah Langkawi', hero_h1_suf:' sesuka hati',
     hero_search_ph:'Cari kereta, destinasi, atau servis...', hero_search_btn:'Cari',
@@ -729,6 +760,14 @@ const T = {
     page_title:'Kakak — Car Rental & Driver in Langkawi',
     nav_about:'About Us', nav_who:'Who We Are', nav_why:'Why Us', nav_media:'Media',
     nav_services:'Services', nav_with_driver:'With Driver', nav_cars:'Cars',
+    nav_mybookings:'My Bookings',
+    mb_title:'Check Your Bookings', mb_subtitle:'Enter the email you used at checkout.',
+    mb_email:'Email Address', mb_check:'Check', mb_close:'Close',
+    mb_none:'No bookings found for this email.',
+    mb_found:'Bookings found:',
+    mb_pickup:'Pickup', mb_return:'Return', mb_days:'Days', mb_amount:'Amount Paid', mb_receipt:'Receipt ID',
+    mb_invalid:'Please enter a valid email.',
+    mb_err:'Could not reach server. Please try again.',
     nav_brands:'Brands', nav_help:'Help', nav_book:'Book Now',
     hero_h1_pre:'Time to ', hero_h1_span:'explore Langkawi', hero_h1_suf:' your own way',
     hero_search_ph:'Search cars, destinations, or services...', hero_search_btn:'Search',
@@ -1315,6 +1354,50 @@ function closeModal(e) {
   if (!e || e.target === document.getElementById('modal')) {
     document.getElementById('modal').classList.remove('open');
     document.body.style.overflow = '';
+  }
+}
+
+// ── MY BOOKINGS (semak tempahan pelanggan) ──
+function openMyBookings() {
+  document.getElementById('mbModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('mbResult').innerHTML = '';
+  setTimeout(() => document.getElementById('mbEmail').focus(), 100);
+}
+function closeMyBookings(e) {
+  if (!e || e.target === document.getElementById('mbModal')) {
+    document.getElementById('mbModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+async function checkMyBookings() {
+  const t = T[lang];
+  const email = document.getElementById('mbEmail').value.trim();
+  const box = document.getElementById('mbResult');
+  if (!email || !email.includes('@')) {
+    box.innerHTML = `<p style="color:var(--bad);font-size:.9rem">${t.mb_invalid}</p>`;
+    return;
+  }
+  box.innerHTML = `<p style="color:var(--ink-light);font-size:.9rem">⏳ ${lang==='ms'?'Memuatkan…':'Loading…'}</p>`;
+  try {
+    const res = await fetch(WORKER_URL + 'my-bookings?email=' + encodeURIComponent(email));
+    const data = await res.json();
+    if (data.error) { box.innerHTML = `<p style="color:var(--bad);font-size:.9rem">${data.error}</p>`; return; }
+    const list = data.bookings || [];
+    if (!list.length) { box.innerHTML = `<p style="color:var(--ink-light);font-size:.92rem">${t.mb_none}</p>`; return; }
+    const fmtD = iso => iso ? new Date(iso).toLocaleDateString(lang==='ms'?'ms-MY':'en-US',{day:'numeric',month:'short',year:'numeric'}) : '—';
+    box.innerHTML = `<p style="font-weight:700;margin-bottom:12px">${t.mb_found}</p>` +
+      list.map(b => `
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px">
+          <div style="font-family:'Barlow Semi Condensed';font-weight:700;font-size:1.05rem;margin-bottom:8px">${b.carName || '—'}</div>
+          <div class="sum-line"><span>${t.mb_pickup}</span><span>${fmtD(b.startIso)}</span></div>
+          <div class="sum-line"><span>${t.mb_return}</span><span>${fmtD(b.endIso)}</span></div>
+          <div class="sum-line"><span>${t.mb_days}</span><span>${b.days || '—'}</span></div>
+          <div class="sum-line"><span>${t.mb_amount}</span><b>RM ${(Number(b.amount)||0).toLocaleString()}</b></div>
+          <div style="font-size:.72rem;color:var(--ink-light);margin-top:8px;font-family:ui-monospace,Menlo,monospace">${t.mb_receipt}: ${b.receiptId||'—'}</div>
+        </div>`).join('');
+  } catch (e) {
+    box.innerHTML = `<p style="color:var(--bad);font-size:.9rem">${t.mb_err}</p>`;
   }
 }
 function sendWA() {
