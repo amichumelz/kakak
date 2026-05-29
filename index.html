@@ -563,7 +563,6 @@ footer{background:var(--cyan);padding:60px 0 0}
           <div class="cal-legend">
             <span class="cal-chip chip-booked" data-i18n="legend_booked">Booked</span>
             <span class="cal-chip chip-peak" data-i18n="legend_peak">Peak (PH)</span>
-            <span class="cal-chip chip-low" data-i18n="legend_low">Low</span>
             <span class="cal-chip chip-normal" data-i18n="legend_normal">Normal</span>
           </div>
         </div>
@@ -708,12 +707,12 @@ const T = {
     sum_pickup:'Ambil', sum_return:'Pulang', sum_days:'Tempoh', sum_total:'Jumlah', sum_package:'Pakej',
     unit_day:'hari', unit_days:'hari',
     sum_pick_hint:'Pilih tarikh ambil & pulang pada kalendar di atas.',
-    sum_mixed:'*Harga termasuk hari peak/low',
+    sum_mixed:'*Harga termasuk hari peak (cuti umum)',
     range_booked_warn:'Julat itu mengandungi tarikh yang sudah penuh.',
     loc1:'Lapangan Terbang (LGK)', loc2:'Jeti Kuah', loc3:'Pantai Cenang', loc4:'Antar ke hotel',
     sum_car:'Kereta / Pakej', sum_rate:'Kadar', sum_day_type:'Jenis Hari', sum_dur:'Tempoh',
     sum_del:'Delivery', sum_free:'Percuma', sum_est:'Anggaran',
-    legend_booked:'Booked', legend_peak:'Peak (PH)', legend_low:'Low', legend_normal:'Normal',
+    legend_booked:'Booked', legend_peak:'Peak (PH)', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Telefon/WhatsApp segera: <b>018-3954478</b>',
     pay_deposit:'Tempah Sekarang',
@@ -809,12 +808,12 @@ const T = {
     sum_pickup:'Pickup', sum_return:'Return', sum_days:'Duration', sum_total:'Total', sum_package:'Package',
     unit_day:'day', unit_days:'days',
     sum_pick_hint:'Select your pickup & return dates on the calendar above.',
-    sum_mixed:'*Total includes peak/low-day rates',
+    sum_mixed:'*Total includes peak (public holiday) rates',
     range_booked_warn:'That range includes a date that is already booked.',
     loc1:'Langkawi Airport (LGK)', loc2:'Kuah Jetty', loc3:'Pantai Cenang', loc4:'Deliver to hotel',
     sum_car:'Car / Package', sum_rate:'Rate', sum_day_type:'Day Type', sum_dur:'Duration',
     sum_del:'Delivery', sum_free:'Free', sum_est:'Estimate',
-    legend_booked:'Booked', legend_peak:'Peak (PH)', legend_low:'Low', legend_normal:'Normal',
+    legend_booked:'Booked', legend_peak:'Peak (PH)', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Hotline/WhatsApp: <b>018-3954478</b>',
     pay_deposit:'Book Now',
@@ -1019,18 +1018,14 @@ function rangeHasBooked(carId, startIso, endIso) {
 
 function getDayMeta(iso) {
   if (PUBLIC_HOLIDAYS.includes(iso)) return {type:'peak', multiplier:1.3};
-  const day = new Date(iso).getDay();
-  if (day === 2 || day === 3) return {type:'low', multiplier:0.9};
   return {type:'normal', multiplier:1};
 }
 
 // Harga untuk satu hari ikut jenis hari.
 //  peak  → harga PEAK SEASON tepat (pricePeak) dari senarai AEE
-//  low   → diskaun midweek −10% atas harga asas (low season)
 //  normal→ harga asas (low season)
 function dayPriceFor(rate, type) {
   if (type === 'peak') return rate.pricePeak || Math.round(rate.price * 1.3);
-  if (type === 'low')  return Math.round(rate.price * 0.9);
   return rate.price;
 }
 
