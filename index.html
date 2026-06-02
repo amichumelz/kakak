@@ -284,9 +284,32 @@ footer{background:var(--cyan);padding:60px 0 0}
 .btn-stripe{background:#635BFF;color:#fff}
 .btn-stripe:hover{background:#4F46E5}
 @media(max-width:560px){
-  .modal-backdrop{padding:10px}
-  .modal{max-height:calc(100vh - 20px)}
-  .modal-head,.modal-body,.modal-foot{padding-left:18px;padding-right:18px}
+  /* Modal jadi bottom sheet penuh */
+  .modal-backdrop{padding:0;align-items:flex-end}
+  .modal{max-height:92vh;border-radius:20px 20px 0 0;max-width:100%}
+  /* Header — more breathing room, bigger close btn */
+  .modal-head{padding:18px 20px}
+  .modal-head h3{font-size:1.2rem}
+  .modal-close{width:38px;height:38px;font-size:1.4rem;background:rgba(255,255,255,.3)}
+  /* Body & footer padding */
+  .modal-body{padding:20px 16px}
+  .modal-foot{padding:14px 16px;gap:10px}
+  .modal-foot .btn{font-size:.8rem;padding:13px 10px}
+  /* Stack name+WA vertically on very small screens */
+  .modal-body .row2{grid-template-columns:1fr}
+  /* Calendar — smaller cells so all 7 fit */
+  .booking-calendar{padding:10px 8px}
+  .cal-grid{gap:3px}
+  .cal-weekday{font-size:.65rem;padding:3px 0}
+  .cal-day{min-height:40px;border-radius:6px;padding:3px 2px;gap:1px}
+  .cal-day .d{font-size:.75rem}
+  .cal-day .r{font-size:.55rem}
+  .cal-nav button{width:30px;height:30px;font-size:1rem}
+  .cal-title{font-size:.85rem}
+  /* Summary & selected car */
+  .sum-total-line b{font-size:1.5rem}
+  .selected-item{padding:10px 13px}
+  .selected-item .si-name{font-size:.95rem}
 }
 
 /* TOAST */
