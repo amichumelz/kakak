@@ -57,18 +57,31 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 }
 
 /* HERO */
-.hero{position:relative;height:520px;overflow:hidden;display:flex;align-items:flex-end}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,25,45,.3) 0%,rgba(5,15,30,.65) 100%),linear-gradient(135deg,#0D4F6C 0%,#1A7FA0 35%,#0E5E80 60%,#0A3550 100%)}
+.hero{position:relative;height:520px;overflow:visible;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;overflow:hidden;background:linear-gradient(to bottom,rgba(10,25,45,.3) 0%,rgba(5,15,30,.65) 100%),linear-gradient(135deg,#0D4F6C 0%,#1A7FA0 35%,#0E5E80 60%,#0A3550 100%)}
 .hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(0,188,212,.25) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(0,100,150,.3) 0%,transparent 50%)}
 .hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.4) 100%)}
-.hero-content{position:relative;z-index:2;width:100%;padding:0 0 48px}
+.hero-content{position:relative;z-index:10;width:100%;padding:0 0 48px}
 .hero-text{text-align:center;color:#fff;margin-bottom:28px}
 .hero-text h1{font-family:'Barlow Semi Condensed';font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:.01em;margin-bottom:8px}
 .hero-text h1 span{font-style:italic;color:var(--cyan)}
-.hero-search{max-width:700px;margin:0 auto;background:#fff;border-radius:999px;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 24px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.hero-search-wrap{max-width:480px;margin:0 auto;position:relative}
+.hero-search{background:#fff;border-radius:999px;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 24px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
 .hero-search input{flex:1;border:none;outline:none;font-family:'Barlow';font-size:1rem;color:var(--ink-mid);background:transparent}
 .hero-search input::placeholder{color:#A0AEC0}
 .hero-search svg{width:20px;height:20px;stroke:#A0AEC0;fill:none;stroke-width:2;stroke-linecap:round;flex:0 0 20px}
+.search-dropdown{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden;display:none;z-index:200}
+.search-dropdown.open{display:block}
+.sd-item{display:flex;align-items:center;gap:12px;padding:11px 18px;cursor:pointer;transition:.15s;border-bottom:1px solid var(--border)}
+.sd-item:last-child{border-bottom:none}
+.sd-item:hover{background:var(--cyan-light)}
+.sd-item-icon{width:36px;height:36px;border-radius:8px;background:var(--bg2);display:grid;place-items:center;flex:0 0 36px;overflow:hidden}
+.sd-item-icon img{width:100%;height:100%;object-fit:cover}
+.sd-item-info{flex:1;min-width:0}
+.sd-item-name{font-weight:700;font-size:.88rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd-item-type{font-size:.75rem;color:var(--ink-light)}
+.sd-item-price{font-family:'Barlow Semi Condensed';font-weight:700;font-size:.95rem;color:var(--cyan-dark);white-space:nowrap}
+.sd-empty{padding:14px 18px;font-size:.88rem;color:var(--ink-light);text-align:center}
 
 /* SECTION */
 .sec{padding:80px 0}
@@ -99,9 +112,9 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 .brand-showcase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .brand-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:box-shadow .22s,transform .22s}
 .brand-card:hover{box-shadow:0 10px 30px rgba(0,0,0,.11);transform:translateY(-3px)}
-.brand-card:hover .bc-img svg{transform:translateX(4px) scale(1.03)}
-.bc-img{height:170px;display:flex;align-items:center;justify-content:center;background:#f4f6f9;border-bottom:1px solid var(--border);overflow:hidden}
-.bc-img svg{width:100%;max-width:230px;height:auto;transition:transform .3s ease}
+.brand-card:hover .bc-img img{transform:scale(1.03)}
+.bc-img{height:170px;display:block;background:#f4f6f9;border-bottom:1px solid var(--border);overflow:hidden}
+.bc-img img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;transition:transform .3s ease;display:block}
 .bc-body{padding:18px 20px 20px;display:flex;justify-content:space-between;align-items:center}
 .bc-brand-name{font-family:'Barlow Semi Condensed';font-size:1.25rem;font-weight:700;color:var(--ink)}
 .bc-models{font-size:.8rem;color:var(--ink-light);margin-top:3px}
@@ -123,8 +136,8 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 .car-list{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .car-item{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px 20px 20px;cursor:pointer;transition:.2s;position:relative;display:flex;flex-direction:column}
 .car-item:hover{box-shadow:0 8px 28px rgba(0,0,0,.1);border-color:rgba(0,188,212,.35);transform:translateY(-2px)}
-.car-item .ci-img{height:130px;display:flex;align-items:center;justify-content:center}
-.car-item .ci-img svg{width:100%;max-width:220px;height:auto}
+.car-item .ci-img{height:130px;display:block;overflow:hidden}
+.car-item .ci-img img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;display:block}
 .ci-foot{border-top:1px solid var(--border);padding-top:14px;margin-top:14px}
 .ci-name-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:14px}
 .ci-name{font-family:'Barlow Semi Condensed';font-size:1.05rem;font-weight:700;color:var(--ink);text-transform:uppercase}
@@ -243,6 +256,22 @@ footer{background:var(--cyan);padding:60px 0 0}
 .chip-normal{background:#EFF6FF;color:#1D4ED8}
 .hotline{font-size:.82rem;color:var(--ink-mid);margin-top:10px}
 .hotline b{color:var(--ink)}
+
+/* DELIVERY TOGGLE */
+.delivery-toggle{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--border);border-radius:12px;overflow:hidden}
+.dt-opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 12px;cursor:pointer;background:#fff;border:none;font-family:'Barlow';transition:.18s;position:relative}
+.dt-opt+.dt-opt{border-left:1.5px solid var(--border)}
+.dt-opt svg{width:22px;height:22px;stroke:var(--ink-light);fill:none;stroke-width:1.8;transition:.18s}
+.dt-opt .dt-label{font-size:.82rem;font-weight:700;letter-spacing:.04em;color:var(--ink-mid);transition:.18s}
+.dt-opt .dt-sub{font-size:.7rem;color:var(--ink-light);transition:.18s}
+.dt-opt.active{background:var(--cyan-light)}
+.dt-opt.active svg{stroke:var(--cyan-dark)}
+.dt-opt.active .dt-label{color:var(--cyan-dark)}
+.dt-opt.active .dt-sub{color:var(--cyan-dark);opacity:.8}
+.dt-opt:hover:not(.active){background:var(--bg2)}
+.delivery-addr{margin-top:10px;display:none}
+.delivery-addr.show{display:block}
+.delivery-charge-badge{display:inline-flex;align-items:center;gap:5px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:999px;padding:3px 10px;font-size:.72rem;font-weight:700;color:#C2410C;margin-top:6px}
 .selected-item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--cyan-light);border:1.5px solid var(--cyan);border-radius:var(--r);padding:13px 16px}
 .selected-item .si-name{font-family:'Barlow Semi Condensed';font-weight:700;font-size:1.05rem;color:var(--ink)}
 .selected-item .si-price{font-weight:700;color:var(--cyan-dark);white-space:nowrap}
@@ -348,10 +377,13 @@ footer{background:var(--cyan);padding:60px 0 0}
     <div class="hero-text">
       <h1 data-i18n="hero_h1_pre">Masa untuk <span data-i18n="hero_h1_span">jelajah Langkawi</span> sesuka hati</h1>
     </div>
-    <div class="hero-search">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" data-i18n-placeholder="hero_search_ph" placeholder="Cari kereta, destinasi, atau servis..." onclick="openModal()">
-      <button class="btn btn-cyan" onclick="openModal()" data-i18n="hero_search_btn">Cari</button>
+    <div class="hero-search-wrap" id="heroSearch">
+      <div class="hero-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="heroSearchInput" data-i18n-placeholder="hero_search_ph" placeholder="Cari kereta, destinasi, atau servis..." oninput="heroSearchQuery(this.value)" onkeydown="heroSearchKey(event)" autocomplete="off">
+        <button class="btn btn-cyan" onclick="heroSearchSubmit()" data-i18n="hero_search_btn">Cari</button>
+      </div>
+      <div class="search-dropdown" id="searchDropdown"></div>
     </div>
   </div>
 </section>
@@ -571,13 +603,28 @@ footer{background:var(--cyan);padding:60px 0 0}
         <label data-i18n="modal_summary">Ringkasan Tempahan</label>
         <div class="booking-summary" id="bookingSummary"></div>
       </div>
-      <div class="fg"><label data-i18n="modal_loc">Lokasi Ambil</label>
-        <select id="m-loc">
-          <option data-i18n="loc1">Lapangan Terbang (LGK)</option>
-          <option data-i18n="loc2">Jeti Kuah</option>
-          <option data-i18n="loc3">Pantai Cenang</option>
-          <option data-i18n="loc4">Antar ke hotel</option>
-        </select>
+      <div class="fg">
+        <label data-i18n="modal_delivery_label">Cara Terima Kereta</label>
+        <div class="delivery-toggle">
+          <button type="button" class="dt-opt active" id="dt-pickup" onclick="setDeliveryMode('pickup')">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="dt-label" data-i18n="dt_pickup_label">Pickup Sendiri</span>
+            <span class="dt-sub" data-i18n="dt_pickup_sub">Percuma</span>
+          </button>
+          <button type="button" class="dt-opt" id="dt-delivery" onclick="setDeliveryMode('delivery')">
+            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span class="dt-label" data-i18n="dt_delivery_label">Hantar ke Lokasi</span>
+            <span class="dt-sub" data-i18n="dt_delivery_sub">+RM30</span>
+          </button>
+        </div>
+        <div class="delivery-addr" id="delivery-addr-wrap">
+          <input type="text" id="m-delivery-addr" data-i18n-placeholder="dt_addr_ph" placeholder="Nama hotel / alamat penghantaran...">
+          <span class="delivery-charge-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span data-i18n="dt_charge_note">Caj penghantaran RM30 dikenakan</span>
+          </span>
+        </div>
+        <input type="hidden" id="m-loc" value="pickup">
       </div>
     </div>
     <div class="modal-foot">
@@ -703,6 +750,7 @@ const T = {
     modal_h:'Buat Tempahan', modal_name:'Nama Penuh', modal_name_ph:'Ahmad bin Ali',
     modal_wa:'No. WhatsApp', modal_car:'Kereta / Pakej Dipilih',
     modal_days:'Bilangan Hari', modal_date:'Tarikh Ambil', modal_calendar:'Kalendar Harga & Ketersediaan', modal_loc:'Lokasi Ambil',
+    modal_delivery_label:'Cara Terima Kereta',
     modal_summary:'Ringkasan Tempahan',
     sum_pickup:'Ambil', sum_return:'Pulang', sum_days:'Tempoh', sum_total:'Jumlah', sum_package:'Pakej',
     unit_day:'hari', unit_days:'hari',
@@ -712,9 +760,14 @@ const T = {
     loc1:'Lapangan Terbang (LGK)', loc2:'Jeti Kuah', loc3:'Pantai Cenang', loc4:'Antar ke hotel',
     sum_car:'Kereta / Pakej', sum_rate:'Kadar', sum_day_type:'Jenis Hari', sum_dur:'Tempoh',
     sum_del:'Delivery', sum_free:'Percuma', sum_est:'Anggaran',
+    sum_delivery_charge:'Caj Penghantaran',
     legend_booked:'Booked', legend_peak:'Peak (PH)', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Telefon/WhatsApp segera: <b>018-3954478</b>',
+    dt_pickup_label:'Pickup Sendiri', dt_pickup_sub:'Percuma',
+    dt_delivery_label:'Hantar ke Lokasi', dt_delivery_sub:'+RM30',
+    dt_addr_ph:'Nama hotel / alamat penghantaran...',
+    dt_charge_note:'Caj penghantaran RM30 dikenakan',
     pay_deposit:'Tempah Sekarang',
     pay_processing:'Sedang buka Stripe...',
     pay_error:'Gagal buka Stripe. Cuba lagi.',
@@ -749,7 +802,7 @@ const T = {
       {q:'Macam mana dengan petrol?', a:'Kami berikan kereta dengan tangki penuh. Kembalikan dengan tangki penuh — mudah dan adil.'},
       {q:'Boleh batalkan tempahan?', a:'Percuma cancel sehingga 24 jam sebelum tarikh ambil. Deposit dikembalikan sepenuhnya.'},
     ],
-    brand_models:{'Perodua':'Axia, Myvi, Alza, Aruz','Honda':'City, CR-V','Proton':'Saga','Toyota':'Hiace, Alphard'},
+    brand_desc:{'Perodua':'Sesuai untuk solo trip, pasangan, dan keluarga kecil yang nak jimat minyak.','Honda':'Sesuai untuk keluarga kecil yang nak pemanduan selesa dan rupa moden.','Proton':'Sesuai untuk pemandu yang mahukan kereta ringkas, jimat, dan mudah dikendalikan.','Toyota':'Sesuai untuk keluarga besar, trip kumpulan, dan perjalanan jauh yang perlukan ruang lebih.'},
     car_types:{'Economy Car':'Economy Car','MPV':'MPV','Sedan':'Sedan','SUV':'SUV','Van':'Van','MPV Luxury':'MPV Luxury'},
     car_fuel:'Petrol', car_auto:'Automatic', car_manual:'Manual',
     drv_names:{half:'Half-Day Driver Tour (4 jam)', full:'Full-Day Island Tour (8 jam)', air:'Airport Transfer'},
@@ -804,6 +857,7 @@ const T = {
     modal_h:'Make a Booking', modal_name:'Full Name', modal_name_ph:'Ahmad bin Ali',
     modal_wa:'WhatsApp Number', modal_car:'Selected Car / Package',
     modal_days:'Number of Days', modal_date:'Pickup Date', modal_calendar:'Availability & Price Calendar', modal_loc:'Pickup Location',
+    modal_delivery_label:'How to Receive the Car',
     modal_summary:'Booking Summary',
     sum_pickup:'Pickup', sum_return:'Return', sum_days:'Duration', sum_total:'Total', sum_package:'Package',
     unit_day:'day', unit_days:'days',
@@ -813,9 +867,14 @@ const T = {
     loc1:'Langkawi Airport (LGK)', loc2:'Kuah Jetty', loc3:'Pantai Cenang', loc4:'Deliver to hotel',
     sum_car:'Car / Package', sum_rate:'Rate', sum_day_type:'Day Type', sum_dur:'Duration',
     sum_del:'Delivery', sum_free:'Free', sum_est:'Estimate',
+    sum_delivery_charge:'Delivery Fee',
     legend_booked:'Booked', legend_peak:'Peak (PH)', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Hotline/WhatsApp: <b>018-3954478</b>',
+    dt_pickup_label:'Self Pickup', dt_pickup_sub:'Free',
+    dt_delivery_label:'Deliver to Location', dt_delivery_sub:'+RM30',
+    dt_addr_ph:'Hotel name / delivery address...',
+    dt_charge_note:'RM30 delivery charge applies',
     pay_deposit:'Book Now',
     pay_processing:'Opening Stripe...',
     pay_error:'Failed to open Stripe. Please try again.',
@@ -850,7 +909,7 @@ const T = {
       {q:'How does petrol work?', a:'We provide the car with a full tank. Return it with a full tank — simple and fair.'},
       {q:'Can I cancel my booking?', a:'Free cancellation up to 24 hours before the pickup date. Deposit is returned in full.'},
     ],
-    brand_models:{'Perodua':'Axia, Myvi, Alza, Aruz','Honda':'City, CR-V','Proton':'Saga','Toyota':'Hiace, Alphard'},
+    brand_desc:{'Perodua':'Best for solo trips, couples, and small families who want to save fuel.','Honda':'Best for small families who want comfort, a smooth drive, and a modern look.','Proton':'Best for drivers who want a simple, fuel-saving car that is easy to handle.','Toyota':'Best for large families, group trips, and long journeys that need more space.'},
     car_types:{'Economy Car':'Economy Car','MPV':'MPV','Sedan':'Sedan','SUV':'SUV','Van':'Van','MPV Luxury':'MPV Luxury'},
     car_fuel:'Petrol', car_auto:'Automatic', car_manual:'Manual',
     drv_names:{half:'Half-Day Driver Tour (4 hrs)', full:'Full-Day Island Tour (8 hrs)', air:'Airport Transfer'},
@@ -905,6 +964,48 @@ function carSVG(type) {
     lux:`<svg viewBox="0 0 300 115"><ellipse cx="150" cy="106" rx="136" ry="7" fill="#e8e8e8"/><path d="M16 78 L20 50 L72 22 L200 20 L248 48 L284 64 L284 80 L16 80Z" fill="#d8d8d8" stroke="#c0c0c0" stroke-width="1.5"/><path d="M72 22 L76 52 L238 52 L234 22Z" fill="#98CCE8" stroke="#88bcd8" stroke-width="1"/><rect x="240" y="58" width="32" height="7" rx="3.5" fill="#FFE566"/><rect x="17" y="58" width="18" height="7" rx="3.5" fill="#FF4040"/><circle cx="66" cy="88" r="19" fill="#111"/><circle cx="66" cy="88" r="12" fill="#666"/><circle cx="66" cy="88" r="5" fill="#aaa"/><circle cx="222" cy="88" r="19" fill="#111"/><circle cx="222" cy="88" r="12" fill="#666"/><circle cx="222" cy="88" r="5" fill="#aaa"/></svg>`
   };
   return s[type] || s.hatch;
+}
+
+const CAR_IMAGE_SRC = {
+  axia:'assets/axia.png',
+  myvi:'assets/perodua.png',
+  bezza:'assets/bezza.png',
+  vios22:'assets/vios2022.png',
+  almera:'assets/nissanalmera.png',
+  citysedan:'assets/hondacity.png',
+  vios24:'assets/vios2024.png',
+  yaris:'assets/yaris.png',
+  cityhatch:'assets/hondacityhatchback.png',
+  avanza:'assets/avanza.png',
+  alza:'assets/alza2024.png',
+  innova:'assets/innova.png',
+  serena:'assets/nissanserena.png',
+  hrv:'assets/honda.png',
+  crv:'assets/hondacr-v.png',
+  camry:'assets/toyotacamry.png',
+  urvan:'assets/nissanurvan.png',
+  hiacemt:'assets/toyotahiacemt.png',
+  hiaceat:'assets/toyotahiaceat.png',
+  starex:'assets/hyundaistarex.png',
+  satria:'assets/protonsatria.png',
+  vellfire22:'assets/vellfire2022.png',
+  alphard22:'assets/alphard2022.png',
+  vellfire25:'assets/vellfire2025.png',
+  alphard25:'assets/alphard2025.png'
+};
+
+function brandImage(brand) {
+  const src = brand === 'Perodua' ? 'assets/axia.png'
+    : brand === 'Honda' ? 'assets/hondacity.png'
+    : brand === 'Proton' ? 'assets/protonsatria.png'
+    : 'assets/vellfire2022.png';
+  return `<img src="${src}" alt="${brand}" loading="lazy"/>`;
+}
+
+function carImage(car) {
+  const src = CAR_IMAGE_SRC[car.id];
+  if (src) return `<img src="${src}" alt="${car.name}" loading="lazy"/>`;
+  return carSVG(car.shape);
 }
 
 const FEAT_ICONS = {
@@ -1134,7 +1235,7 @@ function renderCarList() {
   document.getElementById('carList').innerHTML = shown.map(c => `
     <div class="car-item" onclick="selectCar('${c.id}')">
       ${c.badge ? `<span class="ci-badge ${c.badgeCls}">${c.badge}</span>` : ''}
-      <div class="ci-img">${carSVG(c.shape)}</div>
+      <div class="ci-img">${carImage(c)}</div>
       <div class="ci-foot">
         <div class="ci-name-row">
           <div class="ci-name">${c.name}</div>
@@ -1202,10 +1303,10 @@ function bookService(i) {
 // BRAND SHOWCASE
 // ════════════════════════════════════════
 const BRAND_SVGs = {
-  Perodua:`<svg viewBox="0 0 280 110"><ellipse cx="140" cy="102" rx="130" ry="7" fill="#e8e8e8"/><path d="M22 74 L34 50 L72 26 L168 24 L215 50 L258 64 L258 76 L22 76Z" fill="#e0e0e0" stroke="#ccc" stroke-width="1.5"/><path d="M72 26 L80 52 L206 52 L200 26Z" fill="#B8DDF5" stroke="#aacce0" stroke-width="1"/><rect x="210" y="58" width="34" height="6" rx="3" fill="#FFE566" opacity=".95"/><rect x="22" y="58" width="22" height="6" rx="3" fill="#FF6060" opacity=".85"/><circle cx="72" cy="84" r="17" fill="#1c1c1c"/><circle cx="72" cy="84" r="11" fill="#5a5a5a"/><circle cx="72" cy="84" r="5" fill="#909090"/><circle cx="200" cy="84" r="17" fill="#1c1c1c"/><circle cx="200" cy="84" r="11" fill="#5a5a5a"/><circle cx="200" cy="84" r="5" fill="#909090"/></svg>`,
-  Honda:`<svg viewBox="0 0 290 110"><ellipse cx="145" cy="102" rx="133" ry="7" fill="#e8e8e8"/><path d="M20 76 L24 54 L72 28 L185 26 L230 50 L270 66 L270 78 L20 78Z" fill="#ddd" stroke="#ccc" stroke-width="1.5"/><path d="M72 28 L76 54 L222 54 L220 28Z" fill="#ACD4F0" stroke="#aacce0" stroke-width="1"/><rect x="224" y="60" width="32" height="6" rx="3" fill="#FFE566"/><rect x="21" y="60" width="20" height="6" rx="3" fill="#FF5050"/><circle cx="68" cy="86" r="17" fill="#1c1c1c"/><circle cx="68" cy="86" r="11" fill="#5a5a5a"/><circle cx="68" cy="86" r="5" fill="#909090"/><circle cx="210" cy="86" r="17" fill="#1c1c1c"/><circle cx="210" cy="86" r="11" fill="#5a5a5a"/><circle cx="210" cy="86" r="5" fill="#909090"/></svg>`,
-  Proton:`<svg viewBox="0 0 290 110"><ellipse cx="145" cy="102" rx="133" ry="7" fill="#e8e8e8"/><path d="M18 76 L22 52 L74 26 L188 24 L234 50 L272 66 L272 78 L18 78Z" fill="#d8d8d8" stroke="#ccc" stroke-width="1.5"/><path d="M74 26 L78 54 L225 54 L222 26Z" fill="#AAD4F2" stroke="#aacce0" stroke-width="1"/><rect x="226" y="60" width="30" height="6" rx="3" fill="#FFE566"/><rect x="19" y="60" width="18" height="6" rx="3" fill="#FF5050"/><circle cx="68" cy="86" r="17" fill="#1c1c1c"/><circle cx="68" cy="86" r="11" fill="#5a5a5a"/><circle cx="68" cy="86" r="5" fill="#909090"/><circle cx="213" cy="86" r="17" fill="#1c1c1c"/><circle cx="213" cy="86" r="11" fill="#5a5a5a"/><circle cx="213" cy="86" r="5" fill="#909090"/></svg>`,
-  Toyota:`<svg viewBox="0 0 300 115"><ellipse cx="150" cy="106" rx="136" ry="7" fill="#e8e8e8"/><path d="M14 80 L14 44 L26 26 L220 24 L256 42 L286 60 L286 82 L14 82Z" fill="#ddd" stroke="#ccc" stroke-width="1.5"/><rect x="30" y="28" width="88" height="30" rx="3" fill="#AAD2EE" stroke="#aacce0" stroke-width="1"/><rect x="126" y="28" width="88" height="30" rx="3" fill="#B8DCFA" stroke="#aacce0" stroke-width="1"/><rect x="256" y="60" width="24" height="6" rx="3" fill="#FFE566"/><rect x="15" y="60" width="16" height="6" rx="3" fill="#FF5050"/><circle cx="66" cy="92" r="19" fill="#1c1c1c"/><circle cx="66" cy="92" r="12" fill="#5a5a5a"/><circle cx="66" cy="92" r="5" fill="#909090"/><circle cx="224" cy="92" r="19" fill="#1c1c1c"/><circle cx="224" cy="92" r="12" fill="#5a5a5a"/><circle cx="224" cy="92" r="5" fill="#909090"/></svg>`
+  Perodua:brandImage('Perodua'),
+  Honda:brandImage('Honda'),
+  Proton:brandImage('Proton'),
+  Toyota:brandImage('Toyota')
 };
 
 function renderBrandShowcase() {
@@ -1217,7 +1318,7 @@ function renderBrandShowcase() {
     <div class="brand-card reveal" onclick="goToBrand('${b}')">
       <div class="bc-img">${BRAND_SVGs[b]}</div>
       <div class="bc-body">
-        <div><div class="bc-brand-name">${b}</div><div class="bc-models">${t.brand_models[b]||''}</div></div>
+        <div><div class="bc-brand-name">${b}</div><div class="bc-models">${t.brand_desc[b]||t.brand_models[b]||''}</div></div>
         <div class="bc-caret"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
     </div>`).join('');
@@ -1266,7 +1367,9 @@ function getBookingCalc() {
 
   // Pakej driver = harga tetap, tiada kiraan per-hari
   if (r.drv) {
-    return { r, startIso:rangeStart, endIso:null, pickedIso:rangeStart, days:1, total:r.price, breakdown:[] };
+    const deliveryCharge = deliveryMode === 'delivery' ? DELIVERY_CHARGE : 0;
+    const total = r.price + deliveryCharge;
+    return { r, startIso:rangeStart, endIso:null, pickedIso:rangeStart, days:1, total, breakdown:[], deliveryCharge };
   }
 
   // belum pilih tarikh
@@ -1297,7 +1400,10 @@ function getBookingCalc() {
     return { iso, type:m.type, price:dayPrice };
   });
 
-  return { r, startIso:rangeStart, endIso:rangeEnd, pickedIso:rangeStart, days, total, breakdown };
+  const deliveryCharge = deliveryMode === 'delivery' ? DELIVERY_CHARGE : 0;
+  total += deliveryCharge;
+
+  return { r, startIso:rangeStart, endIso:rangeEnd, pickedIso:rangeStart, days, total, breakdown, deliveryCharge };
 }
 
 function fmtDate(iso) {
@@ -1311,8 +1417,11 @@ function renderBookingSummary(b) {
   if (!box) return;
 
   if (b.r.drv) {
+    const delivLine = b.deliveryCharge
+      ? `<div class="sum-line"><span>${t.sum_delivery_charge}</span><span>+RM${b.deliveryCharge}</span></div>` : '';
     box.innerHTML =
       `<div class="sum-line"><span>${t.sum_package}</span><span>${b.r.name}</span></div>
+       ${delivLine}
        <div class="sum-total-line"><span>${t.sum_total}</span><b>RM ${b.total.toLocaleString()}</b></div>`;
     return;
   }
@@ -1327,12 +1436,15 @@ function renderBookingSummary(b) {
   const types = [...new Set(b.breakdown.map(d => d.type))];
   const mixedNote = (types.length > 1)
     ? `<div class="sum-line sum-note"><span>${t.sum_mixed}</span><span></span></div>` : '';
+  const delivLine = b.deliveryCharge
+    ? `<div class="sum-line" style="color:var(--cyan-dark);font-weight:600"><span>${t.sum_delivery_charge}</span><span>+RM${b.deliveryCharge}</span></div>` : '';
 
   box.innerHTML =
     `<div class="sum-line"><span>${t.sum_pickup}</span><span>${fmtDate(b.startIso)}</span></div>
      <div class="sum-line"><span>${t.sum_return}</span><span>${b.endIso ? fmtDate(b.endIso) : '—'}</span></div>
      <div class="sum-line"><span>${t.sum_days}</span><span>${daysLabel}</span></div>
      ${mixedNote}
+     ${delivLine}
      <div class="sum-total-line"><span>${t.sum_total}</span><b>RM ${b.total.toLocaleString()}</b></div>`;
 }
 
@@ -1341,9 +1453,108 @@ function mRecalc() {
   renderBookingSummary(getBookingCalc());
 }
 
+const DELIVERY_CHARGE = 30;
+let deliveryMode = 'pickup'; // 'pickup' | 'delivery'
+
+function setDeliveryMode(mode) {
+  deliveryMode = mode;
+  document.getElementById('dt-pickup').classList.toggle('active', mode === 'pickup');
+  document.getElementById('dt-delivery').classList.toggle('active', mode === 'delivery');
+  const addrWrap = document.getElementById('delivery-addr-wrap');
+  addrWrap.classList.toggle('show', mode === 'delivery');
+  if (mode === 'delivery') {
+    setTimeout(() => document.getElementById('m-delivery-addr').focus(), 100);
+  }
+  document.getElementById('m-loc').value = mode;
+  mRecalc();
+}
+
+// ════════════════════════════════════════
+// HERO SEARCH
+// ════════════════════════════════════════
+let searchHighlight = -1;
+
+function heroSearchQuery(val) {
+  const dd = document.getElementById('searchDropdown');
+  const q = val.trim().toLowerCase();
+  searchHighlight = -1;
+
+  if (!q) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
+
+  const results = CAR_DATA.filter(c =>
+    c.name.toLowerCase().includes(q) ||
+    c.brand.toLowerCase().includes(q) ||
+    c.type.toLowerCase().includes(q) ||
+    c.id.toLowerCase().includes(q)
+  ).slice(0, 6);
+
+  if (!results.length) {
+    dd.innerHTML = `<div class="sd-empty">${lang==='ms'?'Tiada kereta dijumpai':'No cars found'}</div>`;
+  } else {
+    dd.innerHTML = results.map((c,i) => {
+      const src = CAR_IMAGE_SRC[c.id] || '';
+      const img = src ? `<img src="${src}" alt="${c.name}">` : carSVG(c.shape).replace('<svg','<svg style="width:28px;height:28px"');
+      const t = T[lang];
+      return `<div class="sd-item" data-id="${c.id}" onmousedown="heroSearchSelect('${c.id}')">
+        <div class="sd-item-icon">${img}</div>
+        <div class="sd-item-info">
+          <div class="sd-item-name">${c.name}</div>
+          <div class="sd-item-type">${t.car_types[c.type]||c.type} · ${c.seats} seats · ${c.trans}</div>
+        </div>
+        <div class="sd-item-price">RM${c.price}<span style="font-size:.7rem;font-weight:400;color:var(--ink-light)">/${t.unit_day||'hari'}</span></div>
+      </div>`;
+    }).join('');
+  }
+  dd.classList.add('open');
+}
+
+function heroSearchKey(e) {
+  const dd = document.getElementById('searchDropdown');
+  const items = dd.querySelectorAll('.sd-item');
+  if (!items.length) { if (e.key==='Enter') heroSearchSubmit(); return; }
+  if (e.key === 'ArrowDown') { e.preventDefault(); searchHighlight = Math.min(searchHighlight+1, items.length-1); highlightItem(items); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); searchHighlight = Math.max(searchHighlight-1, -1); highlightItem(items); }
+  else if (e.key === 'Enter') { e.preventDefault(); if (searchHighlight>=0) items[searchHighlight].dispatchEvent(new MouseEvent('mousedown')); else heroSearchSubmit(); }
+  else if (e.key === 'Escape') { dd.classList.remove('open'); }
+}
+
+function highlightItem(items) {
+  items.forEach((el,i) => el.style.background = i===searchHighlight ? 'var(--cyan-light)' : '');
+}
+
+function heroSearchSelect(id) {
+  document.getElementById('searchDropdown').classList.remove('open');
+  document.getElementById('heroSearchInput').value = '';
+  selectCar(id);
+}
+
+function heroSearchSubmit() {
+  const q = document.getElementById('heroSearchInput').value.trim().toLowerCase();
+  if (!q) { openModal(); return; }
+  const match = CAR_DATA.find(c =>
+    c.name.toLowerCase().includes(q) || c.brand.toLowerCase().includes(q) ||
+    c.id.toLowerCase().includes(q) || c.type.toLowerCase().includes(q)
+  );
+  if (match) heroSearchSelect(match.id);
+  else openModal();
+}
+
+// tutup dropdown bila klik luar
+document.addEventListener('click', e => {
+  if (!document.getElementById('heroSearch')?.contains(e.target)) {
+    document.getElementById('searchDropdown')?.classList.remove('open');
+  }
+});
+
 function openModal() {
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  // reset delivery mode
+  deliveryMode = 'pickup';
+  document.getElementById('dt-pickup').classList.add('active');
+  document.getElementById('dt-delivery').classList.remove('active');
+  document.getElementById('delivery-addr-wrap').classList.remove('show');
+  document.getElementById('m-loc').value = 'pickup';
 }
 function closeModal(e) {
   if (!e || e.target === document.getElementById('modal')) {
@@ -1404,12 +1615,24 @@ function sendWA() {
   const days = booking.days;
   const from = booking.startIso ? fmtDate(booking.startIso) : '-';
   const to   = booking.endIso ? fmtDate(booking.endIso) : (booking.startIso ? fmtDate(booking.startIso) : '-');
-  const loc = document.getElementById('m-loc').value;
+  const isDelivery = deliveryMode === 'delivery';
+  const deliveryAddr = isDelivery ? (document.getElementById('m-delivery-addr').value.trim() || '-') : '';
   const total = 'RM' + booking.total.toLocaleString();
-  const msg = lang==='ms'
-    ? `Hai Kakak! Saya ingin membuat tempahan:%0A%0ANama: ${name}%0ANo. WA: ${document.getElementById('m-phone').value||'-'}%0APilihan: ${r.name}%0AAmbil: ${from}%0APulang: ${to}%0ATempoh: ${days} hari%0ALokasi: ${loc}%0AAnggaran: ${total}`
-    : `Hi Kakak! I'd like to make a booking:%0A%0AName: ${name}%0AWA: ${document.getElementById('m-phone').value||'-'}%0ACar/Package: ${r.name}%0APickup: ${from}%0AReturn: ${to}%0ADuration: ${days} days%0ALocation: ${loc}%0AEstimate: ${total}`;
-  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
+
+  let locLine, delivLine;
+  if (lang === 'ms') {
+    locLine = isDelivery
+      ? `Mod: Penghantaran ke lokasi%0AAlamat: ${deliveryAddr}%0ACaj Penghantaran: +RM30`
+      : `Mod: Pickup sendiri`;
+    const msg = `Hai Kakak! Saya ingin membuat tempahan:%0A%0ANama: ${name}%0ANo. WA: ${document.getElementById('m-phone').value||'-'}%0APilihan: ${r.name}%0AAmbil: ${from}%0APulang: ${to}%0ATempoh: ${days} hari%0A${locLine}%0AAnggaran: ${total}`;
+    window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
+  } else {
+    locLine = isDelivery
+      ? `Mode: Delivery to location%0AAddress: ${deliveryAddr}%0ADelivery Fee: +RM30`
+      : `Mode: Self pickup`;
+    const msg = `Hi Kakak! I'd like to make a booking:%0A%0AName: ${name}%0AWA: ${document.getElementById('m-phone').value||'-'}%0ACar/Package: ${r.name}%0APickup: ${from}%0AReturn: ${to}%0ADuration: ${days} days%0A${locLine}%0AEstimate: ${total}`;
+    window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
+  }
   closeModal();
 }
 
