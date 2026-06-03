@@ -2032,6 +2032,9 @@ checkPaySuccess();
 #adminApp .abtn.primary{background:var(--acyan);color:#04222a;border-color:var(--acyan)}
 #adminApp .abtn.primary:hover{background:#2fd4ea}
 #adminApp .abtn:active{transform:scale(.97)}
+#adminApp .abtn.danger{border-color:#e53e3e;color:#e53e3e}
+#adminApp .abtn.danger:hover{background:#e53e3e;color:#fff}
+#adminApp .abtn.sm{padding:5px 10px;font-size:.72rem}
 #adminApp .awrap{max-width:1180px;margin:0 auto;padding:28px}
 #adminApp .login{min-height:72vh;display:grid;place-items:center}
 #adminApp .login-card{width:100%;max-width:380px;background:var(--apanel);border:1px solid var(--aline);
@@ -2146,7 +2149,7 @@ checkPaySuccess();
       </div>
       <div class="tbl-scroll">
         <table>
-          <thead><tr><th>Tarikh Bayar</th><th>Pelanggan</th><th>Kereta</th><th>Ambil → Pulang</th><th>Hari</th><th>Bayaran</th><th>Resit</th></tr></thead>
+          <thead><tr><th>Tarikh Bayar</th><th>Pelanggan</th><th>Kereta</th><th>Ambil → Pulang</th><th>Hari</th><th>Bayaran</th><th>Resit</th><th></th></tr></thead>
           <tbody id="admBody"></tbody>
         </table>
       </div>
@@ -2242,6 +2245,7 @@ window.KADMIN = (function(){
         <td>${b.days||'—'}</td>
         <td class="amt">RM${(Number(b.amount)||0).toLocaleString()}</td>
         <td class="mono sub" style="font-size:.74rem">${b.receiptId||'—'}</td>
+        <td><button class="abtn danger sm" onclick="KADMIN.deleteBooking('${encodeURIComponent(b.sessionId||'')}','${encodeURIComponent(b.customer||'')}')">🗑</button></td>
       </tr>`).join('');
   }
 
@@ -2274,6 +2278,38 @@ window.KADMIN = (function(){
     box.innerHTML=up.map(s=>`<div class="date-chip"><span>${fmt(s)}</span><span class="who">${who(s)}</span></div>`).join('');
   }
 
+  async function deleteBooking(sessionIdEnc, customerEnc) {
+    const sessionId = decodeURIComponent(sessionIdEnc);
+    const customer  = decodeURIComponent(customerEnc);
+    if (!sessionId) { alert('ID tempahan tidak dijumpai.'); return; }
+    const ok = confirm('Padam tempahan ' + (customer||sessionId) + '?\n\nTarikh booked juga akan dibuang dari kalendar.');
+    if (!ok) return;
+    try {
+      const res = await fetch(WORKER_URL + 'admin/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Token': TOKEN },
+        body: JSON.stringify({ sessionId }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        DATA.bookings = DATA.bookings.filter(b => b.sessionId !== sessionId);
+        // Rebuild booked dates dari bookings yang tinggal
+        const newBooked = {};
+        DATA.bookings.forEach(b => {
+          if (b.carId && b.dates) {
+            newBooked[b.carId] = [...new Set([...(newBooked[b.carId]||[]), ...b.dates])].sort();
+          }
+        });
+        DATA.booked = newBooked;
+        renderAll();
+      } else {
+        alert('Gagal padam: ' + (data.error || 'Unknown error'));
+      }
+    } catch(e) {
+      alert('Error: ' + e.message);
+    }
+  }
+
   function tab(which){
     const b=which==='bookings';
     $('admTab1').classList.toggle('active',b); $('admTab2').classList.toggle('active',!b);
@@ -2289,7 +2325,7 @@ window.KADMIN = (function(){
   window.addEventListener('hashchange',()=>{ if(location.hash==='#admin') open(); });
   if(location.hash==='#admin') open();
 
-  return { login, logout, exit, refresh, tab, month, renderAvail, filter, open };
+  return { login, logout, exit, refresh, tab, month, renderAvail, filter, open, deleteBooking };
 })();
 </script>
 
