@@ -361,6 +361,35 @@ footer{background:var(--cyan);padding:60px 0 0}
   .success-actions{display:none!important}
   .success-card{box-shadow:none!important;border-radius:0!important;max-width:100%!important}
 }
+
+/* GALLERY CAROUSEL */
+.gallery-sec{background:#0a1628;padding:64px 0}
+.gallery-sec .sec-title{color:#fff}
+.gallery-sec .sec-sub{color:rgba(255,255,255,.55);text-align:center;margin-bottom:40px;font-size:.95rem}
+.gal-track-wrap{position:relative;overflow:hidden;width:100%}
+.gal-track{display:flex;gap:12px;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform}
+.gal-item{flex:0 0 calc(33.333% - 8px);border-radius:16px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;position:relative}
+.gal-item img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .4s ease}
+.gal-item:hover img{transform:scale(1.05)}
+.gal-nav-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);color:#fff;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
+.gal-nav-btn:hover{background:rgba(0,188,212,.7)}
+.gal-nav-btn.prev{left:12px}
+.gal-nav-btn.next{right:12px}
+.gal-nav-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.gal-dots{display:flex;justify-content:center;gap:6px;margin-top:24px}
+.gal-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.2s}
+.gal-dot.active{background:var(--cyan);width:24px;border-radius:4px}
+/* Lightbox */
+.gal-lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);align-items:center;justify-content:center}
+.gal-lightbox.open{display:flex}
+.gal-lightbox img{max-width:90vw;max-height:88vh;border-radius:12px;object-fit:contain}
+.gal-lb-close{position:absolute;top:16px;right:20px;color:#fff;font-size:2rem;cursor:pointer;line-height:1;background:none;border:none;opacity:.7}
+.gal-lb-close:hover{opacity:1}
+.gal-lb-prev,.gal-lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:#fff;width:48px;height:48px;border-radius:50%;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gal-lb-prev{left:16px} .gal-lb-next{right:16px}
+.gal-lb-prev:hover,.gal-lb-next:hover{background:rgba(0,188,212,.5)}
+@media(max-width:640px){.gal-item{flex:0 0 calc(50% - 6px)}}
+@media(max-width:400px){.gal-item{flex:0 0 85%}}
 </style>
 </head>
 <body>
@@ -387,6 +416,7 @@ footer{background:var(--cyan);padding:60px 0 0}
       <a href="#cars" data-i18n="nav_cars">Kereta</a>
       <a href="#dest" data-i18n="nav_brands">Jenama</a>
       <a href="#faq" data-i18n="nav_help">Bantuan</a>
+      <a href="#gallery">Galeri</a>
       <a href="#testi">Testimonial</a>
       <a href="#" onclick="openMyBookings();return false" data-i18n="nav_mybookings">Semak Tempahan</a>
     </div>
@@ -526,6 +556,33 @@ footer{background:var(--cyan);padding:60px 0 0}
     </div>
   </div>
 </section>
+
+
+<!-- GALLERY -->
+<section class="gallery-sec" id="gallery">
+  <div class="wrap">
+    <h2 class="sec-title reveal" style="text-align:center;margin-bottom:8px" data-i18n="gallery_h2">Galeri Pelanggan</h2>
+    <p class="sec-sub reveal">Momen perjalanan pelanggan kami di Langkawi</p>
+    <div class="gal-track-wrap reveal">
+      <button class="gal-nav-btn prev" onclick="galMove(-1)" aria-label="Prev">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="gal-track" id="galTrack"></div>
+      <button class="gal-nav-btn next" onclick="galMove(1)" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="gal-dots" id="galDots"></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="gal-lightbox" id="galLightbox">
+  <button class="gal-lb-close" onclick="lbClose()">×</button>
+  <button class="gal-lb-prev" onclick="lbNav(-1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+  <img id="galLbImg" src="" alt="">
+  <button class="gal-lb-next" onclick="lbNav(1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+</div>
 
 <!-- FAQ -->
 <section class="sec" id="faq" style="background:var(--bg2);padding:60px 0">
@@ -783,7 +840,7 @@ const T = {
     svc_vis_title:'Jelajah Langkawi Sesuka Hati',
     svc_vis_desc:'Sewa kereta jam, hari, atau minggu — pilih masa kamu sendiri. Pickup di airport atau jeti, drive ke mana sahaja, dan pulangkan apabila selesai.',
     svc_tag1:'Tangki penuh', svc_tag2:'Insurans asas', svc_tag3:'Free delivery',
-    testi_h2:'Ulasan dari Pelanggan Kami',
+    testi_h2:'Ulasan dari Pelanggan Kami', gallery_h2:'Galeri Pelanggan',
     faq_h2:'Perlu Bantuan?',
     cta_h2:'Hello, Langkawi sedang menunggu.<br>Jom kita tunjukkan jalan.',
     cta_btn:'TEMPAH SEKARANG',
@@ -893,7 +950,7 @@ const T = {
     svc_vis_title:'Explore Langkawi Your Own Way',
     svc_vis_desc:'Rent a car by the hour, day, or week — choose your own schedule. Pick up at the airport or jetty, drive wherever you want, and return when done.',
     svc_tag1:'Full tank', svc_tag2:'Basic insurance', svc_tag3:'Free delivery',
-    testi_h2:'Reviews from Our Customers',
+    testi_h2:'Reviews from Our Customers', gallery_h2:'Customer Gallery',
     faq_h2:'Need Help?',
     cta_h2:'Hello, Langkawi is waiting for you.<br>Let us show you around.',
     cta_btn:'BOOK NOW',
@@ -1059,18 +1116,9 @@ function brandImage(brand) {
   return `<img src="${src}" alt="${brand}" loading="lazy"/>`;
 }
 
-// object-position override — 'center' untuk kereta yang gambarnya sesuai center
-const CAR_IMG_POS = {
-  alza:'center', bezza:'center', serena:'center',
-  hrv:'center', urvan:'center', nbox:'center',
-};
-
 function carImage(car) {
   const src = CAR_IMAGE_SRC[car.id];
-  if (src) {
-    const pos = CAR_IMG_POS[car.id] || 'bottom';
-    return `<img src="${src}" alt="${car.name}" loading="lazy" style="object-position:${pos}"/>`;
-  }
+  if (src) return `<img src="${src}" alt="${car.name}" loading="lazy"/>`;
   return carSVG(car.shape);
 }
 
@@ -2348,6 +2396,93 @@ window.KADMIN = (function(){
 
   return { login, logout, exit, refresh, tab, month, renderAvail, filter, open, deleteBooking };
 })();
+
+// ── CUSTOMER GALLERY ─────────────────────────────────────────
+(function(){
+  const IMGS = Array.from({length:19}, (_,i) => 'assets/c' + (i+1) + '.jpeg');
+  const PER  = window.innerWidth <= 640 ? (window.innerWidth <= 400 ? 1 : 2) : 3;
+  let cur = 0, lbIdx = 0;
+  const total = IMGS.length;
+  const pages = Math.ceil(total / PER);
+
+  function render() {
+    const track = document.getElementById('galTrack');
+    const dots  = document.getElementById('galDots');
+    if (!track) return;
+    track.innerHTML = IMGS.map((src, i) =>
+      `<div class="gal-item" onclick="window.lbOpen(${i})">
+        <img src="${src}" alt="Gallery ${i+1}" loading="lazy">
+      </div>`
+    ).join('');
+    dots.innerHTML = Array.from({length: pages}, (_, i) =>
+      `<div class="gal-dot${i===0?' active':''}" onclick="galGoTo(${i})"></div>`
+    ).join('');
+    updateTrack();
+  }
+
+  function updateTrack() {
+    const track = document.getElementById('galTrack');
+    if (!track) return;
+    const itemW = track.parentElement.offsetWidth / PER;
+    track.style.transform = `translateX(-${cur * itemW * PER}px)`;
+    document.querySelectorAll('.gal-dot').forEach((d,i) => d.classList.toggle('active', i === Math.floor(cur * PER / PER)));
+  }
+
+  window.galMove = function(dir) {
+    cur = Math.max(0, Math.min(pages - 1, cur + dir));
+    updateTrack();
+    syncDots();
+  };
+
+  window.galGoTo = function(page) {
+    cur = page;
+    updateTrack();
+    syncDots();
+  };
+
+  function syncDots() {
+    document.querySelectorAll('.gal-dot').forEach((d,i) => d.classList.toggle('active', i === cur));
+  }
+
+  // Auto-play setiap 4 saat
+  setInterval(() => {
+    cur = cur >= pages - 1 ? 0 : cur + 1;
+    updateTrack();
+    syncDots();
+  }, 4000);
+
+  // Lightbox
+  window.lbOpen = function(idx) {
+    lbIdx = idx;
+    document.getElementById('galLbImg').src = IMGS[lbIdx];
+    document.getElementById('galLightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.lbClose = function() {
+    document.getElementById('galLightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  window.lbNav = function(dir) {
+    lbIdx = (lbIdx + dir + total) % total;
+    document.getElementById('galLbImg').src = IMGS[lbIdx];
+  };
+
+  // Close lightbox bila klik luar gambar
+  document.getElementById('galLightbox').addEventListener('click', function(e) {
+    if (e.target === this) lbClose();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('galLightbox').classList.contains('open')) return;
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft')  lbNav(-1);
+    if (e.key === 'Escape')     lbClose();
+  });
+
+  render();
+})();
+
 </script>
 
 </body>
