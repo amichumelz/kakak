@@ -136,7 +136,7 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 .car-list{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .car-item{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px 20px 20px;cursor:pointer;transition:.2s;position:relative;display:flex;flex-direction:column}
 .car-item:hover{box-shadow:0 8px 28px rgba(0,0,0,.1);border-color:rgba(0,188,212,.35);transform:translateY(-2px)}
-.car-item .ci-img{height:130px;display:block;overflow:hidden}
+.car-item .ci-img{height:270px;display:block;overflow:hidden}
 .car-item .ci-img img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;display:block}
 .ci-foot{border-top:1px solid var(--border);padding-top:14px;margin-top:14px}
 .ci-name-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:14px}
@@ -1042,7 +1042,13 @@ const CAR_IMAGE_SRC = {
   vellfire22:'assets/vellfire.jpeg',
   alphard22:'assets/alphard.jpeg',
   vellfire25:'assets/vellfire.jpeg',
-  alphard25:'assets/alphard2025.jpeg'
+  alphard25:'assets/alphard2025.jpeg',
+  hilux:    'assets/toyotahilux.jpeg',
+  zannix:   'assets/innovazanix.jpeg',
+  jimny:    'assets/suzukijimny.jpeg',
+  x70:      'assets/protonx70.jpeg',
+  x50:      'assets/protonx50.jpeg',
+  nbox:     'assets/hondanbox.jpeg',
 };
 
 function brandImage(brand) {
@@ -1102,6 +1108,12 @@ const CAR_DATA = [
   {id:'alphard22', brand:'Toyota',  name:'Toyota Alphard 2022',  price:450, pricePeak:500,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
   {id:'vellfire25',brand:'Toyota',  name:'Toyota Vellfire 2025', price:800, pricePeak:900,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
   {id:'alphard25', brand:'Toyota',  name:'Toyota Alphard 2025',  price:900, pricePeak:1000, shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
+  {id:'hilux',     brand:'Toyota',  name:'Toyota Hilux 4x4',     price:350, pricePeak:400,  shape:'suv',   type:'4x4 Truck',   seats:5,  trans:'Automatic', badge:'4x4',         badgeCls:''},
+  {id:'zannix',    brand:'Toyota',  name:'Innova Zenix',         price:220, pricePeak:300,  shape:'van',   type:'MPV',         seats:7,  trans:'Automatic', badge:'New',         badgeCls:'hot'},
+  {id:'jimny',     brand:'Suzuki',  name:'Suzuki Jimny',         price:350, pricePeak:400,  shape:'suv',   type:'SUV',         seats:4,  trans:'Automatic', badge:'4x4',         badgeCls:''},
+  {id:'x70',       brand:'Proton',  name:'Proton X70',           price:350, pricePeak:400,  shape:'suv',   type:'SUV',         seats:5,  trans:'Automatic', badge:'SUV',         badgeCls:''},
+  {id:'x50',       brand:'Proton',  name:'Proton X50',           price:300, pricePeak:350,  shape:'suv',   type:'SUV',         seats:5,  trans:'Automatic', badge:'SUV',         badgeCls:''},
+  {id:'nbox',      brand:'Honda',   name:'Honda N-BOX',          price:300, pricePeak:350,  shape:'hatch', type:'Kei Car',     seats:4,  trans:'Automatic', badge:'New',         badgeCls:'hot'},
 ];
 
 const CARS_LIMIT = 6;       // berapa kereta dipapar sebelum "View More"
