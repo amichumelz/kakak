@@ -1213,7 +1213,7 @@ const CAR_IMAGE_SRC = {
   hiacemt:'assets/toyotahiacemt.jpeg',
   hiaceat:'assets/toyotahiaceat.jpeg',
   starex:'assets/hyundaistarex.jpeg',
-  satria:'assets/hyundaistaria.jpeg',
+  staria:'assets/hyundaistaria.jpeg',
   vellfire22:'assets/vellfire.jpeg',
   alphard22:'assets/alphard.jpeg',
   vellfire25:'assets/vellfire2025.jpeg',
@@ -1286,7 +1286,7 @@ const CAR_DATA = [
   {id:'hiacemt',   brand:'Toyota',  name:'Toyota Hiace (MT)',    price:200, pricePeak:300,  shape:'van',   type:'Van',         seats:12, trans:'Manual',    badge:'Group',       badgeCls:''},
   {id:'hiaceat',   brand:'Toyota',  name:'Toyota Hiace (AT)',    price:350, pricePeak:450,  shape:'van',   type:'Van',         seats:12, trans:'Automatic', badge:'Group',       badgeCls:''},
   {id:'starex',    brand:'Hyundai', name:'Hyundai Starex',       price:400, pricePeak:450,  shape:'van',   type:'MPV',         seats:11, trans:'Automatic', badge:'',            badgeCls:''},
-  {id:'satria',    brand:'Proton',  name:'Proton Satria',        price:450, pricePeak:500,  shape:'hatch', type:'Sport',       seats:5,  trans:'Automatic', badge:'',            badgeCls:''},
+  {id:'staria',    brand:'Hyundai', name:'Hyundai Staria',       price:450, pricePeak:500,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
   {id:'vellfire22',brand:'Toyota',  name:'Toyota Vellfire 2022', price:400, pricePeak:450,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
   {id:'alphard22', brand:'Toyota',  name:'Toyota Alphard 2022',  price:450, pricePeak:500,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
   {id:'vellfire25',brand:'Toyota',  name:'Toyota Vellfire 2025', price:800, pricePeak:900,  shape:'lux',   type:'MPV Luxury',  seats:7,  trans:'Automatic', badge:'VIP',         badgeCls:'lux'},
@@ -1621,18 +1621,21 @@ function getRateFor(id) {
 // Luxury (MPV Luxury): RM50/jam
 // Lebih 3 jam → kira 1 hari tambahan
 function getExtraHourRate(carType, carId) {
-  // Kereta specific yang kira luxury (RM50/jam)
-  const luxuryIds = ['camry', 'jimny'];
-  if (carId && luxuryIds.includes(carId.toLowerCase())) return 50;
+  const id = (carId || '').toLowerCase();
+  // RM50/jam — Luxury
+  const luxury50 = ['camry', 'jimny', 'staria', 'vellfire22', 'alphard22', 'vellfire25', 'alphard25'];
+  if (luxury50.includes(id)) return 50;
+  // RM30/jam — SUV & 4x4
+  const suv30 = ['hrv', 'crv', 'x70', 'x50', 'hilux'];
+  if (suv30.includes(id)) return 30;
+  // RM25/jam — Kei Car
+  if (id === 'nbox') return 25;
 
   if (!carType) return 15;
   const t = carType.toLowerCase();
   if (t.includes('mpv luxury') || t.includes('luxury')) return 50;
   if (t.includes('van')) return 25;
   if (t.includes('mpv')) return 20;
-  // SUV → kira sama macam MPV (RM20/jam)
-  if (t.includes('suv')) return 20;
-  // Economy Car, Sedan, Kei Car, Sport, 4x4 → RM15
   return 15;
 }
 
