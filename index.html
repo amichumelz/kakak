@@ -1059,9 +1059,18 @@ function brandImage(brand) {
   return `<img src="${src}" alt="${brand}" loading="lazy"/>`;
 }
 
+// object-position override — 'center' untuk kereta yang gambarnya sesuai center
+const CAR_IMG_POS = {
+  alza:'center', bezza:'center', serena:'center',
+  hrv:'center', urvan:'center', nbox:'center',
+};
+
 function carImage(car) {
   const src = CAR_IMAGE_SRC[car.id];
-  if (src) return `<img src="${src}" alt="${car.name}" loading="lazy"/>`;
+  if (src) {
+    const pos = CAR_IMG_POS[car.id] || 'bottom';
+    return `<img src="${src}" alt="${car.name}" loading="lazy" style="object-position:${pos}"/>`;
+  }
   return carSVG(car.shape);
 }
 
