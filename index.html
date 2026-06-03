@@ -57,28 +57,29 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 }
 
 /* HERO */
-.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
 .hero-bg{position:absolute;inset:0;overflow:hidden}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.1) 40%,rgba(0,0,0,.6) 100%)}
-.hero-content{position:relative;z-index:10;width:100%}
-.hero-text{text-align:center;color:#fff;padding:0 20px 32px;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.25) 0%,rgba(0,0,0,.45) 50%,rgba(0,0,0,.65) 100%)}
+.hero-content{position:relative;z-index:10;width:100%;display:flex;flex-direction:column;align-items:center;gap:40px;padding:0 20px}
+.hero-text{text-align:center;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4)}
 .hero-text h1{font-family:'Barlow Semi Condensed';font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:.01em;margin-bottom:10px;line-height:1.15}
-.hero-text h1 span{font-style:italic;color:var(--cyan)}
+.hero-text h1 span{font-style:italic}
 .hero-text p{font-size:clamp(.9rem,2vw,1.1rem);opacity:.9;max-width:500px;margin:0 auto;line-height:1.6}
-.hero-booking-bar{background:rgba(0,0,0,.45);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.12);padding:20px 0}
-.hero-booking-inner{max-width:900px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:2fr 1fr 1fr auto;align-items:end;gap:14px}
-.hero-booking-field label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
-.hero-booking-field select,.hero-booking-field input[type=date]{width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:11px 14px;color:#fff;font-family:'Barlow';font-size:.9rem;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none}
+.hero-booking-bar{background:rgba(255,255,255,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:24px 28px;width:100%;max-width:900px;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+.hero-booking-inner{display:grid;grid-template-columns:2fr 1fr 1fr auto;align-items:end;gap:14px}
+.hero-booking-field label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:6px}
+.hero-booking-field select,.hero-booking-field input[type=date]{width:100%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:11px 14px;color:#fff;font-family:'Barlow';font-size:.9rem;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none}
 .hero-booking-field select option{color:#1a1a1a;background:#fff}
 .hero-booking-field input[type=date]{color-scheme:dark}
 .hero-book-btn{background:var(--cyan);color:#04222a;border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow';font-weight:800;font-size:.9rem;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:.2s;height:46px}
 .hero-book-btn:hover{background:#2fd4ea}
 @media(max-width:640px){
-  .hero-booking-inner{grid-template-columns:1fr;gap:10px;padding:0 16px}
+  .hero-content{gap:28px}
+  .hero-booking-bar{padding:18px 16px;border-radius:16px}
+  .hero-booking-inner{grid-template-columns:1fr;gap:10px}
   .hero-booking-field select,.hero-booking-field input[type=date]{text-align:center}
   .hero-book-btn{width:100%;height:48px;font-size:1rem}
-  .hero-text{padding:0 16px 24px}
 }
 .search-dropdown{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden;display:none;z-index:200}
 .search-dropdown.open{display:block}
@@ -143,9 +144,29 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 .car-list{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .car-item{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px 20px 20px;cursor:pointer;transition:.2s;position:relative;display:flex;flex-direction:column}
 .car-item:hover{box-shadow:0 8px 28px rgba(0,0,0,.1);border-color:rgba(0,188,212,.35);transform:translateY(-2px)}
-.car-item .ci-img{height:270px;display:block;overflow:hidden}
-.car-item .ci-img img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;display:block}
-.ci-foot{border-top:1px solid var(--border);padding-top:14px;margin-top:14px}
+.ci-badge{position:absolute;top:12px;left:12px;background:var(--cyan);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:3px 10px}
+/* Car image zoom */
+.ci-img{height:270px;display:block;overflow:hidden;position:relative}
+.ci-img img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;display:block;transition:transform .3s ease}
+.car-item:hover .ci-img img{transform:scale(1.04)}
+.ci-zoom-btn{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;cursor:pointer;opacity:0;transform:scale(.85);transition:opacity .2s,transform .2s;z-index:5}
+.ci-zoom-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round}
+.car-item:hover .ci-zoom-btn{opacity:1;transform:scale(1)}
+.ci-zoom-btn:hover{background:rgba(0,188,212,.75)!important}
+@media(hover:none),(max-width:768px){.ci-zoom-btn{opacity:1;transform:scale(1)}}
+
+/* Car lightbox */
+.car-lb{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:none;place-items:center;padding:20px}
+.car-lb.open{display:grid}
+.car-lb-inner{position:relative;max-width:860px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.car-lb-inner img{width:100%;display:block;object-fit:cover;max-height:80vh}
+.car-lb-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));padding:24px 20px 16px;color:#fff}
+.car-lb-info .lb-name{font-family:'Barlow Semi Condensed';font-size:1.3rem;font-weight:700}
+.car-lb-info .lb-price{font-size:.9rem;color:var(--cyan);font-weight:600;margin-top:2px}
+.car-lb-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1.3rem;cursor:pointer;display:grid;place-items:center;transition:.2s;z-index:10}
+.car-lb-close:hover{background:rgba(255,255,255,.2)}
+.car-lb-book{position:absolute;bottom:16px;right:16px;background:var(--cyan);color:#04222a;border:none;border-radius:999px;padding:9px 20px;font-family:'Barlow';font-weight:800;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.car-lb-book:hover{background:#2fd4ea}
 .ci-name-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:14px}
 .ci-name{font-family:'Barlow Semi Condensed';font-size:1.05rem;font-weight:700;color:var(--ink);text-transform:uppercase}
 .ci-price-block{text-align:right;flex:0 0 auto}
@@ -155,7 +176,6 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 .ci-feats{display:flex;gap:14px;flex-wrap:wrap}
 .ci-feat{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:.72rem;color:var(--ink-mid);font-weight:500;text-align:center;min-width:48px}
 .ci-feat svg{width:30px;height:30px;stroke:var(--cyan);fill:none;stroke-width:1.5}
-.ci-badge{position:absolute;top:12px;right:12px;background:var(--cyan);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:3px 10px}
 .ci-badge.hot{background:#E53E3E}
 .ci-badge.lux{background:#B7950B;color:#fff}
 .cars-cta{text-align:center;margin-top:32px}
@@ -217,6 +237,12 @@ footer{background:var(--cyan);padding:60px 0 0}
 @media(max-width:900px){.foot-top{grid-template-columns:1fr 1fr;gap:28px}}
 @media(max-width:560px){.foot-top{grid-template-columns:1fr}}
 
+/* TIME ROW */
+.time-row{margin-top:4px}
+.time-row select{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A5568' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;padding-right:32px}
+.extra-hour-badge{display:inline-flex;align-items:center;gap:5px;background:#FFF3CD;border:1px solid #FFD700;color:#856404;font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:8px;margin-top:6px;width:100%}
+.extra-hour-badge svg{flex:0 0 14px}
+.extra-day-badge{display:inline-flex;align-items:center;gap:5px;background:#FFE8E8;border:1px solid #FFB3B3;color:#9B1C1C;font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:8px;margin-top:4px;width:100%}
 /* MODAL */
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;place-items:center;padding:20px;overflow-y:auto}
 .modal-backdrop.open{display:grid}
@@ -404,7 +430,7 @@ footer{background:var(--cyan);padding:60px 0 0}
 <!-- NAV -->
 <header>
   <nav class="wrap">
-    <a href="#"><img src="assets/logo.png" alt="Kakak" style="height:40px;width:auto;display:block"></a>
+    <a href="#"><img src="assets/logo.png" alt="Kakak" style="height:50px;width:auto;display:block;max-width:160px;object-fit:contain"></a>
     <div class="navlinks" id="nav">
       <div class="has-drop"><span data-i18n="nav_about">Tentang Kami</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         <div class="drop-menu">
@@ -444,7 +470,7 @@ footer{background:var(--cyan);padding:60px 0 0}
   </div>
   <div class="hero-content">
     <div class="hero-text">
-      <h1><span data-i18n="hero_h1_pre">Kakak Kereta Sewa</span> <span data-i18n="hero_h1_span" style="font-style:italic;color:var(--cyan)">( Syahirah )</span></h1>
+      <h1><span data-i18n="hero_h1_pre" style="color:#fff">Kakak Kereta Sewa</span> <span data-i18n="hero_h1_span" style="font-style:italic;color:#fff">( Syahirah )</span></h1>
       <p data-i18n="hero_sub">Dari serendah RM80/Hari. Pilih kereta, pilih destinasi, ikut gaya kamu.</p>
     </div>
     <div class="hero-booking-bar">
@@ -487,7 +513,7 @@ footer{background:var(--cyan);padding:60px 0 0}
         <p class="tagline" style="margin-top:6px;color:var(--ink-mid)" data-i18n="welcome_tag2">Sewa, drive, dan nikmati.</p>
         <p data-i18n="welcome_body">Jelajah Pulau Langkawi dengan fleksibel — sewa kereta harian, mingguan, atau pilih pakej percutian penuh dengan driver lokal yang kenal setiap pelusuk pulau, semuanya mudah dan jujur.</p>
         <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap">
-          <button class="btn btn-cyan" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn1">Lihat Kereta</button>
+          <button class="btn btn-cyan" onclick="document.getElementById('cars').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn1">Lihat Kereta</button>
           <button class="btn btn-outline" onclick="document.getElementById('svc').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn2">Servis Kami</button>
         </div>
       </div>
@@ -682,6 +708,45 @@ footer{background:var(--cyan);padding:60px 0 0}
         <div class="fg"><label data-i18n="modal_wa">No. WhatsApp</label><input type="tel" id="m-phone" placeholder="011-xxxx xxxx"></div>
       </div>
       <div class="fg"><label data-i18n="modal_email">Alamat E-mel</label><input type="email" id="m-email" placeholder="contoh@email.com"></div>
+      <!-- Masa Ambil & Pulang -->
+      <div class="row2 time-row">
+        <div class="fg">
+          <label data-i18n="modal_pickup_time">Masa Ambil</label>
+          <select id="m-pickup-time" onchange="mRecalc()">
+            <option value="08:00">8:00 AM</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+            <option value="18:00">6:00 PM</option>
+            <option value="19:00">7:00 PM</option>
+            <option value="20:00">8:00 PM</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label data-i18n="modal_return_time">Masa Pulang</label>
+          <select id="m-return-time" onchange="mRecalc()">
+            <option value="08:00">8:00 AM</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="10:00" selected>10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+            <option value="18:00">6:00 PM</option>
+            <option value="19:00">7:00 PM</option>
+            <option value="20:00">8:00 PM</option>
+          </select>
+        </div>
+      </div>
       <div class="fg"><label data-i18n="modal_car">Kereta / Pakej Dipilih</label><div class="selected-item" id="m-car-display">—</div></div>
       <input type="hidden" id="m-from">
       <div class="fg">
@@ -710,8 +775,8 @@ footer{background:var(--cyan);padding:60px 0 0}
         <label data-i18n="modal_delivery_label">Cara Terima Kereta</label>
         <div class="delivery-toggle">
           <button type="button" class="dt-opt active" id="dt-pickup" onclick="setDeliveryMode('pickup')">
-            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span class="dt-label" data-i18n="dt_pickup_label">Pickup Sendiri</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.0 1.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <span class="dt-label" data-i18n="dt_pickup_label">Jetti &amp; Airport</span>
             <span class="dt-sub" data-i18n="dt_pickup_sub">Percuma</span>
           </button>
           <button type="button" class="dt-opt" id="dt-delivery" onclick="setDeliveryMode('delivery')">
@@ -806,6 +871,19 @@ footer{background:var(--cyan);padding:60px 0 0}
   <span data-i18n="wa_btn">Tempah via WhatsApp (018-3954478)</span>
 </a>
 
+<!-- CAR IMAGE LIGHTBOX -->
+<div class="car-lb" id="carLb" onclick="if(event.target===this)carLbClose()">
+  <div class="car-lb-inner">
+    <button class="car-lb-close" onclick="carLbClose()">×</button>
+    <img id="carLbImg" src="" alt="">
+    <div class="car-lb-info">
+      <div class="lb-name" id="carLbName"></div>
+      <div class="lb-price" id="carLbPrice"></div>
+    </div>
+    <button class="car-lb-book" id="carLbBook" onclick="carLbBook()">Tempah</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -862,10 +940,16 @@ const T = {
     modal_h:'Buat Tempahan', modal_name:'Nama Penuh', modal_name_ph:'Ahmad bin Ali',
     modal_wa:'No. WhatsApp', modal_email:'Alamat E-mel', modal_car:'Kereta / Pakej Dipilih',
     modal_days:'Bilangan Hari', modal_date:'Tarikh Ambil', modal_calendar:'Kalendar Harga & Ketersediaan', modal_loc:'Lokasi Ambil',
+    modal_pickup_time:'Masa Ambil', modal_return_time:'Masa Pulang',
     modal_delivery_label:'Cara Terima Kereta',
     modal_summary:'Ringkasan Tempahan',
     sum_pickup:'Ambil', sum_return:'Pulang', sum_days:'Tempoh', sum_total:'Jumlah', sum_package:'Pakej',
     unit_day:'hari', unit_days:'hari',
+    sum_extra_hours:'Caj Extra Jam',
+    sum_extra_day:'Kira 1 Hari Tambahan',
+    sum_extra_note_hours:'Lebih {n} jam — RM{rate}/jam × {n} jam',
+    sum_extra_note_day:'Lebih 3 jam — dikira 1 hari tambahan',
+    sum_pickup_time:'Masa Ambil', sum_return_time:'Masa Pulang',
     sum_pick_hint:'Pilih tarikh ambil & pulang pada kalendar di atas.',
     sum_mixed:'*Harga termasuk hari peak (cuti umum)',
     range_booked_warn:'Julat itu mengandungi tarikh yang sudah penuh.',
@@ -876,7 +960,7 @@ const T = {
     legend_booked:'Booked', legend_peak:'Peak (PH)', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Telefon/WhatsApp segera: <b>018-3954478</b>',
-    dt_pickup_label:'Pickup Sendiri', dt_pickup_sub:'Percuma',
+    dt_pickup_label:'Jetti & Airport', dt_pickup_sub:'Percuma',
     dt_delivery_label:'Hantar ke Lokasi', dt_delivery_sub:'+RM30',
     dt_addr_ph:'Nama hotel / alamat penghantaran...',
     dt_charge_note:'Caj penghantaran RM30 dikenakan',
@@ -972,10 +1056,16 @@ const T = {
     modal_h:'Make a Booking', modal_name:'Full Name', modal_name_ph:'Ahmad bin Ali',
     modal_wa:'WhatsApp Number', modal_email:'Email Address', modal_car:'Selected Car / Package',
     modal_days:'Number of Days', modal_date:'Pickup Date', modal_calendar:'Availability & Price Calendar', modal_loc:'Pickup Location',
+    modal_pickup_time:'Pickup Time', modal_return_time:'Return Time',
     modal_delivery_label:'How to Receive the Car',
     modal_summary:'Booking Summary',
     sum_pickup:'Pickup', sum_return:'Return', sum_days:'Duration', sum_total:'Total', sum_package:'Package',
     unit_day:'day', unit_days:'days',
+    sum_extra_hours:'Extra Hour Charge',
+    sum_extra_day:'Charged as 1 Extra Day',
+    sum_extra_note_hours:'Over {n} hr(s) — RM{rate}/hr × {n}',
+    sum_extra_note_day:'Over 3 hours — charged as 1 extra day',
+    sum_pickup_time:'Pickup Time', sum_return_time:'Return Time',
     sum_pick_hint:'Select your pickup & return dates on the calendar above.',
     sum_mixed:'*Total includes peak (public holiday) rates',
     range_booked_warn:'That range includes a date that is already booked.',
@@ -986,7 +1076,7 @@ const T = {
     legend_booked:'Booked', legend_peak:'Peak (PH)', legend_normal:'Normal',
     day_type_peak:'Peak (PH)', day_type_low:'Low', day_type_normal:'Normal',
     hotline_text:'Hotline/WhatsApp: <b>018-3954478</b>',
-    dt_pickup_label:'Self Pickup', dt_pickup_sub:'Free',
+    dt_pickup_label:'Jetty & Airport', dt_pickup_sub:'Free',
     dt_delivery_label:'Deliver to Location', dt_delivery_sub:'+RM30',
     dt_addr_ph:'Hotel name / delivery address...',
     dt_charge_note:'RM30 delivery charge applies',
@@ -1372,7 +1462,12 @@ function renderCarList() {
   document.getElementById('carList').innerHTML = shown.map(c => `
     <div class="car-item" onclick="selectCar('${c.id}')">
       ${c.badge ? `<span class="ci-badge ${c.badgeCls}">${c.badge}</span>` : ''}
-      <div class="ci-img">${carImage(c)}</div>
+      <div class="ci-img">
+        ${carImage(c)}
+        <button class="ci-zoom-btn" onclick="event.stopPropagation();carLbOpen('${c.id}')" title="Lihat gambar penuh">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+      </div>
       <div class="ci-foot">
         <div class="ci-name-row">
           <div class="ci-name">${c.name}</div>
@@ -1498,20 +1593,81 @@ function getRateFor(id) {
   return m[id] || {name:'—', price:0, drv:false};
 }
 
+// ════════════════════════════════════════
+// EXTRA HOUR RATES BY CAR TYPE
+// ════════════════════════════════════════
+// Compact/Economy Car & Sedan: RM15/jam
+// MPV: RM20/jam
+// Van: RM25/jam
+// Luxury (MPV Luxury): RM50/jam
+// Lebih 3 jam → kira 1 hari tambahan
+function getExtraHourRate(carType) {
+  if (!carType) return 15;
+  const t = carType.toLowerCase();
+  if (t.includes('mpv luxury') || t.includes('luxury')) return 50;
+  if (t.includes('van')) return 25;
+  if (t.includes('mpv')) return 20;
+  // Economy Car, Sedan, SUV, Kei Car, Sport, 4x4 → RM15
+  return 15;
+}
+
+// Kira extra jam dari masa ambil & pulang
+// Returns { extraHours, extraCharge, extraType: 'hours'|'day'|null }
+function calcExtraTime(startIso, endIso, pickupTime, returnTime, rate) {
+  if (!startIso || !endIso) return { extraHours: 0, extraCharge: 0, extraType: null };
+
+  // Kalau pilih tarikh sama (sehari), jangan kira extra
+  // Extra jam hanya kira kalau masa pulang LEBIH LEWAT dari masa ambil pada hari terakhir
+  // Logik: kira total jam dari masa ambil hari pertama ke masa pulang hari terakhir
+  // Bandingkan dengan bilangan hari × 24 jam
+  const [ph, pm] = (pickupTime || '08:00').split(':').map(Number);
+  const [rh, rm] = (returnTime || '10:00').split(':').map(Number);
+
+  // Pickup datetime
+  const pickupDt = new Date(startIso + 'T00:00:00');
+  pickupDt.setHours(ph, pm, 0, 0);
+
+  // Return datetime — based on rangeEnd date
+  const returnDt = new Date((endIso || startIso) + 'T00:00:00');
+  returnDt.setHours(rh, rm, 0, 0);
+
+  const totalMs = returnDt - pickupDt;
+  if (totalMs <= 0) return { extraHours: 0, extraCharge: 0, extraType: null };
+
+  const totalHours = totalMs / 3600000;
+  const bookedHours = rate.days * 24; // setiap hari = 24 jam
+  const diff = totalHours - bookedHours; // jam lebih
+
+  if (diff <= 0) return { extraHours: 0, extraCharge: 0, extraType: null };
+
+  const extraHoursRounded = Math.ceil(diff);
+  const hourRate = getExtraHourRate(rate.r.type || '');
+
+  if (extraHoursRounded > 3) {
+    // Lebih 3 jam = kira 1 hari tambahan
+    const dayPrice = dayPriceFor(rate.r, getDayMeta(endIso || startIso).type);
+    return { extraHours: extraHoursRounded, extraCharge: dayPrice, extraType: 'day' };
+  } else {
+    return { extraHours: extraHoursRounded, extraCharge: hourRate * extraHoursRounded, extraType: 'hours', hourRate };
+  }
+}
+
 function getBookingCalc() {
   const id = currentSel;
   const r = getRateFor(id);
+  const pickupTime = document.getElementById('m-pickup-time')?.value || '08:00';
+  const returnTime = document.getElementById('m-return-time')?.value || '10:00';
 
   // Pakej driver = harga tetap, tiada kiraan per-hari
   if (r.drv) {
     const deliveryCharge = deliveryMode === 'delivery' ? DELIVERY_CHARGE : 0;
     const total = r.price + deliveryCharge;
-    return { r, startIso:rangeStart, endIso:null, pickedIso:rangeStart, days:1, total, breakdown:[], deliveryCharge };
+    return { r, startIso:rangeStart, endIso:null, pickedIso:rangeStart, days:1, total, breakdown:[], deliveryCharge, pickupTime, returnTime, extraHours:0, extraCharge:0, extraType:null };
   }
 
   // belum pilih tarikh
   if (!rangeStart) {
-    return { r, startIso:null, endIso:null, pickedIso:null, days:0, total:0, breakdown:[] };
+    return { r, startIso:null, endIso:null, pickedIso:null, days:0, total:0, breakdown:[], pickupTime, returnTime, extraHours:0, extraCharge:0, extraType:null };
   }
 
   // senarai hari sewa (24 jam/unit): start .. end-1; kalau sehari → [start]
@@ -1540,7 +1696,11 @@ function getBookingCalc() {
   const deliveryCharge = deliveryMode === 'delivery' ? DELIVERY_CHARGE : 0;
   total += deliveryCharge;
 
-  return { r, startIso:rangeStart, endIso:rangeEnd, pickedIso:rangeStart, days, total, breakdown, deliveryCharge };
+  // Kira extra jam
+  const extra = calcExtraTime(rangeStart, rangeEnd || rangeStart, pickupTime, returnTime, { days, r });
+  total += extra.extraCharge;
+
+  return { r, startIso:rangeStart, endIso:rangeEnd, pickedIso:rangeStart, days, total, breakdown, deliveryCharge, pickupTime, returnTime, extraHours:extra.extraHours, extraCharge:extra.extraCharge, extraType:extra.extraType, hourRate:extra.hourRate };
 }
 
 function fmtDate(iso) {
@@ -1568,19 +1728,45 @@ function renderBookingSummary(b) {
     return;
   }
 
+  // Format time 24h → 12h
+  function fmt12(timeStr) {
+    if (!timeStr) return '';
+    const [h, m] = timeStr.split(':').map(Number);
+    const ampm = h < 12 ? 'AM' : 'PM';
+    const h12 = h % 12 || 12;
+    return `${h12}:${String(m).padStart(2,'0')} ${ampm}`;
+  }
+
   const daysLabel = `${b.days} ${b.days > 1 ? t.unit_days : t.unit_day}`;
-  // nota jika harga bercampur (ada peak / low dalam julat)
   const types = [...new Set(b.breakdown.map(d => d.type))];
   const mixedNote = (types.length > 1)
     ? `<div class="sum-line sum-note"><span>${t.sum_mixed}</span><span></span></div>` : '';
   const delivLine = b.deliveryCharge
     ? `<div class="sum-line" style="color:var(--cyan-dark);font-weight:600"><span>${t.sum_delivery_charge}</span><span>+RM${b.deliveryCharge}</span></div>` : '';
 
+  // Extra hour / day line
+  let extraLine = '';
+  if (b.extraType === 'hours' && b.extraCharge > 0) {
+    const note = (t.sum_extra_note_hours||'').replace('{n}', b.extraHours).replace('{rate}', b.hourRate).replace('{n}', b.extraHours);
+    extraLine = `<div class="sum-line" style="color:#856404;font-weight:600">
+      <span>⏰ ${t.sum_extra_hours} <span style="font-size:.72rem;font-weight:400;color:var(--ink-light)">(${note})</span></span>
+      <span>+RM${b.extraCharge}</span>
+    </div>
+    <div class="extra-hour-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${t.sum_extra_note_hours?.replace('{n}', b.extraHours).replace('{rate}', b.hourRate).replace('{n}', b.extraHours)||''}</div>`;
+  } else if (b.extraType === 'day' && b.extraCharge > 0) {
+    extraLine = `<div class="sum-line" style="color:#9B1C1C;font-weight:600">
+      <span>📅 ${t.sum_extra_day}</span>
+      <span>+RM${b.extraCharge}</span>
+    </div>
+    <div class="extra-day-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${t.sum_extra_note_day||''}</div>`;
+  }
+
   box.innerHTML =
-    `<div class="sum-line"><span>${t.sum_pickup}</span><span>${fmtDate(b.startIso)}</span></div>
-     <div class="sum-line"><span>${t.sum_return}</span><span>${b.endIso ? fmtDate(b.endIso) : '—'}</span></div>
+    `<div class="sum-line"><span>${t.sum_pickup}</span><span>${fmtDate(b.startIso)} · <b>${fmt12(b.pickupTime)}</b></span></div>
+     <div class="sum-line"><span>${t.sum_return}</span><span>${b.endIso ? fmtDate(b.endIso) : fmtDate(b.startIso)} · <b>${fmt12(b.returnTime)}</b></span></div>
      <div class="sum-line"><span>${t.sum_days}</span><span>${daysLabel}</span></div>
      ${mixedNote}
+     ${extraLine}
      ${delivLine}
      <div class="sum-total-line"><span>${t.sum_total}</span><b>RM ${b.total.toLocaleString()}</b></div>`;
 }
@@ -1756,18 +1942,39 @@ function sendWA() {
   const deliveryAddr = isDelivery ? (document.getElementById('m-delivery-addr').value.trim() || '-') : '';
   const total = 'RM' + booking.total.toLocaleString();
 
+  // Format time helper
+  function fmt12wa(ts) {
+    if (!ts) return '';
+    const [h,m] = ts.split(':').map(Number);
+    return `${h%12||12}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`;
+  }
+  const ptStr = fmt12wa(booking.pickupTime);
+  const rtStr = fmt12wa(booking.returnTime);
+
+  // Extra charge line
+  let extraWA = '';
+  if (booking.extraType === 'hours' && booking.extraCharge > 0) {
+    extraWA = lang==='ms'
+      ? `%0ACaj Extra Jam: +RM${booking.extraCharge} (${booking.extraHours} jam × RM${booking.hourRate})`
+      : `%0AExtra Hour Charge: +RM${booking.extraCharge} (${booking.extraHours} hr × RM${booking.hourRate})`;
+  } else if (booking.extraType === 'day' && booking.extraCharge > 0) {
+    extraWA = lang==='ms'
+      ? `%0ACaj Extra Hari: +RM${booking.extraCharge} (lebih 3 jam = 1 hari tambahan)`
+      : `%0AExtra Day Charge: +RM${booking.extraCharge} (over 3 hrs = 1 extra day)`;
+  }
+
   let locLine, delivLine;
   if (lang === 'ms') {
     locLine = isDelivery
       ? `Mod: Penghantaran ke lokasi%0AAlamat: ${deliveryAddr}%0ACaj Penghantaran: +RM30`
       : `Mod: Pickup sendiri`;
-    const msg = `Hai Kakak! Saya ingin membuat tempahan:%0A%0ANama: ${name}%0ANo. WA: ${document.getElementById('m-phone').value||'-'}%0APilihan: ${r.name}%0AAmbil: ${from}%0APulang: ${to}%0ATempoh: ${days} hari%0A${locLine}%0AAnggaran: ${total}`;
+    const msg = `Hai Kakak! Saya ingin membuat tempahan:%0A%0ANama: ${name}%0ANo. WA: ${document.getElementById('m-phone').value||'-'}%0APilihan: ${r.name}%0AAmbil: ${from} (${ptStr})%0APulang: ${to} (${rtStr})%0ATempoh: ${days} hari${extraWA}%0A${locLine}%0AAnggaran: ${total}`;
     window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
   } else {
     locLine = isDelivery
       ? `Mode: Delivery to location%0AAddress: ${deliveryAddr}%0ADelivery Fee: +RM30`
       : `Mode: Self pickup`;
-    const msg = `Hi Kakak! I'd like to make a booking:%0A%0AName: ${name}%0AWA: ${document.getElementById('m-phone').value||'-'}%0ACar/Package: ${r.name}%0APickup: ${from}%0AReturn: ${to}%0ADuration: ${days} days%0A${locLine}%0AEstimate: ${total}`;
+    const msg = `Hi Kakak! I'd like to make a booking:%0A%0AName: ${name}%0AWA: ${document.getElementById('m-phone').value||'-'}%0ACar/Package: ${r.name}%0APickup: ${from} (${ptStr})%0AReturn: ${to} (${rtStr})%0ADuration: ${days} days${extraWA}%0A${locLine}%0AEstimate: ${total}`;
     window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
   }
   closeModal();
@@ -2535,6 +2742,35 @@ window.KADMIN = (function(){
   };
   setTimeout(init, 100);
 })();
+
+// ── CAR IMAGE LIGHTBOX ─────────────────────────────
+let _carLbId = null;
+function carLbOpen(carId) {
+  const car = CAR_DATA.find(c => c.id === carId);
+  if (!car) return;
+  const src = CAR_IMAGE_SRC[car.id];
+  if (!src) return; // no real image, skip
+  _carLbId = carId;
+  document.getElementById('carLbImg').src = src;
+  document.getElementById('carLbName').textContent = car.name;
+  const t = T[lang];
+  document.getElementById('carLbPrice').textContent = `RM ${car.price} / ${t.unit_day||'hari'}`;
+  document.getElementById('carLbBook').textContent = lang==='ms' ? 'Tempah Sekarang' : 'Book Now';
+  document.getElementById('carLb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function carLbClose() {
+  document.getElementById('carLb').classList.remove('open');
+  document.body.style.overflow = '';
+  _carLbId = null;
+}
+function carLbBook() {
+  carLbClose();
+  if (_carLbId) selectCar(_carLbId);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('carLb').classList.contains('open')) carLbClose();
+});
 
 </script>
 
