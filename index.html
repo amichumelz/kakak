@@ -65,6 +65,25 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 .hero-text{text-align:center;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4)}
 .hero-text h1{font-family:'Barlow Semi Condensed';font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:.01em;margin-bottom:10px;line-height:1.15}
 .hero-text h1 span{font-style:italic}
+@keyframes shimmerGlow{
+  0%{background-position:200% center;filter:drop-shadow(0 0 6px rgba(0,188,212,.4))}
+  50%{filter:drop-shadow(0 0 18px rgba(0,188,212,.9)) drop-shadow(0 0 32px rgba(0,220,240,.5))}
+  100%{background-position:-200% center;filter:drop-shadow(0 0 6px rgba(0,188,212,.4))}
+}
+@keyframes floatY{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+.logo-glow{
+  display:inline-block;
+  background:linear-gradient(90deg,#fff 20%,#00BCD4 40%,#7EEEFF 55%,#00BCD4 70%,#fff 80%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmerGlow 3s linear infinite, floatY 4s ease-in-out infinite;
+  text-shadow:none;
+}
 .hero-text p{font-size:clamp(.9rem,2vw,1.1rem);opacity:.9;max-width:500px;margin:0 auto;line-height:1.6}
 .hero-booking-bar{background:rgba(255,255,255,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:24px 28px;width:100%;max-width:900px;box-shadow:0 8px 40px rgba(0,0,0,.25)}
 .hero-booking-inner{display:grid;grid-template-columns:2fr 1fr 1fr auto;align-items:end;gap:14px}
@@ -470,7 +489,7 @@ footer{background:var(--cyan);padding:60px 0 0}
   </div>
   <div class="hero-content">
     <div class="hero-text">
-      <h1><span data-i18n="hero_h1_pre" style="color:#fff">Kakak Kereta Sewa</span> <span data-i18n="hero_h1_span" style="font-style:italic;color:#fff">( Syahirah )</span></h1>
+      <h1><span data-i18n="hero_h1_pre" class="logo-glow">Kakak Kereta Sewa</span> <span data-i18n="hero_h1_span" style="font-style:italic;color:#fff">( Syahirah )</span></h1>
       <p data-i18n="hero_sub">Dari serendah RM80/Hari. Pilih kereta, pilih destinasi, ikut gaya kamu.</p>
     </div>
     <div class="hero-booking-bar">
@@ -1601,13 +1620,19 @@ function getRateFor(id) {
 // Van: RM25/jam
 // Luxury (MPV Luxury): RM50/jam
 // Lebih 3 jam → kira 1 hari tambahan
-function getExtraHourRate(carType) {
+function getExtraHourRate(carType, carId) {
+  // Kereta specific yang kira luxury (RM50/jam)
+  const luxuryIds = ['camry', 'jimny'];
+  if (carId && luxuryIds.includes(carId.toLowerCase())) return 50;
+
   if (!carType) return 15;
   const t = carType.toLowerCase();
   if (t.includes('mpv luxury') || t.includes('luxury')) return 50;
   if (t.includes('van')) return 25;
   if (t.includes('mpv')) return 20;
-  // Economy Car, Sedan, SUV, Kei Car, Sport, 4x4 → RM15
+  // SUV → kira sama macam MPV (RM20/jam)
+  if (t.includes('suv')) return 20;
+  // Economy Car, Sedan, Kei Car, Sport, 4x4 → RM15
   return 15;
 }
 
@@ -1641,7 +1666,7 @@ function calcExtraTime(startIso, endIso, pickupTime, returnTime, rate) {
   if (diff <= 0) return { extraHours: 0, extraCharge: 0, extraType: null };
 
   const extraHoursRounded = Math.ceil(diff);
-  const hourRate = getExtraHourRate(rate.r.type || '');
+  const hourRate = getExtraHourRate(rate.r.type || '', rate.r.id || '');
 
   if (extraHoursRounded > 3) {
     // Lebih 3 jam = kira 1 hari tambahan
