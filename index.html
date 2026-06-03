@@ -283,6 +283,12 @@ footer{background:var(--cyan);padding:60px 0 0}
 .modal-foot .btn{flex:1}
 .btn-stripe{background:#635BFF;color:#fff}
 .btn-stripe:hover{background:#4F46E5}
+.btn-fpx{background:#E8002D;color:#fff}
+.btn-fpx:hover{background:#C0001E}
+.pay-method-wrap{display:flex;flex-direction:column;gap:8px;width:100%}
+.pay-method-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-light);text-align:center;margin:4px 0 2px}
+.pay-method-row{display:flex;gap:10px;width:100%}
+.pay-method-row .btn{flex:1}
 @media(max-width:560px){
   /* Modal jadi bottom sheet penuh */
   .modal-backdrop{padding:0;align-items:flex-end}
@@ -650,12 +656,21 @@ footer{background:var(--cyan);padding:60px 0 0}
         <input type="hidden" id="m-loc" value="pickup">
       </div>
     </div>
-    <div class="modal-foot">
-      <button class="btn" style="background:#25D366;color:#fff;flex:1" onclick="sendWA()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.836L.047 23.954l6.282-1.49C7.886 23.47 9.9 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.636-.508-5.148-1.394l-.369-.219-3.73.885.924-3.638-.241-.374C2.54 15.704 2 13.914 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-        <span data-i18n="modal_send">Hantar via WhatsApp</span>
-      </button>
-      <button class="btn btn-stripe" id="payBtn" onclick="payDeposit()" data-i18n="pay_deposit">Tempah Sekarang</button>
+    <div class="modal-foot" style="flex-direction:column;gap:10px">
+      <div class="pay-method-row">
+        <button class="btn" style="background:#25D366;color:#fff" onclick="sendWA()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.836L.047 23.954l6.282-1.49C7.886 23.47 9.9 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.636-.508-5.148-1.394l-.369-.219-3.73.885.924-3.638-.241-.374C2.54 15.704 2 13.914 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          <span data-i18n="modal_send">Hantar via WhatsApp</span>
+        </button>
+      </div>
+      <div class="pay-method-label">— atau bayar terus —</div>
+      <div class="pay-method-row">
+        <button class="btn btn-fpx" id="payFpxBtn" onclick="payFPX()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          <span data-i18n="pay_fpx">Bayar FPX (Online Banking)</span>
+        </button>
+        <button class="btn btn-stripe" id="payBtn" onclick="payDeposit()" data-i18n="pay_deposit">Kad / Apple Pay</button>
+      </div>
     </div>
   </div>
 </div>
@@ -694,7 +709,7 @@ footer{background:var(--cyan);padding:60px 0 0}
       <p id="sp-subtitle">Pembayaran kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.</p>
       <div class="success-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Selamat &amp; disahkan oleh Stripe
+        Selamat &amp; disahkan
       </div>
     </div>
     <div class="success-body">
@@ -791,9 +806,12 @@ const T = {
     dt_delivery_label:'Hantar ke Lokasi', dt_delivery_sub:'+RM30',
     dt_addr_ph:'Nama hotel / alamat penghantaran...',
     dt_charge_note:'Caj penghantaran RM30 dikenakan',
-    pay_deposit:'Tempah Sekarang',
-    pay_processing:'Sedang buka Stripe...',
-    pay_error:'Gagal buka Stripe. Cuba lagi.',
+    pay_deposit:'Kad / Apple Pay',
+    pay_fpx:'Bayar FPX (Online Banking)',
+    pay_processing:'Memproses...',
+    pay_error:'Gagal. Cuba lagi.',
+    pay_fpx_processing:'Membuka ToyyibPay...',
+    pay_fpx_error:'Gagal buka ToyyibPay. Cuba lagi.',
     pay_success:'Pembayaran berjaya dalam test mode.',
     pay_cancel:'Pembayaran dibatalkan.',
     modal_send:'Hantar via WhatsApp', wa_btn:'Tempah via WhatsApp (018-3954478)',
@@ -898,9 +916,12 @@ const T = {
     dt_delivery_label:'Deliver to Location', dt_delivery_sub:'+RM30',
     dt_addr_ph:'Hotel name / delivery address...',
     dt_charge_note:'RM30 delivery charge applies',
-    pay_deposit:'Book Now',
-    pay_processing:'Opening Stripe...',
-    pay_error:'Failed to open Stripe. Please try again.',
+    pay_deposit:'Card / Apple Pay',
+    pay_fpx:'Pay FPX (Online Banking)',
+    pay_processing:'Processing...',
+    pay_error:'Error. Please try again.',
+    pay_fpx_processing:'Opening ToyyibPay...',
+    pay_fpx_error:'Failed to open ToyyibPay. Please try again.',
     pay_success:'Payment successful in test mode.',
     pay_cancel:'Payment cancelled.',
     modal_send:'Send via WhatsApp', wa_btn:'Book via WhatsApp (018-3954478)',
@@ -1659,6 +1680,51 @@ function sendWA() {
   closeModal();
 }
 
+async function payFPX() {
+  const name = document.getElementById('m-name').value.trim();
+  if (!name) { showToast(lang==='ms'?'Sila isi nama dahulu':'Please enter your name first'); return; }
+
+  const booking = getBookingCalc();
+  if (!booking.r.drv && !booking.startIso) {
+    showToast(lang==='ms'?'Sila pilih tarikh ambil dahulu':'Please select a pickup date first'); return;
+  }
+  const carName = booking.r.name;
+  const total = booking.total;
+  const days = booking.days;
+  const carId = booking.r.drv ? '' : selectedCarId();
+  const dates = booking.breakdown.map(d => d.iso).join(',');
+  const phone = document.getElementById('m-phone').value.trim();
+  const startIso = booking.startIso || '';
+  const endIso = booking.endIso || '';
+
+  const btn = document.getElementById('payFpxBtn');
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${lang==='ms'?'Memproses...':'Processing...'}`;
+
+  try {
+    const res = await fetch(WORKER_URL + 'toyyibpay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ carName, total, days, customerName: name, phone, lang, carId, dates, startIso, endIso }),
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      showToast(data.error || (lang==='ms' ? T.ms.pay_fpx_error : T.en.pay_fpx_error));
+      btn.disabled = false;
+      btn.innerHTML = oldText;
+    }
+  } catch (err) {
+    showToast(lang==='ms' ? 'Gagal sambung ke server.' : 'Failed to connect to server.');
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
+}
+
 async function payDeposit() {
   const name = document.getElementById('m-name').value.trim();
   if (!name) { showToast(lang==='ms'?'Sila isi nama dahulu':'Please enter your name first'); return; }
@@ -1782,22 +1848,77 @@ renderTesti();
 renderFAQ();
 
 // ════════════════════════════════════════
-// SUCCESS PAGE
-// ════════════════════════════════════════
 async function checkPaySuccess() {
   const params = new URLSearchParams(window.location.search);
   const payStatus = params.get('pay');
   const sessionId = params.get('session_id');
 
+  // ToyyibPay return URL params
+  const statusId  = params.get('status_id');   // 1=success, 2=pending, 3=fail
+  const billcode  = params.get('billcode');
+  const orderId   = params.get('order_id');
+
+  // Handle ToyyibPay redirect
+  if (statusId && billcode) {
+    if (statusId === '1') {
+      showSuccessPageFPX(billcode, orderId);
+    } else if (statusId === '2') {
+      showToast(lang==='ms' ? '⏳ Pembayaran dalam proses. Kami akan hubungi anda.' : '⏳ Payment pending. We will contact you.');
+    } else {
+      showToast(lang==='ms' ? T.ms.pay_cancel : T.en.pay_cancel);
+    }
+    return;
+  }
+
+  // Handle Stripe redirect
   if (payStatus === 'success' && sessionId) {
     showSuccessPage(sessionId);
   } else if (payStatus === 'success') {
-    // Fallback kalau takde session_id
     showToast(T[lang].pay_success);
   } else if (payStatus === 'cancel') {
     showToast(T[lang].pay_cancel);
   }
 }
+
+async function showSuccessPageFPX(billcode, orderId) {
+  const page = document.getElementById('successPage');
+  page.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('sp-name').textContent    = '...';
+  document.getElementById('sp-car').textContent     = '...';
+  document.getElementById('sp-email').textContent   = '...';
+  document.getElementById('sp-amount').textContent  = '...';
+  document.getElementById('sp-receipt').textContent = '...';
+
+  try {
+    const res  = await fetch(WORKER_URL + 'toyyibpay-session?billcode=' + billcode + (orderId ? '&order_id=' + orderId : ''));
+    const data = await res.json();
+    const isMs = lang === 'ms';
+
+    document.getElementById('sp-title').textContent    = isMs ? 'Pembayaran Berjaya! 🎉' : 'Payment Successful! 🎉';
+    document.getElementById('sp-subtitle').textContent = isMs
+      ? 'Pembayaran FPX anda telah diterima. Kami akan hubungi anda tidak lama lagi.'
+      : 'Your FPX payment has been received. We will contact you shortly.';
+    document.getElementById('sp-namelabel').textContent  = isMs ? 'Nama' : 'Name';
+    document.getElementById('sp-carlabel').textContent   = isMs ? 'Tempahan' : 'Booking';
+    document.getElementById('sp-emaillabel').textContent = isMs ? 'No. WhatsApp' : 'WhatsApp';
+    document.getElementById('sp-totallabel').textContent = isMs ? 'Jumlah Dibayar' : 'Amount Paid';
+
+    document.getElementById('sp-name').textContent    = data.customerName || '—';
+    document.getElementById('sp-car').textContent     = data.itemName     || '—';
+    document.getElementById('sp-email').textContent   = data.phone        || data.email || '—';
+    document.getElementById('sp-amount').textContent  = data.amount ? 'RM ' + Number(data.amount).toFixed(2) : '—';
+    document.getElementById('sp-receipt').textContent = data.receiptId    || billcode || '—';
+
+    fetchBooked();
+  } catch (e) {
+    document.getElementById('sp-name').textContent = '—';
+    document.getElementById('sp-receipt').textContent = billcode || (lang==='ms' ? 'Sila hubungi kami untuk pengesahan.' : 'Please contact us for confirmation.');
+  }
+}
+
+
 
 async function showSuccessPage(sessionId) {
   const page = document.getElementById('successPage');
