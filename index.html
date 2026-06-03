@@ -336,25 +336,31 @@ footer{background:var(--cyan);padding:60px 0 0}
 
 /* SUCCESS PAGE */
 .success-page{display:none;position:fixed;inset:0;z-index:999;background:#f7fafc;overflow-y:auto}
-.success-page.show{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px}
-.success-card{background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.12);max-width:520px;width:100%;overflow:hidden}
-.success-head{background:linear-gradient(135deg,#00BCD4,#009BB5);padding:40px 36px 32px;text-align:center;color:#fff}
-.success-head .checkmark{width:72px;height:72px;background:rgba(255,255,255,.2);border-radius:50%;display:grid;place-items:center;margin:0 auto 20px}
-.success-head .checkmark svg{width:38px;height:38px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.success-head h2{font-family:'Barlow Semi Condensed';font-size:1.9rem;font-weight:700;margin-bottom:6px}
-.success-head p{font-size:.95rem;opacity:.88;line-height:1.5}
-.success-body{padding:32px 36px}
-.receipt-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px dashed var(--border);font-size:.9rem}
+.success-page.show{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px}
+.success-card{background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.12);max-width:480px;width:100%;overflow:hidden}
+.success-head{background:linear-gradient(135deg,#00BCD4,#009BB5);padding:24px 28px 20px;text-align:center;color:#fff}
+.success-head .checkmark{width:56px;height:56px;background:rgba(255,255,255,.2);border-radius:50%;display:grid;place-items:center;margin:0 auto 12px}
+.success-head .checkmark svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.success-head h2{font-family:'Barlow Semi Condensed';font-size:1.6rem;font-weight:700;margin-bottom:4px}
+.success-head p{font-size:.85rem;opacity:.88;line-height:1.4}
+.success-body{padding:20px 28px 16px}
+.receipt-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--border);font-size:.88rem}
 .receipt-row:last-of-type{border-bottom:none}
 .receipt-row .label{color:var(--ink-mid);font-weight:500}
 .receipt-row .val{font-weight:700;color:var(--ink);text-align:right;max-width:60%}
-.receipt-row.total-row .label{font-size:1rem;font-weight:700;color:var(--ink)}
-.receipt-row.total-row .val{font-family:'Barlow Semi Condensed';font-size:1.6rem;color:var(--cyan)}
-.receipt-id{background:var(--bg2);border-radius:10px;padding:12px 16px;margin:20px 0 0;font-size:.75rem;color:var(--ink-mid);word-break:break-all}
-.receipt-id b{display:block;margin-bottom:4px;color:var(--ink);font-size:.78rem}
-.success-actions{display:flex;gap:12px;padding:0 36px 32px;flex-wrap:wrap}
-.success-actions .btn{flex:1;min-width:140px}
-.success-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border-radius:999px;padding:6px 14px;font-size:.82rem;font-weight:600;margin-top:12px}
+.receipt-row.total-row .label{font-size:.95rem;font-weight:700;color:var(--ink)}
+.receipt-row.total-row .val{font-family:'Barlow Semi Condensed';font-size:1.5rem;color:var(--cyan)}
+.receipt-id{background:var(--bg2);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.72rem;color:var(--ink-mid);word-break:break-all}
+.receipt-id b{display:block;margin-bottom:3px;color:var(--ink);font-size:.75rem}
+.success-actions{display:flex;gap:10px;padding:14px 28px 22px;flex-wrap:wrap}
+.success-actions .btn{flex:1;min-width:120px;font-size:.82rem;padding:11px 16px}
+.success-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border-radius:999px;padding:5px 12px;font-size:.78rem;font-weight:600;margin-top:8px}
+@media print{
+  body > *:not(#successPage){display:none!important}
+  .success-page{position:static!important;background:#fff!important;padding:0!important}
+  .success-actions{display:none!important}
+  .success-card{box-shadow:none!important;border-radius:0!important;max-width:100%!important}
+}
 </style>
 </head>
 <body>
@@ -1850,6 +1856,17 @@ renderTesti();
 renderFAQ();
 
 // ════════════════════════════════════════
+function notifyOwnerWA({ name, car, phone, amount, receipt, type }) {
+  var txt = 'TEMPAHAN BARU DITERIMA' +
+    '%0A%0ANama: ' + encodeURIComponent(name || '-') +
+    '%0AKereta: ' + encodeURIComponent(car || '-') +
+    '%0AKontak: ' + encodeURIComponent(phone || '-') +
+    '%0ABayaran: RM ' + (Number(amount) || 0).toFixed(2) + ' (' + encodeURIComponent(type) + ')' +
+    '%0AID: ' + encodeURIComponent(receipt || '-') +
+    '%0A%0ASila hubungi pelanggan untuk pengesahan.';
+  window.open('https://wa.me/60194863077?text=' + txt, '_blank');
+}
+
 async function checkPaySuccess() {
   const params = new URLSearchParams(window.location.search);
   const payStatus = params.get('pay');
@@ -1914,6 +1931,12 @@ async function showSuccessPageFPX(billcode, orderId) {
     document.getElementById('sp-receipt').textContent = data.receiptId    || billcode || '—';
 
     fetchBooked();
+    // Notify owner via WA
+    notifyOwnerWA({
+      name: data.customerName, car: data.itemName,
+      phone: data.phone, amount: data.amount,
+      receipt: data.receiptId || billcode, type: 'FPX'
+    });
   } catch (e) {
     document.getElementById('sp-name').textContent = '—';
     document.getElementById('sp-receipt').textContent = billcode || (lang==='ms' ? 'Sila hubungi kami untuk pengesahan.' : 'Please contact us for confirmation.');
@@ -1957,6 +1980,12 @@ async function showSuccessPage(sessionId) {
 
       // server dah rekod tarikh booked semasa sahkan bayaran — refresh kalendar
       fetchBooked();
+      // Notify owner via WA
+      notifyOwnerWA({
+        name: data.customerName, car: data.itemName,
+        phone: data.email, amount: data.amount,
+        receipt: data.receiptId, type: 'Kad/Apple Pay'
+      });
     }
   } catch (e) {
     document.getElementById('sp-name').textContent = '—';
