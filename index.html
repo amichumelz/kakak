@@ -116,9 +116,6 @@ nav{display:flex;align-items:center;height:72px;gap:32px}
 .dot.active{background:var(--cyan)}
 @media(max-width:900px){.welcome-grid{grid-template-columns:1fr;gap:40px}}
 
-/* BRAND SHOWCASE */
-.brand-sec{background:var(--bg2)}
-.brand-sec-header{margin-bottom:40px}
 .brand-showcase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .brand-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:box-shadow .22s,transform .22s}
 .brand-card:hover{box-shadow:0 10px 30px rgba(0,0,0,.11);transform:translateY(-3px)}
@@ -407,7 +404,7 @@ footer{background:var(--cyan);padding:60px 0 0}
 <!-- NAV -->
 <header>
   <nav class="wrap">
-    <a href="#" class="logo">KAKAK</a>
+    <a href="#"><img src="assets/logo.png" alt="Kakak" style="height:40px;width:auto;display:block"></a>
     <div class="navlinks" id="nav">
       <div class="has-drop"><span data-i18n="nav_about">Tentang Kami</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         <div class="drop-menu">
@@ -424,7 +421,6 @@ footer{background:var(--cyan);padding:60px 0 0}
         </div>
       </div>
       <a href="#cars" data-i18n="nav_cars">Kereta</a>
-      <a href="#dest" data-i18n="nav_brands">Jenama</a>
       <a href="#faq" data-i18n="nav_help">Bantuan</a>
       <a href="#gallery">Galeri</a>
       <a href="#testi">Testimonial</a>
@@ -444,11 +440,11 @@ footer{background:var(--cyan);padding:60px 0 0}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Langkawi_Malaysia_Aerial-view-of-Langkawi-01.jpg/1280px-Langkawi_Malaysia_Aerial-view-of-Langkawi-01.jpg" alt="Langkawi">
+    <img src="assets/langkawi.jpg" alt="Langkawi">
   </div>
   <div class="hero-content">
     <div class="hero-text">
-      <h1 data-i18n="hero_h1_pre">Masa untuk <span data-i18n="hero_h1_span">jelajah Langkawi</span> sesuka hati</h1>
+      <h1><span data-i18n="hero_h1_pre">Kakak Kereta Sewa</span> <span data-i18n="hero_h1_span" style="font-style:italic;color:var(--cyan)">( Syahirah )</span></h1>
       <p data-i18n="hero_sub">Dari serendah RM80/Hari. Pilih kereta, pilih destinasi, ikut gaya kamu.</p>
     </div>
     <div class="hero-booking-bar">
@@ -509,16 +505,6 @@ footer{background:var(--cyan);padding:60px 0 0}
   </div>
 </section>
 
-<!-- BRAND SHOWCASE -->
-<section class="sec brand-sec" id="dest">
-  <div class="wrap">
-    <div class="brand-sec-header reveal">
-      <h2 class="sec-title" data-i18n="brand_h2">Pilih Jenama Kereta Kamu dari Koleksi Terkini.</h2>
-      <p class="sec-sub" style="margin-top:10px" data-i18n="brand_sub">Tekan jenama untuk lihat semua model yang tersedia.</p>
-    </div>
-    <div class="brand-showcase-grid" id="brandShowcase"></div>
-  </div>
-</section>
 
 <!-- CARS -->
 <section class="sec" id="cars">
@@ -655,10 +641,6 @@ footer{background:var(--cyan);padding:60px 0 0}
       <div class="foot-col">
         <h5 data-i18n="nav_cars">Kereta</h5>
         <ul>
-          <li><a href="#dest" class="bold">Perodua</a></li>
-          <li><a href="#dest">Proton</a></li>
-          <li><a href="#dest">Honda</a></li>
-          <li><a href="#dest">Toyota</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -844,7 +826,7 @@ const T = {
     mb_invalid:'Sila masukkan e-mel yang sah.',
     mb_err:'Tidak dapat hubungi server. Sila cuba semula.',
     nav_brands:'Jenama', nav_help:'Bantuan', nav_book:'Tempah Sekarang',
-    hero_h1_pre:'Masa untuk ', hero_h1_span:'jelajah Langkawi', hero_h1_suf:' sesuka hati',
+    hero_h1_pre:'Kakak Kereta Sewa', hero_h1_span:'( Syahirah )', hero_h1_suf:'',
     hero_sub:'Dari serendah RM80/Hari. Pilih kereta, pilih destinasi, ikut gaya kamu.', hb_car:'Pilih Kereta', hb_pickup:'Tarikh Ambil', hb_days:'Bilangan Hari', hb_btn:'Tempah Sekarang', hero_search_ph:'Cari kereta, destinasi, atau servis...', hero_search_btn:'Cari',
     welcome_h2:'Selamat Datang ke Sewa Kereta Mesra-Bajet di Langkawi',
     welcome_tag1:'Dari serendah RM80/Hari. Mana-mana destinasi, ikut gaya kamu.',
@@ -954,7 +936,7 @@ const T = {
     mb_invalid:'Please enter a valid email.',
     mb_err:'Could not reach server. Please try again.',
     nav_brands:'Brands', nav_help:'Help', nav_book:'Book Now',
-    hero_h1_pre:'Time to ', hero_h1_span:'explore Langkawi', hero_h1_suf:' your own way',
+    hero_h1_pre:'Kakak Kereta Sewa', hero_h1_span:'( Syahirah )', hero_h1_suf:'',
     hero_sub:'From as low as RM80/Day. Pick your car, pick your destination.', hb_car:'Select Car', hb_pickup:'Pickup Date', hb_days:'Number of Days', hb_btn:'Book Now', hero_search_ph:'Search cars, destinations, or services...', hero_search_btn:'Search',
     welcome_h2:'Welcome to Budget-Friendly Car Rental in Langkawi',
     welcome_tag1:'From only RM80/Day. Any destination, your style.',
