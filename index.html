@@ -608,6 +608,7 @@ footer{background:var(--cyan);padding:60px 0 0}
         <div class="fg"><label data-i18n="modal_name">Nama Penuh</label><input type="text" id="m-name" data-i18n-placeholder="modal_name_ph" placeholder="Ahmad bin Ali"></div>
         <div class="fg"><label data-i18n="modal_wa">No. WhatsApp</label><input type="tel" id="m-phone" placeholder="011-xxxx xxxx"></div>
       </div>
+      <div class="fg"><label data-i18n="modal_email">Alamat E-mel</label><input type="email" id="m-email" placeholder="contoh@email.com"></div>
       <div class="fg"><label data-i18n="modal_car">Kereta / Pakej Dipilih</label><div class="selected-item" id="m-car-display">—</div></div>
       <input type="hidden" id="m-from">
       <div class="fg">
@@ -786,7 +787,7 @@ const T = {
     foot_privacy:'Dasar Privasi', foot_contact:'Hubungi Kami',
     foot_bottom:'KAKAK SDN. BHD. · Pantai Cenang, Langkawi, Kedah · Laman demonstrasi',
     modal_h:'Buat Tempahan', modal_name:'Nama Penuh', modal_name_ph:'Ahmad bin Ali',
-    modal_wa:'No. WhatsApp', modal_car:'Kereta / Pakej Dipilih',
+    modal_wa:'No. WhatsApp', modal_email:'Alamat E-mel', modal_car:'Kereta / Pakej Dipilih',
     modal_days:'Bilangan Hari', modal_date:'Tarikh Ambil', modal_calendar:'Kalendar Harga & Ketersediaan', modal_loc:'Lokasi Ambil',
     modal_delivery_label:'Cara Terima Kereta',
     modal_summary:'Ringkasan Tempahan',
@@ -896,7 +897,7 @@ const T = {
     foot_privacy:'Privacy Policy', foot_contact:'Contact Us',
     foot_bottom:'KAKAK SDN. BHD. · Pantai Cenang, Langkawi, Kedah · Demo website',
     modal_h:'Make a Booking', modal_name:'Full Name', modal_name_ph:'Ahmad bin Ali',
-    modal_wa:'WhatsApp Number', modal_car:'Selected Car / Package',
+    modal_wa:'WhatsApp Number', modal_email:'Email Address', modal_car:'Selected Car / Package',
     modal_days:'Number of Days', modal_date:'Pickup Date', modal_calendar:'Availability & Price Calendar', modal_loc:'Pickup Location',
     modal_delivery_label:'How to Receive the Car',
     modal_summary:'Booking Summary',
@@ -1694,6 +1695,7 @@ async function payFPX() {
   const carId = booking.r.drv ? '' : selectedCarId();
   const dates = booking.breakdown.map(d => d.iso).join(',');
   const phone = document.getElementById('m-phone').value.trim();
+  const email = document.getElementById('m-email').value.trim();
   const startIso = booking.startIso || '';
   const endIso = booking.endIso || '';
 
@@ -1706,7 +1708,7 @@ async function payFPX() {
     const res = await fetch(WORKER_URL + 'toyyibpay', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ carName, total, days, customerName: name, phone, lang, carId, dates, startIso, endIso }),
+      body: JSON.stringify({ carName, total, days, customerName: name, phone, email, lang, carId, dates, startIso, endIso }),
     });
 
     const data = await res.json();
