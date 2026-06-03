@@ -414,7 +414,6 @@ footer{background:var(--cyan);padding:60px 0 0}
         </div>
       </div>
       <a href="#cars" data-i18n="nav_cars">Kereta</a>
-      <a href="#dest" data-i18n="nav_brands">Jenama</a>
       <a href="#faq" data-i18n="nav_help">Bantuan</a>
       <a href="#gallery">Galeri</a>
       <a href="#testi">Testimonial</a>
@@ -463,7 +462,7 @@ footer{background:var(--cyan);padding:60px 0 0}
         <p class="tagline" style="margin-top:6px;color:var(--ink-mid)" data-i18n="welcome_tag2">Sewa, drive, dan nikmati.</p>
         <p data-i18n="welcome_body">Jelajah Pulau Langkawi dengan fleksibel — sewa kereta harian, mingguan, atau pilih pakej percutian penuh dengan driver lokal yang kenal setiap pelusuk pulau, semuanya mudah dan jujur.</p>
         <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap">
-          <button class="btn btn-cyan" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn1">Lihat Kereta</button>
+          <button class="btn btn-cyan" onclick="document.getElementById('cars').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn1">Lihat Kereta</button>
           <button class="btn btn-outline" onclick="document.getElementById('svc').scrollIntoView({behavior:'smooth'})" data-i18n="welcome_btn2">Servis Kami</button>
         </div>
       </div>
@@ -481,22 +480,12 @@ footer{background:var(--cyan);padding:60px 0 0}
   </div>
 </section>
 
-<!-- BRAND SHOWCASE -->
-<section class="sec brand-sec" id="dest">
-  <div class="wrap">
-    <div class="brand-sec-header reveal">
-      <h2 class="sec-title" data-i18n="brand_h2">Pilih Jenama Kereta Kamu dari Koleksi Terkini.</h2>
-      <p class="sec-sub" style="margin-top:10px" data-i18n="brand_sub">Tekan jenama untuk lihat semua model yang tersedia.</p>
-    </div>
-    <div class="brand-showcase-grid" id="brandShowcase"></div>
-  </div>
-</section>
 
 <!-- CARS -->
 <section class="sec" id="cars">
   <div class="wrap">
     <div class="cars-header reveal">
-      <h2 class="sec-title" data-i18n="cars_h2">Kami Ada 25 Model Kereta,<br>Kamu Yang Pilih.</h2>
+      <h2 class="sec-title" data-i18n="cars_h2">Kami Ada 31 Model Kereta,<br>Kamu Yang Pilih.</h2>
     </div>
     <div class="brand-filters reveal" id="brandFilters"></div>
     <p class="cars-count reveal" id="carsCount"></p>
@@ -627,10 +616,6 @@ footer{background:var(--cyan);padding:60px 0 0}
       <div class="foot-col">
         <h5 data-i18n="nav_cars">Kereta</h5>
         <ul>
-          <li><a href="#dest" class="bold">Perodua</a></li>
-          <li><a href="#dest">Proton</a></li>
-          <li><a href="#dest">Honda</a></li>
-          <li><a href="#dest">Toyota</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -830,7 +815,7 @@ const T = {
     why4_h:'25+ Model Kereta', why4_p:'Dari Axia ekonomi hingga Alphard VIP — pilih ikut bajet dan saiz kumpulan kamu.',
     brand_h2:'Pilih Jenama Kereta Kamu dari Koleksi Terkini.',
     brand_sub:'Tekan jenama untuk lihat semua model yang tersedia.',
-    cars_h2:'Kami Ada 25 Model Kereta,<br>Kamu Yang Pilih.',
+    cars_h2:'Kami Ada 31 Model Kereta,<br>Kamu Yang Pilih.',
     cars_filter_all:'Semua', cars_cta:'TEMPAH SEKARANG',
     cars_count_all:'kereta dijumpai', cars_count_brand:'kereta dijumpai untuk',
     cars_view_more:'Lihat Lagi ({n}) Kereta', cars_view_less:'Tunjuk Kurang',
@@ -940,7 +925,7 @@ const T = {
     why4_h:'25+ Car Models', why4_p:'From economy Axia to VIP Alphard — choose by budget and group size.',
     brand_h2:'Choose Your Preferred Car Brand from Our Latest Collection.',
     brand_sub:'Tap a brand to see all available models.',
-    cars_h2:'We Have 25 Car Models,<br>You Choose.',
+    cars_h2:'We Have 31 Car Models,<br>You Choose.',
     cars_filter_all:'All', cars_cta:'BOOK NOW',
     cars_count_all:'cars found', cars_count_brand:'cars found for',
     cars_view_more:'View {n} More Cars', cars_view_less:'Show Less',
@@ -1081,7 +1066,7 @@ const CAR_IMAGE_SRC = {
   vios22:'assets/vios2022.jpeg',
   almera:'assets/nissanalmera.jpeg',
   citysedan:'assets/hondacity2025.jpeg',
-  vios24:'assets/vios2022.jpeg',
+  vios24:'assets/vios2024.jpeg',
   yaris:'assets/toyotayaris.jpeg',
   cityhatch:'assets/hondacity2025.jpeg',
   avanza:'assets/toyotaavanza.jpeg',
@@ -1092,13 +1077,13 @@ const CAR_IMAGE_SRC = {
   crv:'assets/hondacrv.jpeg',
   camry:'assets/toyotacamry.jpeg',
   urvan:'assets/nissanurvanmt.jpeg',
-  hiacemt:'assets/toyotahiaceat.jpeg',
+  hiacemt:'assets/toyotahiacemt.jpeg',
   hiaceat:'assets/toyotahiaceat.jpeg',
   starex:'assets/hyundaistarex.jpeg',
   satria:'assets/hyundaistaria.jpeg',
   vellfire22:'assets/vellfire.jpeg',
   alphard22:'assets/alphard.jpeg',
-  vellfire25:'assets/vellfire.jpeg',
+  vellfire25:'assets/vellfire2025.jpeg',
   alphard25:'assets/alphard2025.jpeg',
   hilux:    'assets/toyotahilux.jpeg',
   zannix:   'assets/innovazanix.jpeg',
