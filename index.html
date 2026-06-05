@@ -392,10 +392,12 @@ footer{background:var(--cyan);padding:60px 0 0}
 .success-card{background:#fff;border-radius:0;box-shadow:0 4px 24px rgba(0,0,0,.12);max-width:680px;width:100%;overflow:hidden;font-size:.9rem}
 
 /* Receipt Header */
-.receipt-header{background:var(--cyan);padding:20px 28px 16px;text-align:center;color:#fff}
-.receipt-header .rh-logo{font-family:'Barlow Semi Condensed';font-size:2rem;font-weight:800;color:#fff;letter-spacing:.04em;margin-bottom:4px}
-.receipt-header .rh-addr{font-size:.75rem;color:rgba(255,255,255,.85);line-height:1.6}
-.receipt-header .rh-addr span{margin:0 6px}
+.receipt-header{background:var(--cyan);padding:24px 28px 18px;text-align:center;color:#fff}
+.rh-logo-wrap{display:flex;justify-content:center;align-items:center;margin-bottom:10px}
+.rh-logo-img{height:72px;width:auto;object-fit:contain;filter:brightness(0) invert(1);display:block;margin:0 auto}
+.rh-divider{width:60px;height:2px;background:rgba(255,255,255,.4);margin:0 auto 10px}
+.rh-addr{font-size:.78rem;color:rgba(255,255,255,.9);line-height:1.8;display:flex;flex-direction:column;gap:2px;align-items:center}
+.rh-addr span{display:block}
 
 /* Receipt Title Bar */
 .receipt-title-bar{display:flex;justify-content:space-between;align-items:flex-start;padding:18px 28px 14px;border-bottom:2px solid var(--cyan)}
@@ -454,15 +456,26 @@ footer{background:var(--cyan);padding:60px 0 0}
 }
 
 @media print{
+  @page{margin:10mm;size:A4}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body > *:not(#successPage){display:none!important}
-  .success-page{position:static!important;background:#fff!important;padding:0!important;display:block!important}
+  .success-page{position:static!important;background:#fff!important;padding:0!important;display:block!important;align-items:flex-start!important}
   .success-actions{display:none!important}
-  .success-card{box-shadow:none!important;max-width:100%!important}
-  .receipt-header{background:var(--cyan)!important}
-  .receipt-header img{display:block!important;visibility:visible!important;height:60px!important}
-  .receipt-section-title{background:var(--cyan)!important}
+  .success-card{box-shadow:none!important;max-width:100%!important;border-radius:0!important;font-size:.82rem!important}
+  .receipt-header{background:var(--cyan)!important;padding:16px 20px 12px!important}
+  .rh-logo-img{height:56px!important;display:block!important;visibility:visible!important}
+  .receipt-section-title{background:var(--cyan)!important;padding:6px 14px!important}
   .charges-table th{background:var(--ink)!important}
+  .receipt-title-bar{padding:12px 20px 10px!important}
+  .receipt-title-bar .rtb-left h2{font-size:1.6rem!important}
+  .receipt-section{padding:0 20px!important}
+  .receipt-section-title{margin:0 -20px!important}
+  .receipt-totals{padding:6px 20px 4px!important}
+  .receipt-fields{padding:6px 0!important}
+  .receipt-field .rf-label,.receipt-field .rf-val{padding:3px 0!important;font-size:.8rem!important}
+  .charges-table td,.charges-table th{padding:6px 10px!important;font-size:.78rem!important}
+  .rtotal-row{padding:3px 0!important;font-size:.82rem!important}
+  .receipt-footer{padding:8px 20px 10px!important}
 }
 
 /* GALLERY CAROUSEL */
@@ -913,9 +926,12 @@ footer{background:var(--cyan);padding:60px 0 0}
 
     <!-- Company Header -->
     <div class="receipt-header">
-      <div class="rh-logo"><img src="assets/logo.png" alt="Kakak Kereta Sewa" style="height:60px;width:auto;object-fit:contain;filter:brightness(0) invert(1)"></div>
+      <div class="rh-logo-wrap">
+        <img src="assets/logo.png" alt="Kakak Kereta Sewa" class="rh-logo-img">
+      </div>
+      <div class="rh-divider"></div>
       <div class="rh-addr">
-        📍 Gerai No.1 Masjid Al-Hana, Jalan Persiaran Putra, Langkawi
+        <span>📍 Gerai No.1 Masjid Al-Hana, Jalan Persiaran Putra, Langkawi</span>
         <span>📞 019-4863077</span>
       </div>
     </div>
