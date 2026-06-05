@@ -966,14 +966,7 @@ footer{background:var(--cyan);padding:60px 0 0}
               <th>Amount</th>
             </tr>
           </thead>
-          <tbody id="sp-charges-body">
-            <tr>
-              <td>Base Rental Fee</td>
-              <td id="sp-rate">—</td>
-              <td id="sp-qty">—</td>
-              <td id="sp-subtotal-amt">—</td>
-            </tr>
-          </tbody>
+          <tbody id="sp-charges-body"></tbody>
         </table>
       </div>
     </div>
@@ -2429,16 +2422,34 @@ function _fillReceipt(data, payMethod) {
   const seasonMap = { peak:'Peak Season', low:'Low Season', normal:'Normal Season' };
   document.getElementById('sp-season').textContent = seasonMap[data.season] || data.season || 'Normal Season';
 
-  // Charges
-  const total     = Number(data.amount || 0);
-  const ratePerDay = days > 0 ? (total / days) : total;
-  document.getElementById('sp-rate').textContent         = fmtMYR(ratePerDay.toFixed(2));
-  document.getElementById('sp-qty').textContent          = days;
-  document.getElementById('sp-subtotal-amt').textContent = fmtMYR(total);
-  document.getElementById('sp-sub').textContent          = fmtMYR(total);
-  document.getElementById('sp-amount').textContent       = fmtMYR(total);
-  document.getElementById('sp-amountpaid').textContent   = fmtMYR(total);
-  document.getElementById('sp-paymethod').textContent    = payMethod || '—';
+  // Charges - dynamic rows
+  const total       = Number(data.amount || 0);
+  const deliveryFee = Number(data.deliveryFee || 0);
+  const extraCharge = Number(data.extraCharge || 0);
+  const extraHours  = Number(data.extraHours  || 0);
+  const hourRate    = Number(data.hourRate    || 0);
+  const baseAmount  = total - deliveryFee - extraCharge;
+  const ratePerDay  = days > 0 ? (baseAmount / days) : baseAmount;
+
+  let rows = '<tr><td>Base Rental Fee</td><td>' + fmtMYR(ratePerDay.toFixed(2)) + '</td><td style="text-align:center">' + days + '</td><td>' + fmtMYR(baseAmount) + '</td></tr>';
+
+  if (extraCharge > 0) {
+    const extraLabel = data.extraType === 'hours'
+      ? 'Extra Hour Charge (' + extraHours + ' jam x RM' + hourRate + ')'
+      : 'Extra Day Charge (lebih 3 jam)';
+    rows += '<tr><td>' + extraLabel + '</td><td>—</td><td style="text-align:center">1</td><td>' + fmtMYR(extraCharge) + '</td></tr>';
+  }
+
+  if (deliveryFee > 0) {
+    const dLabel = 'Delivery Fee' + (data.deliveryAddr ? ' - ' + data.deliveryAddr : '');
+    rows += '<tr><td>' + dLabel + '</td><td>—</td><td style="text-align:center">1</td><td>' + fmtMYR(deliveryFee) + '</td></tr>';
+  }
+
+  document.getElementById('sp-charges-body').innerHTML  = rows;
+  document.getElementById('sp-sub').textContent         = fmtMYR(total);
+  document.getElementById('sp-amount').textContent      = fmtMYR(total);
+  document.getElementById('sp-amountpaid').textContent  = fmtMYR(total);
+  document.getElementById('sp-paymethod').textContent   = payMethod || '—';
 }
 
 function closeSuccessPage() {
@@ -2463,7 +2474,13 @@ window.testReceipt = function() {
     startIso:     '2026-05-04',
     endIso:       '2026-05-05',
     days:         2,
-    amount:       160
+    amount:       210,
+    extraCharge:  20,
+    extraHours:   2,
+    hourRate:     10,
+    extraType:    'hours',
+    deliveryFee:  30,
+    deliveryAddr: 'The Danna Langkawi'
   }, 'Credit/Debit Card');
   document.getElementById('successPage').classList.add('show');
   document.body.style.overflow = 'hidden';
