@@ -387,31 +387,77 @@ footer{background:var(--cyan);padding:60px 0 0}
 @media(max-width:560px){.why-cards{grid-template-columns:1fr}}
 
 /* SUCCESS PAGE */
-.success-page{display:none;position:fixed;inset:0;z-index:999;background:#f7fafc;overflow-y:auto}
-.success-page.show{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px}
-.success-card{background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.12);max-width:480px;width:100%;overflow:hidden}
-.success-head{background:linear-gradient(135deg,#00BCD4,#009BB5);padding:24px 28px 20px;text-align:center;color:#fff}
-.success-head .checkmark{width:56px;height:56px;background:rgba(255,255,255,.2);border-radius:50%;display:grid;place-items:center;margin:0 auto 12px}
-.success-head .checkmark svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.success-head h2{font-family:'Barlow Semi Condensed';font-size:1.6rem;font-weight:700;margin-bottom:4px}
-.success-head p{font-size:.85rem;opacity:.88;line-height:1.4}
-.success-body{padding:20px 28px 16px}
-.receipt-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--border);font-size:.88rem}
-.receipt-row:last-of-type{border-bottom:none}
-.receipt-row .label{color:var(--ink-mid);font-weight:500}
-.receipt-row .val{font-weight:700;color:var(--ink);text-align:right;max-width:60%}
-.receipt-row.total-row .label{font-size:.95rem;font-weight:700;color:var(--ink)}
-.receipt-row.total-row .val{font-family:'Barlow Semi Condensed';font-size:1.5rem;color:var(--cyan)}
-.receipt-id{background:var(--bg2);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.72rem;color:var(--ink-mid);word-break:break-all}
-.receipt-id b{display:block;margin-bottom:3px;color:var(--ink);font-size:.75rem}
-.success-actions{display:flex;gap:10px;padding:14px 28px 22px;flex-wrap:wrap}
+.success-page{display:none;position:fixed;inset:0;z-index:999;background:#f0f4f8;overflow-y:auto}
+.success-page.show{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;padding:24px 16px 40px}
+.success-card{background:#fff;border-radius:0;box-shadow:0 4px 24px rgba(0,0,0,.12);max-width:680px;width:100%;overflow:hidden;font-size:.9rem}
+
+/* Receipt Header */
+.receipt-header{background:var(--cyan);padding:20px 28px 16px;text-align:center;color:#fff}
+.receipt-header .rh-logo{font-family:'Barlow Semi Condensed';font-size:2rem;font-weight:800;color:#fff;letter-spacing:.04em;margin-bottom:4px}
+.receipt-header .rh-addr{font-size:.75rem;color:rgba(255,255,255,.85);line-height:1.6}
+.receipt-header .rh-addr span{margin:0 6px}
+
+/* Receipt Title Bar */
+.receipt-title-bar{display:flex;justify-content:space-between;align-items:flex-start;padding:18px 28px 14px;border-bottom:2px solid var(--cyan)}
+.receipt-title-bar .rtb-left h2{font-family:'Barlow Semi Condensed';font-size:2rem;font-weight:800;color:var(--ink);letter-spacing:.02em}
+.receipt-title-bar .rtb-right{text-align:right;font-size:.8rem;color:var(--ink-mid);line-height:1.8}
+.receipt-title-bar .rtb-right b{color:var(--ink)}
+
+/* Section blocks */
+.receipt-section{padding:0 28px}
+.receipt-section-title{background:var(--cyan);color:#fff;font-family:'Barlow';font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;margin:0 -28px;text-align:center}
+.receipt-fields{display:grid;grid-template-columns:140px 1fr;gap:0;padding:10px 0}
+.receipt-field{display:contents}
+.receipt-field .rf-label{font-weight:700;color:var(--ink);padding:5px 0;font-size:.85rem}
+.receipt-field .rf-label::after{content:':'}
+.receipt-field .rf-val{padding:5px 0;color:var(--ink);font-size:.85rem}
+
+/* Charges table */
+.charges-table{width:100%;border-collapse:collapse;font-size:.85rem;margin:12px 0}
+.charges-table th{background:var(--ink);color:#fff;padding:9px 12px;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;text-align:left}
+.charges-table th:last-child{text-align:right}
+.charges-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink)}
+.charges-table td:not(:first-child){text-align:center}
+.charges-table td:last-child{text-align:right;font-weight:600}
+.charges-table tr:last-child td{border-bottom:none}
+
+/* Totals */
+.receipt-totals{padding:8px 28px 4px;border-top:1px solid var(--border)}
+.rtotal-row{display:flex;justify-content:flex-end;gap:60px;padding:5px 0;font-size:.88rem;color:var(--ink-mid)}
+.rtotal-row b{color:var(--ink);min-width:90px;text-align:right;font-weight:600}
+.rtotal-grand{display:flex;justify-content:flex-end;gap:60px;padding:10px 0;border-top:2px solid var(--cyan);margin-top:4px}
+.rtotal-grand span{font-family:'Barlow Semi Condensed';font-size:1rem;font-weight:700;color:var(--cyan);text-transform:uppercase}
+.rtotal-grand b{font-family:'Barlow Semi Condensed';font-size:1.1rem;font-weight:800;color:var(--cyan);min-width:90px;text-align:right}
+
+/* Payment method */
+.receipt-pay-status{display:flex;justify-content:space-between;align-items:center;padding:5px 0}
+.receipt-pay-status .rps-label{font-weight:700;font-size:.85rem;color:var(--ink)}
+.receipt-pay-status .rps-val{font-size:.85rem;color:var(--ink)}
+.rps-val.paid{color:var(--cyan-dark);font-weight:700}
+
+/* Footer note */
+.receipt-footer{text-align:center;padding:12px 28px 16px;font-size:.78rem;color:var(--ink-light);font-style:italic;border-top:1px solid var(--border)}
+
+/* Actions */
+.success-actions{display:flex;gap:10px;padding:12px 28px 20px;flex-wrap:wrap;background:var(--bg2);border-top:1px solid var(--border)}
 .success-actions .btn{flex:1;min-width:120px;font-size:.82rem;padding:11px 16px}
-.success-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border-radius:999px;padding:5px 12px;font-size:.78rem;font-weight:600;margin-top:8px}
+
+@media(max-width:560px){
+  .receipt-title-bar{flex-direction:column;gap:8px}
+  .receipt-title-bar .rtb-right{text-align:left}
+  .receipt-fields{grid-template-columns:110px 1fr}
+  .receipt-section-title{margin:0 -20px}
+  .receipt-section{padding:0 20px}
+  .receipt-header{padding:16px 20px 12px}
+  .receipt-totals{padding:8px 20px 4px}
+  .success-actions{padding:12px 20px 18px}
+}
+
 @media print{
   body > *:not(#successPage){display:none!important}
-  .success-page{position:static!important;background:#fff!important;padding:0!important}
+  .success-page{position:static!important;background:#fff!important;padding:0!important;display:block!important}
   .success-actions{display:none!important}
-  .success-card{box-shadow:none!important;border-radius:0!important;max-width:100%!important}
+  .success-card{box-shadow:none!important;max-width:100%!important}
 }
 
 /* GALLERY CAROUSEL */
@@ -859,28 +905,112 @@ footer{background:var(--cyan);padding:60px 0 0}
 <!-- SUCCESS PAGE -->
 <div class="success-page" id="successPage">
   <div class="success-card">
-    <div class="success-head">
-      <div class="checkmark">
-        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h2 id="sp-title">Pembayaran Berjaya!</h2>
-      <p id="sp-subtitle">Pembayaran kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.</p>
-      <div class="success-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Selamat &amp; disahkan
+
+    <!-- Company Header -->
+    <div class="receipt-header">
+      <div class="rh-logo" id="sp-company-name">KAKAK KERETA SEWA</div>
+      <div class="rh-addr">
+        📍 Gerai No.1 Masjid Al-Hana, Jalan Persiaran Putra, Langkawi
+        <span>📞 019-4863077</span>
       </div>
     </div>
-    <div class="success-body">
-      <div class="receipt-row"><span class="label" id="sp-namelabel">Nama</span><span class="val" id="sp-name">—</span></div>
-      <div class="receipt-row"><span class="label" id="sp-carlabel">Tempahan</span><span class="val" id="sp-car">—</span></div>
-      <div class="receipt-row"><span class="label" id="sp-emaillabel">E-mel</span><span class="val" id="sp-email">—</span></div>
-      <div class="receipt-row total-row"><span class="label" id="sp-totallabel">Jumlah Dibayar</span><span class="val" id="sp-amount">—</span></div>
-      <div class="receipt-id"><b>ID Transaksi</b><span id="sp-receipt">—</span></div>
+
+    <!-- Title + Receipt ID -->
+    <div class="receipt-title-bar">
+      <div class="rtb-left"><h2>RENTAL RECEIPT</h2></div>
+      <div class="rtb-right">
+        <div>Receipt #: <b id="sp-receipt">—</b></div>
+        <div>Date: <b id="sp-date">—</b></div>
+      </div>
     </div>
+
+    <!-- Renter Information -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Renter Information</div>
+      <div class="receipt-fields">
+        <div class="receipt-field"><span class="rf-label">Name</span><span class="rf-val" id="sp-name">—</span></div>
+        <div class="receipt-field"><span class="rf-label">Phone</span><span class="rf-val" id="sp-phone">—</span></div>
+        <div class="receipt-field"><span class="rf-label">Email</span><span class="rf-val" id="sp-email">—</span></div>
+      </div>
+    </div>
+
+    <!-- Vehicle Details -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Vehicle Details</div>
+      <div class="receipt-fields">
+        <div class="receipt-field"><span class="rf-label">Vehicle</span><span class="rf-val" id="sp-car">—</span></div>
+        <div class="receipt-field"><span class="rf-label">Season</span><span class="rf-val" id="sp-season">—</span></div>
+      </div>
+    </div>
+
+    <!-- Rental Period -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Rental Period</div>
+      <div class="receipt-fields">
+        <div class="receipt-field"><span class="rf-label">Pickup</span><span class="rf-val" id="sp-pickup">—</span></div>
+        <div class="receipt-field"><span class="rf-label">Return</span><span class="rf-val" id="sp-return">—</span></div>
+        <div class="receipt-field"><span class="rf-label">Total Days</span><span class="rf-val" id="sp-days">—</span></div>
+      </div>
+    </div>
+
+    <!-- Charges Summary -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Charges Summary</div>
+      <div style="margin:12px 0">
+        <table class="charges-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Rate</th>
+              <th>Days/Qty</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="sp-charges-body">
+            <tr>
+              <td>Base Rental Fee</td>
+              <td id="sp-rate">—</td>
+              <td id="sp-qty">—</td>
+              <td id="sp-subtotal-amt">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Totals -->
+    <div class="receipt-totals">
+      <div class="rtotal-row"><span>Subtotal</span><b id="sp-sub">—</b></div>
+      <div class="rtotal-row"><span>Tax</span><b>MYR 0.00</b></div>
+      <div class="rtotal-grand"><span>Grand Total</span><b id="sp-amount">—</b></div>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="receipt-section" style="padding-top:2px">
+      <div class="receipt-section-title">Payment Method</div>
+      <div style="padding:10px 0">
+        <div class="receipt-pay-status">
+          <span class="rps-label">Payment Status</span>
+          <span class="rps-val paid">✅ Successfully Paid</span>
+        </div>
+        <div class="receipt-pay-status">
+          <span class="rps-label">Payment Method</span>
+          <span class="rps-val" id="sp-paymethod">—</span>
+        </div>
+        <div class="receipt-pay-status">
+          <span class="rps-label">Amount Paid</span>
+          <span class="rps-val" id="sp-amountpaid">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="receipt-footer">Thank you for choosing Kakak Kereta Sewa Langkawi.</div>
+
     <div class="success-actions">
-      <button class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+      <button class="btn btn-outline" onclick="window.print()">🖨️ Print / Download PDF</button>
       <button class="btn btn-cyan" onclick="closeSuccessPage()">Balik ke Laman Utama</button>
     </div>
+
   </div>
 </div>
 
@@ -2225,34 +2355,16 @@ async function showSuccessPageFPX(billcode, orderId) {
   page.classList.add('show');
   document.body.style.overflow = 'hidden';
 
-  document.getElementById('sp-name').textContent    = '...';
-  document.getElementById('sp-car').textContent     = '...';
-  document.getElementById('sp-email').textContent   = '...';
-  document.getElementById('sp-amount').textContent  = '...';
-  document.getElementById('sp-receipt').textContent = '...';
+  // Set today's date
+  document.getElementById('sp-date').textContent = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
 
   try {
     const res  = await fetch(WORKER_URL + 'toyyibpay-session?billcode=' + billcode + (orderId ? '&order_id=' + orderId : ''));
     const data = await res.json();
-    const isMs = lang === 'ms';
 
-    document.getElementById('sp-title').textContent    = isMs ? 'Pembayaran Berjaya! 🎉' : 'Payment Successful! 🎉';
-    document.getElementById('sp-subtitle').textContent = isMs
-      ? 'Pembayaran FPX anda telah diterima. Kami akan hubungi anda tidak lama lagi.'
-      : 'Your FPX payment has been received. We will contact you shortly.';
-    document.getElementById('sp-namelabel').textContent  = isMs ? 'Nama' : 'Name';
-    document.getElementById('sp-carlabel').textContent   = isMs ? 'Tempahan' : 'Booking';
-    document.getElementById('sp-emaillabel').textContent = isMs ? 'No. WhatsApp' : 'WhatsApp';
-    document.getElementById('sp-totallabel').textContent = isMs ? 'Jumlah Dibayar' : 'Amount Paid';
-
-    document.getElementById('sp-name').textContent    = data.customerName || '—';
-    document.getElementById('sp-car').textContent     = data.itemName     || '—';
-    document.getElementById('sp-email').textContent   = data.phone        || data.email || '—';
-    document.getElementById('sp-amount').textContent  = data.amount ? 'RM ' + Number(data.amount).toFixed(2) : '—';
-    document.getElementById('sp-receipt').textContent = data.receiptId    || billcode || '—';
+    _fillReceipt(data, 'FPX (Online Banking)');
 
     fetchBooked();
-    // Notify owner via WA
     notifyOwnerWA({
       name: data.customerName, car: data.itemName,
       phone: data.phone, amount: data.amount,
@@ -2271,37 +2383,17 @@ async function showSuccessPage(sessionId) {
   page.classList.add('show');
   document.body.style.overflow = 'hidden';
 
-  // Set loading state
-  document.getElementById('sp-name').textContent    = '...';
-  document.getElementById('sp-car').textContent     = '...';
-  document.getElementById('sp-email').textContent   = '...';
-  document.getElementById('sp-amount').textContent  = '...';
-  document.getElementById('sp-receipt').textContent = '...';
+  // Set today's date
+  document.getElementById('sp-date').textContent = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
 
   try {
     const res  = await fetch(WORKER_URL + 'session?id=' + sessionId);
     const data = await res.json();
 
     if (data.status === 'paid') {
-      const isMs = lang === 'ms';
-      document.getElementById('sp-title').textContent    = isMs ? 'Pembayaran Berjaya! 🎉' : 'Payment Successful! 🎉';
-      document.getElementById('sp-subtitle').textContent = isMs
-        ? 'Pembayaran kamu telah diterima. Kami akan hubungi kamu tidak lama lagi.'
-        : 'Your payment has been received. We will contact you shortly.';
-      document.getElementById('sp-namelabel').textContent  = isMs ? 'Nama' : 'Name';
-      document.getElementById('sp-carlabel').textContent   = isMs ? 'Tempahan' : 'Booking';
-      document.getElementById('sp-emaillabel').textContent = isMs ? 'E-mel' : 'Email';
-      document.getElementById('sp-totallabel').textContent = isMs ? 'Jumlah Dibayar' : 'Amount Paid';
+      _fillReceipt(data, 'Credit/Debit Card');
 
-      document.getElementById('sp-name').textContent    = data.customerName || '—';
-      document.getElementById('sp-car').textContent     = data.itemName     || '—';
-      document.getElementById('sp-email').textContent   = data.email        || '—';
-      document.getElementById('sp-amount').textContent  = 'RM ' + Number(data.amount).toFixed(2);
-      document.getElementById('sp-receipt').textContent = data.receiptId    || '—';
-
-      // server dah rekod tarikh booked semasa sahkan bayaran — refresh kalendar
       fetchBooked();
-      // Notify owner via WA
       notifyOwnerWA({
         name: data.customerName, car: data.itemName,
         phone: data.email, amount: data.amount,
@@ -2314,6 +2406,41 @@ async function showSuccessPage(sessionId) {
   }
 }
 
+// Helper: populate all receipt fields from API data
+function _fillReceipt(data, payMethod) {
+  const fmtMYR = v => 'MYR ' + Number(v||0).toFixed(2);
+  const fmtDate = iso => iso ? new Date(iso).toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric'}) : '—';
+
+  document.getElementById('sp-receipt').textContent   = data.receiptId || '—';
+  document.getElementById('sp-name').textContent      = data.customerName || '—';
+  document.getElementById('sp-phone').textContent     = data.phone || '—';
+  document.getElementById('sp-email').textContent     = data.email || '—';
+  document.getElementById('sp-car').textContent       = data.itemName || '—';
+
+  // Dates & days
+  const startIso = data.startIso || data.startDate || '';
+  const endIso   = data.endIso   || data.endDate   || '';
+  const days     = Number(data.days) || 1;
+  document.getElementById('sp-pickup').textContent = fmtDate(startIso);
+  document.getElementById('sp-return').textContent = fmtDate(endIso);
+  document.getElementById('sp-days').textContent   = days;
+
+  // Season
+  const seasonMap = { peak:'Peak Season', low:'Low Season', normal:'Normal Season' };
+  document.getElementById('sp-season').textContent = seasonMap[data.season] || data.season || 'Normal Season';
+
+  // Charges
+  const total     = Number(data.amount || 0);
+  const ratePerDay = days > 0 ? (total / days) : total;
+  document.getElementById('sp-rate').textContent         = fmtMYR(ratePerDay.toFixed(2));
+  document.getElementById('sp-qty').textContent          = days;
+  document.getElementById('sp-subtotal-amt').textContent = fmtMYR(total);
+  document.getElementById('sp-sub').textContent          = fmtMYR(total);
+  document.getElementById('sp-amount').textContent       = fmtMYR(total);
+  document.getElementById('sp-amountpaid').textContent   = fmtMYR(total);
+  document.getElementById('sp-paymethod').textContent    = payMethod || '—';
+}
+
 function closeSuccessPage() {
   document.getElementById('successPage').classList.remove('show');
   document.body.style.overflow = '';
@@ -2322,6 +2449,26 @@ function closeSuccessPage() {
 }
 
 checkPaySuccess();
+
+// ── TEST RECEIPT PREVIEW ──────────────────────────────
+window.testReceipt = function() {
+  document.getElementById('sp-date').textContent = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  _fillReceipt({
+    receiptId:    'pi_3TTDzrPDTWlly0Zv2TUqdZBo',
+    customerName: 'Nur Annis Salwa Binti Khairul Azhar',
+    phone:        '01119556160',
+    email:        'annissalwa17@gmail.com',
+    itemName:     'Perodua Axia',
+    season:       'low',
+    startIso:     '2026-05-04',
+    endIso:       '2026-05-05',
+    days:         2,
+    amount:       160
+  }, 'Credit/Debit Card');
+  document.getElementById('successPage').classList.add('show');
+  document.body.style.overflow = 'hidden';
+};
+
 </script>
 
 <!-- ════════════════════════════════════════════════════════════
