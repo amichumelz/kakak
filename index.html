@@ -454,10 +454,15 @@ footer{background:var(--cyan);padding:60px 0 0}
 }
 
 @media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body > *:not(#successPage){display:none!important}
   .success-page{position:static!important;background:#fff!important;padding:0!important;display:block!important}
   .success-actions{display:none!important}
   .success-card{box-shadow:none!important;max-width:100%!important}
+  .receipt-header{background:var(--cyan)!important}
+  .receipt-header img{display:block!important;visibility:visible!important;height:60px!important}
+  .receipt-section-title{background:var(--cyan)!important}
+  .charges-table th{background:var(--ink)!important}
 }
 
 /* GALLERY CAROUSEL */
@@ -1000,7 +1005,7 @@ footer{background:var(--cyan);padding:60px 0 0}
     <div class="receipt-footer">Thank you for choosing Kakak Kereta Sewa Langkawi.</div>
 
     <div class="success-actions">
-      <button class="btn btn-outline" onclick="window.print()">🖨️ Print / Download PDF</button>
+      <button class="btn btn-outline" onclick="printReceipt()">🖨️ Print / Download PDF</button>
       <button class="btn btn-cyan" onclick="closeSuccessPage()">Balik ke Laman Utama</button>
     </div>
 
@@ -2450,6 +2455,26 @@ function _fillReceipt(data, payMethod) {
   document.getElementById('sp-amount').textContent      = fmtMYR(total);
   document.getElementById('sp-amountpaid').textContent  = fmtMYR(total);
   document.getElementById('sp-paymethod').textContent   = payMethod || '—';
+}
+
+function printReceipt() {
+  // Convert logo to base64 so it prints correctly
+  const logoImg = document.querySelector('.receipt-header img');
+  if (!logoImg) { window.print(); return; }
+  if (logoImg.src.startsWith('data:')) { window.print(); return; }
+  const canvas = document.createElement('canvas');
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = function() {
+    canvas.width  = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    logoImg.src = canvas.toDataURL('image/png');
+    setTimeout(() => window.print(), 100);
+  };
+  img.onerror = function() { window.print(); }; // fallback
+  img.src = logoImg.src + '?t=' + Date.now();
 }
 
 function closeSuccessPage() {
